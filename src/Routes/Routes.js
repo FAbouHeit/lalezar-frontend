@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import Home from "../Pages/Home/Home";
-import Prducts from "../Pages/Products/Products.js";
 import Outlet from '../Routes/Outlet.js'
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
 import ProductForm from "../Pages/ProductForm/ProductForm";
@@ -22,8 +21,9 @@ import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import NotFound from "../Pages/NotFound/NotFound";
 import Unauthorized from "../Pages/Unauthorized/Unauthorized";
-import NavBar from "../Layouts/Navbar/Navbar.js";
 import Products from "../Pages/Products/Products.js";
+import ContactUs from "../Pages/ContactUs/ContactUs.js";
+import AboutUs from "../Pages/AboutUs/AboutUs.js";
 
 const PrivatRoute = ({ element, roles }) => {
   const { user, checkUser } = useContext(AuthContext);
@@ -67,6 +67,8 @@ const AppRouter = () => {
         <Route path="/BlogsPage" element={<BlogsPage />} />
         <Route path="/BlogDetails" element={<BlogDetails />} />
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/ContactUs" element={<ContactUs />} />
+        <Route path="/AboutUs" element={<AboutUs />} />
       </Route>
 
       <Route path="/Login" exact element={<Login />} />
