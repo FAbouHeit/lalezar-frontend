@@ -9,8 +9,8 @@
 
 .navBar {
   width: 90%;
+  padding: 0px 15px;
   margin: 0 auto;
-  padding: 0px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,14 +23,19 @@
   opacity: 0.7;
 }
 
+.linksWrapperContainer {
+  display: flex;
+  column-gap: 15px;
+  list-style: none;
+  /* background-color: green; */
+}
+
 .linksWrapper {
   margin: 0;
-  padding: 0;
+  padding: 10px;
   display: flex;
   column-gap: 15px;
   width: fit-content;
-  /* align-items: center; */
-  /* justify-content: space-between; */
   list-style: none;
   align-items: center;
 }
@@ -38,9 +43,7 @@
 .linksWrapper > li > a,
 .linksWrapperMobile > li > a {
   text-decoration: none;
-  /* color: white; */
   color: black;
-  /* font-weight: bold; */
   font-size: 16px;
   transition: 0.3s opacity ease-in-out;
 }
@@ -52,7 +55,7 @@
 .navBar ul > li > a:hover {
   opacity: 1;
   transition: 0.5s ease;
-  color: #C86823;
+  color: #c86823;
 }
 
 .burgerButton {
@@ -123,18 +126,34 @@
   width: 100%;
   align-self: center;
   text-align: center;
-  /* background-color: red; */
 }
 
-
-/* Add this to your CSS or styling file */
 .menuItem:hover {
-    /* background-color: #yourHoverBackgroundColor;  */
-    color: #C86823;
-  }
-  
+  color: #c86823;
+}
 
-@media screen and (max-width: 680px) {
+/* for switching between navbar */
+.activeLink {
+  /* background-color: red; */
+  padding: 10px;
+  border-bottom: 1px solid #c86823;
+  transition: border-bottom 0.3 step-end;
+}
+
+@media screen and (min-width: 901px) and (max-width : 1000px) {
+  .navBar {
+    width: 95%;
+    display: flex;
+    justify-content: space-around;
+  }
+  .linksWrapper {
+    padding: 10px;
+    display: flex;
+    column-gap: 10px;
+  }
+}
+
+@media screen and (max-width: 900px) {
   .navBar {
     width: 92%;
   }
