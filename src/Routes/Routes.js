@@ -2,28 +2,23 @@ import { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import Home from "../Pages/Home/Home";
-import Prducts from "../Pages/Products/Products.js";
 import Outlet from '../Routes/Outlet.js'
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
-import ProductForm from "../Pages/ProductForm/ProductForm";
 import Cart from "../Pages/Cart/Cart";
 import BlogsPage from "../Pages/Blogs/Blogs";
 import BlogDetails from "../Pages/BlogDetails/BlogDetails";
-import BlogForm from "../Pages/BlogForm/BlogForm";
 import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 import DashOverview from "../Pages/DashOverview/DashOverview";
 import DashOrder from "../Pages/DashOrders/DashOrders";
 import DashProduct from "../Pages/DashProducts/DashProducts";
 import DashUser from "../Pages/DashUsers/DashUsers";
-import UserForm from "../Pages/UserForm/UserForm";
 import ProfilePage from "../Pages/Profile/Profile";
 import ProfileEdit from "../Pages/ProfileEdit/ProfileEdit";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
 import NotFound from "../Pages/NotFound/NotFound";
 import Unauthorized from "../Pages/Unauthorized/Unauthorized";
-import NavBar from "../Layouts/Navbar/Navbar.js";
-import Products from "../Pages/Products/Products.js";
+import Products from "../Pages/Products/Products";
 
 const PrivatRoute = ({ element, roles }) => {
   const { user, checkUser } = useContext(AuthContext);
@@ -73,24 +68,6 @@ const AppRouter = () => {
       <Route path="/SignUp" exact element={<SignUp />} />
       <Route path="/Unauthorized" exact element={<Unauthorized />} />
       <Route
-        path="/ProductForm"
-        exact
-        element={
-          <PrivatRoute>
-            <ProductForm />
-          </PrivatRoute>
-        }
-      />
-      <Route
-        path="/BlogForm"
-        exact
-        element={
-          <PrivatRoute>
-            <BlogForm />
-          </PrivatRoute>
-        }
-      />
-      <Route
         path="/DashOverview"
         exact
         element={
@@ -123,15 +100,6 @@ const AppRouter = () => {
         element={
           <PrivatRoute>
             <DashUser />
-          </PrivatRoute>
-        }
-      />
-      <Route
-        path="/UserForm"
-        exact
-        element={
-          <PrivatRoute>
-            <UserForm />
           </PrivatRoute>
         }
       />
