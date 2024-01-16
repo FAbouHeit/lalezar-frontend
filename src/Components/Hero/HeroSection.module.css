@@ -1,0 +1,88 @@
+:root{
+  --color-orange : #C86823
+}
+.HeroSection {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  padding: 2rem 0 ;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.SloganContainer{
+  height: 15rem;
+}
+
+.Slogan{
+  color: var(--color-orange);
+  font-size: 4rem;
+  margin-top: 0;
+}
+
+.P{
+  color: rgb(27, 27, 27);
+  font-size: 1.5rem;
+}
+
+.left{
+  width: 60%;
+}
+
+.right{
+  width: 40%;
+}
+
+.img{
+  width: 100%;
+
+}
+
+@media screen and (max-width : 1200px) {
+   .left{
+    width: 50%;
+   }
+   .right{
+    width: 50%;
+   }
+   .SloganContainer{
+    height: 10rem;
+   }
+   .Slogan{
+    font-size: 3rem;
+   }
+}
+
+@media screen and (max-width : 920px) {
+  .Slogan{
+    font-size: 2.5rem;
+  }
+  .SloganContainer{
+    height: 10rem;
+  }
+  .P{
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width : 600px) {
+  .HeroSection{
+    flex-direction: column-reverse;
+    row-gap: 1.5rem;
+  }
+  .Slogan{
+    font-size: 2rem;
+  }
+  .P{
+    font-size: 1rem;
+  }
+  .left {
+    width: 100%;
+  }
+  .right{
+    width: 80%;
+  }
+  .SloganContainer{
+    height: 6rem;
+  }
+}
