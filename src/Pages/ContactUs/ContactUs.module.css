@@ -1,0 +1,358 @@
+.contactPage {
+    width: 90%;
+    margin: 1.5em auto;
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+}
+
+.contactContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    height: 100%;
+}
+
+.contactTitle {
+    width: 85%;
+    text-align: center;
+    font-size: 3em;
+    flex-shrink: 0;
+    font-weight: normal;
+    height: 10%;
+}
+
+.contactTitle::after {
+    display: block;
+    clear: both;
+    content: "";
+    position: relative;
+    left: 0;
+    bottom: 0;
+    max-width: 5%;
+    height: 1px;
+    width: 50%;
+    border-bottom: 3px solid #C86823;
+    margin: 0 auto;
+    padding: 0px 0px;
+}
+
+.contactNb {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 30%;
+    row-gap: 1.5rem;
+}
+
+.callUs {
+    height: 30%;
+}
+
+.callUs,
+.msgUs {
+    width: 95%;
+
+}
+
+.title {
+    color: #C86823;
+    font-weight: bold;
+}
+
+.msgUs {
+    border-top: 1px solid #c86823ef;
+    /* border-top: 1px solid #e8833aef; */
+    padding-top: 1.5rem;
+    height: 30%;
+}
+
+.callUs,
+.msgUs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.contactTitles h4 {
+    display: inline-block;
+    font-size: 1.05em;
+    font-weight: normal;
+}
+
+.contactTitles {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+}
+
+.imgHolderX {
+    display: none;
+}
+
+.imgHolder,
+.imgHolderX {
+    width: 2.7em;
+    height: 2.7em;
+    border-radius: 50%;
+    background-color: #c86823;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgHolder {
+    display: flex;
+}
+
+.imgHolder img,
+.imgHolderX img {
+    width: 60%;
+    height: 60%;
+}
+
+.textHolder {
+    font-size: 1.05em;
+}
+
+.form {
+    width: 70%;
+}
+
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
+    height: 100%;
+    margin-top: 0;
+}
+
+.inputsHolder {
+    display: flex;
+    height: 10%;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 1.5rem;
+}
+
+.inputsHolder,
+.msgHolder,
+.btnHolder {
+    width: 95%;
+}
+
+.msgHolder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inputs {
+    width: 31%;
+    height: 90%;
+    border-radius: 10px;
+    background: #FFF;
+    padding: 0.5em 0 0em 0.7em;
+    border: 1px solid #C86823;
+    margin-right: 10px;
+    min-height: 40px;
+}
+
+.inputs::placeholder,
+.msgInput::placeholder {
+    opacity: 0.6;
+    font-size: 1.2em;
+}
+
+.msgInput {
+    width: 100%;
+    border-radius: 15px;
+    background: #FFF;
+    padding: 1em 0 0em 1.2em;
+    border: 1px solid #C86823;
+    margin: auto;
+
+}
+
+.btnHolder {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.msgBtn {
+    border-radius: 5px;
+    background: #C86823;
+    width: 20%;
+    height: 3em;
+    font-size: 1em;
+    color: #FFF;
+    border-style: none;
+}
+
+
+.inputs:focus,
+.msgInput:focus {
+    outline: none;
+    /* border: 1px solid #C86823; */
+
+}
+
+/**************************************************/
+@media (max-width:1110px) {
+
+    .callUs {
+        width: 100%;
+    }
+}
+
+@media (max-width:980px) {
+    .imgHolder {
+        width: 2.2em;
+        height: 2.2em;
+    }
+
+    .contactTitles h4 {
+        font-size: 1em;
+
+    }
+
+    .textHolder {
+        font-size: 0.95em;
+    }
+
+
+    .inputsHolder,
+    .msgHolder,
+    .btnHolder {
+        width: 100%;
+    }
+
+    .inputs {
+        width: 33%;
+    }
+}
+
+@media (max-width:790px) {
+    .contactTitles h4 {
+        font-size: 0.7em;
+
+    }
+
+    .textHolder {
+        font-size: 0.8em;
+    }
+
+}
+
+
+@media (max-width:750px) {
+    .contactPage {
+        align-items: center;
+        height: auto;
+    }
+
+    .contactTitle {
+        font-size: 2em;
+        flex-shrink: 0;
+        font-weight: normal;
+        position: relative;
+    }
+
+    .contactTitle::after {
+        max-width: 12%;
+    }
+
+    .contactContainer {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        gap: 1.2em;
+
+    }
+
+    .contactNb {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        /* box-shadow: 0px 1px 13px 0px rgba(0, 0, 0, 0.1); */
+        width: 100%;
+        justify-content: space-evenly;
+        padding: 0;
+    }
+
+    .form {
+        width: 100%;
+        height: auto;
+    }
+
+    .contactForm {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .imgHolderX {
+        width: 2.2em;
+        height: 2.2em;
+    }
+
+    .inputsHolder {
+        display: flex;
+        height: 50%;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        width: 100%;
+        row-gap: 2rem;
+    }
+
+    .inputs {
+        min-width: 100%;
+        height: 33%;
+        padding: 0.5em 0 0.5em 0.2em;
+        margin-right: 10px;
+    }
+
+    .msgHolder {
+        height: 50%;
+        width: 100%;
+    }
+
+    .msgInput {
+        height: 120px;
+        margin: auto;
+    }
+
+
+    .btnHolder {
+        height: 20%;
+    }
+
+    .msgBtn {
+        width: 50%;
+        height: 3em;
+        font-size: 1em;
+    }
+
+    .textHolder {
+        font-size: 0.8em;
+    }
+
+    .callUs,
+    .msgUs {
+        width: 100%;
+        padding: 0.5em;
+        justify-content: space-evenly;
+
+    }
+
+    .title {
+        width: 90%;
+        margin: 2rem auto;
+        text-align: left;
+    }
+}
