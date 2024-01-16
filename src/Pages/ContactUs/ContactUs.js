@@ -1,7 +1,5 @@
 import React from 'react'
 import styles from './ContactUs.module.css'
-import callIcon from "../../Assets/phone-call.png"
-import emailIcon from "../../Assets/email.png"
 import TextField from '@mui/material/TextField';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import CallIcon from '@mui/icons-material/Call';
@@ -81,14 +79,14 @@ function ContactUs() {
               />
             </div>
             <div className={styles.btnHolder}>
-              <Button
+            <Button
                 variant="contained"
                 sx={{
                   bgcolor: "#C86823",
                   transition: "background-color 0.3s ease, color 0.3s ease",
                   "&:hover": {
-                    bgcolor: "#e8833aef",
-                    color: "#C86823",
+                    bgcolor: "#A0471D",
+                    color: "white",
                   },
                 }}
               >
@@ -114,7 +112,7 @@ function ContactUs() {
               padding: 0
             }}>Write To Us</h4>
             </div>
-            <p className={styles.textHolder}> <span className={styles.imgHolderX}> <img src={emailIcon} alt="Message Icon" /> </span>Fill out our form and we will contact you within 24 hours.</p>
+            <p className={styles.textHolder}> <span className={styles.imgHolderX}> </span>Fill out our form and we will contact you within 24 hours.</p>
             <p className={styles.textHolder}>Emails: customer@exclusive.com</p>
             <p className={styles.textHolder}>Emails: support@exclusive.com</p>
           </article>

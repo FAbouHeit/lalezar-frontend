@@ -1,0 +1,51 @@
+
+.pageContainer {
+    /* position: relative; */
+    height: 100vh;
+    background-image: url('../../Assets/login1.png'); 
+    background-size: cover;
+    display: flex;
+    justify-content:flex-start;
+    position: relative;
+  
+}
+.title{
+    color: #c86823;
+}
+.linkPhrase{
+    display: flex;
+    flex-direction: row;
+    gap:0.3rem;
+}
+.linkLogin{
+    color: #c86823;
+    margin-top: 15px;
+
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    left: 20%;
+    top: 10%;
+   gap:2rem;
+}
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 1.3rem;
+}
+.buttonContainer{
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+   justify-items: left;
+}
+.orPhrase{
+    display: flex;
+    justify-content: center;
+}
