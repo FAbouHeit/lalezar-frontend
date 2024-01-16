@@ -4,7 +4,11 @@
   top: 0;
   z-index: 5;
   width: 100%;
-  /* background-color: yellow; */
+  border-bottom: 1px solid rgb(233, 233, 233);
+
+  /* Add blur effect */
+  backdrop-filter: blur(10px); /* You can adjust the blur amount */
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .navBar {
@@ -104,7 +108,7 @@
   position: absolute;
   height: 0;
   left: 0;
-  top: 60px;
+  top: 72px;
   display: flex;
   align-items: flex-start;
   flex-direction: column;

@@ -10,10 +10,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Badge from "@mui/material/Badge";
-import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { withStyles } from "@mui/material/styles";
 
 function Navbar() {
   const [collapesed, setCollapsed] = useState(false);
@@ -21,43 +19,13 @@ function Navbar() {
   // nav with active
   const [isActive, setActive] = useState([false, false, false, false, false]);
   const navigate = useNavigate();
-  const handleLinkClick = (index, path) => {
-    setActive([false, false, false, false, false]);
-    setActive((prev) => {
-      const newActive = [...prev];
-      newActive[index] = true;
-      return newActive;
-    });
-    localStorage.setItem("activeLink", path);
-    navigate(path);
-
-    setCollapsed(false);
-  };
-
-  useEffect(() => {
-    const storedActiveLink = localStorage.getItem("activeLink");
-    const activeIndex = [
-      "/home",
-      "/ProductsPage",
-      "/BlogsPage",
-      "/ContactUs",
-      "/AboutUs",
-    ].indexOf(storedActiveLink);
-    setActive([false, false, false, false]);
-    if (activeIndex !== -1) {
-      setActive((prev) => {
-        const newActive = [...prev];
-        newActive[activeIndex] = true;
-        return newActive;
-      });
-    }
-  }, [navigate]);
+ 
 
   // MUI
   const [anchorEl1, setAnchorEl1] = React.useState(null);
-  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  // const [anchorEl2, setAnchorEl2] = React.useState(null);
   const open = Boolean(anchorEl1);
-  const open2 = Boolean(anchorEl2);
+  // const open2 = Boolean(anchorEl2);
   const handleClick = (event) => {
     setAnchorEl1(event.currentTarget);
   };
@@ -65,24 +33,58 @@ function Navbar() {
     setAnchorEl1(null);
   };
 
-  const handleClickMobile = (event) => {
-    setAnchorEl2(event.currentTarget);
+
+  const handleLinkClick = (index, path) => {
+    setActive([false, false, false, false, false]);
+    setActive((prev) => {
+      const newActive = [...prev];
+      newActive[index] = true;
+      return newActive;
+    });
+
+    navigate(path);
+
+    setCollapsed(false);
   };
-  const handleCloseMobile = () => {
-    setAnchorEl2(null);
-  };
+  
 
   // Navbar
   useEffect(() => {
+  
+    const defaultActiveLink = "/home";
+    const activeLink = window.location.pathname || defaultActiveLink;
+  
+    const activeIndex = [
+      "/home",
+      "/ProductsPage",
+      "/BlogsPage",
+      "/ContactUs",
+      "/AboutUs",
+    ].indexOf(activeLink);
+  
+    setActive((prev) => {
+      const newActive = Array(5).fill(false); 
+      newActive[activeIndex] = true;
+      return newActive;
+    });
+  
+    navigate(activeLink);
+  
     function updateSize() {
-      if (window.innerWidth > 600) {
+      if (window.innerWidth > 960) {
         setCollapsed(false);
       }
     }
+  
     window.addEventListener("resize", updateSize);
     updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+  
+    return () => {
+      window.removeEventListener("resize", updateSize);
+    };
+  }, [navigate]);
+  
+
   const toggleClasses = [
     Styles.linksWrapperMobile,
     collapesed ? Styles.activeNav : "",
@@ -100,15 +102,6 @@ function Navbar() {
   const goToSignUpPage = () => {
     navigate("/SignUp");
   };
-
-  const StyledBadge = styled(Badge)(({ theme }) => ({
-    "& .MuiBadge-badge": {
-      right: -3,
-      top: 13,
-      border: `2px solid ${theme.palette.background.paper}`,
-      padding: "0 4px",
-    },
-  }));
 
   return (
     <section className={Styles.heroSection}>
