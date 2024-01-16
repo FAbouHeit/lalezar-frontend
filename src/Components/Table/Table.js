@@ -50,6 +50,7 @@ const Table = ({
           'lastName' ,
           "email",
           "phoneNumber",
+          "image"
         ];
       } else {
         visibleFields = Object.keys(data[0]);
@@ -60,10 +61,10 @@ const Table = ({
         headerName: field,
         flex: screenWidth < 800 ? 0 : 1,
         renderCell: (params) => {
-          if ((field === "icon" && params.row.icon) || (field === "cover" && params.row.cover) ) {
+          if (field === "image" && params.row.image ) {
             return (
               <img
-                src={`${process.env.REACT_APP_SQL_API}/${params.row.icon ? params.row.icon : params.row.cover}`} // Assuming the "icon" field contains the image URL
+                src={`${process.env.REACT_APP_SQL_API}/${params.row.image ? params.row.image : ""}`} // Assuming the "icon" field contains the image URL
                 alt="Icon"
                 style={{ width: "70px", height: "50px" }}
               />
