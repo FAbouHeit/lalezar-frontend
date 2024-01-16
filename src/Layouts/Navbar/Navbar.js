@@ -9,6 +9,11 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { withStyles } from "@mui/material/styles";
 
 function Navbar() {
   const [collapesed, setCollapsed] = useState(false);
@@ -96,6 +101,15 @@ function Navbar() {
     navigate("/SignUp");
   };
 
+  const StyledBadge = styled(Badge)(({ theme }) => ({
+    "& .MuiBadge-badge": {
+      right: -3,
+      top: 13,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px",
+    },
+  }));
+
   return (
     <section className={Styles.heroSection}>
       <header className={Styles.header}>
@@ -110,98 +124,6 @@ function Navbar() {
           </NavLink>
 
           <ul className={Styles.linksWrapperContainer}>
-            <ul className={Styles.linksWrapper}>
-              <li>
-                <Button
-                  id="demo-positioned-button"
-                  aria-controls={open ? "demo-positioned-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  endIcon={<ExpandMoreIcon />}
-                  sx={{
-                    color: "black",
-                    fontSize: "16px",
-                    textTransform: "none",
-                    "&:hover": {
-                      opacity: "1",
-                      transition: "0.5s ease",
-                      color: "#C86823",
-                      bgcolor: "transparent",
-                    },
-                  }}
-                >
-                  Categories
-                </Button>
-                <Menu
-                  id="demo-positioned-menu"
-                  aria-labelledby="demo-positioned-button"
-                  anchorEl={anchorEl1}
-                  open={open}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  sx={{
-                    mt: "3rem",
-                  }}
-                >
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    Eastern & Western
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    Artal Al Ajdad
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    AL Baset
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    Local Products
-                  </MenuItem>
-                </Menu>
-              </li>
-            </ul>
-            {/* Categoriy Drop Down ending */}
-          </ul>
-
-          <ul className={Styles.linksWrapperContainer} style={{columnGap:"5vw"}}>
             {/* Categoriy Drop Down beginning */}
 
             {/* Navbar beginning */}
@@ -243,7 +165,7 @@ function Navbar() {
                 </NavLink>
               </li>
               <li>
-                <NavLink 
+                <NavLink
                   to="/AboutUs"
                   onClick={() => handleLinkClick(4, "/AboutUs")}
                   className={isActive[4] ? Styles.activeLink : ""}
@@ -253,6 +175,106 @@ function Navbar() {
               </li>
             </ul>
             {/* Navbar Ending */}
+
+            {/* <ul className={Styles.linksWrapperContainer}>
+              <ul className={Styles.linksWrapper}>
+                <li>
+                  
+                </li>
+              </ul>
+            </ul> */}
+
+            <Button
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              endIcon={<ExpandMoreIcon />}
+              sx={{
+                color: "black",
+                fontSize: "16px",
+                textTransform: "none",
+                "&:hover": {
+                  opacity: "1",
+                  transition: "0.5s ease",
+                  color: "#C86823",
+                  bgcolor: "transparent",
+                },
+              }}
+            >
+              En
+            </Button>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl1}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              sx={{
+                mt: "3rem",
+              }}
+            >
+              {/* <MenuItem
+                onClick={handleClose}
+                sx={{
+                  "&:hover": {
+                    bgcolor: "transparent",
+                    color: "#C86823",
+                  },
+                }}
+              >
+                English
+              </MenuItem> */}
+              <MenuItem
+                onClick={handleClose}
+                sx={{
+                  "&:hover": {
+                    bgcolor: "transparent",
+                    color: "#C86823",
+                  },
+                }}
+              >
+                عربي
+              </MenuItem>
+            </Menu>
+
+            {/* Categoriy Drop Down ending */}
+
+            {/* Badge beginning */}
+
+            <IconButton
+              aria-label="cart"
+              sx={{
+                "&:hover": {
+                  background: "transparent",
+                },
+              }}
+            >
+              <Badge
+                badgeContent={4}
+                color="secondary"
+                sx={{
+                  color: "black",
+                  "& .MuiBadge-badge": { bgcolor: "#C86823" },
+                  "& .MuiBadge-badge:hover": {
+                    bgcolor: "#A0471D",
+                  },
+                }}
+              >
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+
+            {/* Badge ending */}
 
             {/* SignUp LogIn beginning */}
             <ul className={Styles.linksWrapper}>
@@ -265,7 +287,7 @@ function Navbar() {
                       color: "#C86823",
                       borderColor: "#C86823",
                       transition: "background-color 0.3s ease, color 0.3s ease",
-                      textTransform:"none",
+                      textTransform: "none",
                       "&:hover": {
                         borderColor: "#C86823",
                         backgroundColor: "#C86823",
@@ -282,10 +304,10 @@ function Navbar() {
                     sx={{
                       bgcolor: "#C86823",
                       transition: "background-color 0.3s ease, color 0.3s ease",
-                      textTransform:"none",
+                      textTransform: "none",
                       "&:hover": {
-                        bgcolor: "white",
-                        color: "#C86823",
+                        bgcolor: "#A0471D",
+                        color: "white",
                       },
                     }}
                   >
@@ -360,7 +382,7 @@ function Navbar() {
               </NavLink>
             </li>
 
-            <li>
+            {/* <li>
               <div>
                 <Button
                   id="demo-positioned-button"
@@ -418,7 +440,7 @@ function Navbar() {
                   </MenuItem>
                 </Menu>
               </div>
-            </li>
+            </li> */}
 
             <li>
               <Stack
@@ -455,8 +477,8 @@ function Navbar() {
                     transition: "background-color 0.3s ease, color 0.3s ease",
                     // width:"100px",
                     "&:hover": {
-                      bgcolor: "white",
-                      color: "#C86823",
+                      bgcolor: "#A0471D",
+                      color: "white",
                     },
                   }}
                 >
