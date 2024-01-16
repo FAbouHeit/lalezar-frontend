@@ -56,8 +56,14 @@
 
 }
 
+.title {
+    color: #C86823;
+    font-weight: bold;
+}
+
 .msgUs {
     border-top: 1px solid #c86823ef;
+    /* border-top: 1px solid #e8833aef; */
     padding-top: 1.5rem;
     height: 30%;
 }
@@ -120,7 +126,6 @@
     gap: 3rem;
     width: 100%;
     height: 100%;
-    align-items: center;
     margin-top: 0;
 }
 
@@ -139,9 +144,9 @@
 }
 
 .msgHolder {
-    display: flex; 
+    display: flex;
     justify-content: center;
-     align-items: center;
+    align-items: center;
 }
 
 .inputs {
@@ -245,8 +250,9 @@
 @media (max-width:750px) {
     .contactPage {
         align-items: center;
-        height:auto;
+        height: auto;
     }
+
     .contactTitle {
         font-size: 2em;
         flex-shrink: 0;
@@ -259,12 +265,12 @@
     }
 
     .contactContainer {
-        width: 80%;
+        width: 90%;
         display: flex;
         flex-direction: column;
         height: 100%;
         gap: 1.2em;
-        
+
     }
 
     .contactNb {
@@ -343,5 +349,10 @@
         justify-content: space-evenly;
 
     }
-}
 
+    .title {
+        width: 90%;
+        margin: 2rem auto;
+        text-align: left;
+    }
+}

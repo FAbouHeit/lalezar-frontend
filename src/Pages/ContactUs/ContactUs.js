@@ -10,13 +10,13 @@ import Button from '@mui/material/Button';
 function ContactUs() {
   return (
     <div className={styles.contactPage}>
-      <h1>Contact Us</h1>
+      <h1 className={styles.title}>Contact Us</h1>
       <main className={styles.contactContainer}>
         <form className={styles.form} action="/" method='POST' name="contact">
           <div className={styles.contactForm}>
 
             <div className={styles.inputsHolder}>
-              <TextField fullWidth id="outlined-basic" label="email" variant="outlined" sx={{
+              <TextField fullWidth id="outlined-basic" label="Name" variant="outlined" sx={{
                 "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                   border: "2px solid #C86823 !important",
                   borderRadius: "4px",
@@ -29,7 +29,7 @@ function ContactUs() {
                   color: "#C86823 ",
                 },
               }} />
-              <TextField fullWidth id="outlined-basic" label="email" variant="outlined" sx={{
+              <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" sx={{
                 "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                   border: "2px solid #C86823 !important",
                   borderRadius: "4px",
@@ -42,7 +42,7 @@ function ContactUs() {
                   color: "#C86823 ",
                 },
               }} />
-              <TextField fullWidth id="outlined-basic" label="email" variant="outlined" sx={{
+              <TextField fullWidth id="outlined-basic" label="Phone" variant="outlined" sx={{
                 "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                   border: "2px solid #C86823 !important",
                   borderRadius: "4px",
@@ -59,7 +59,7 @@ function ContactUs() {
             <div className={styles.msgHolder}>
               <TextField
                 id="outlined-multiline-static"
-                label="Multiline"
+                label="Message"
                 multiline
                 rows={10}
                 variant="outlined"
@@ -87,7 +87,7 @@ function ContactUs() {
                   bgcolor: "#C86823",
                   transition: "background-color 0.3s ease, color 0.3s ease",
                   "&:hover": {
-                    bgcolor: "white",
+                    bgcolor: "#e8833aef",
                     color: "#C86823",
                   },
                 }}
