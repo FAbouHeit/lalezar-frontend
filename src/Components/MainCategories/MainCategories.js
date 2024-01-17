@@ -16,7 +16,7 @@ const MainCategories = () => {
           index === 1 ? Styles.insideRight : Styles.insideLeft;
         const imgClass = index === 1 ? Styles.imgRight : Styles.imgLeft;
         return (
-          <section className={Styles.main}>
+          <section className={Styles.main} key={index}>
             <img src={item.img} alt="img" className={imgClass} />
             <div className={divClassName}>
               <p className={Styles.P}>{item.title}</p>

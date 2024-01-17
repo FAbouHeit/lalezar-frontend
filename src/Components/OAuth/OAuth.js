@@ -1,16 +1,16 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../../Firebase";
 import { useContext } from "react";
-import { AuthContext } from "../../context/authContext";
+import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import googleG from "../../assets/images/G.png";
-import UseApi from "../../hookes/useApi";
+import googleG from "../../Assets/G.png";
+import useApi from "../../Hooks/UseApi";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 const  OAuth = ()  => {
-  const {apiCall , loading , error} = UseApi()
-  const {fetchUserData , setUser , user} = useContext(AuthContext)
+  const {apiCall , loading } = useApi()
+  const {fetchUserData , setUser} = useContext(AuthContext)
   const navigate = useNavigate();
   const handleGoogleClick = async () => {
     try {
@@ -21,7 +21,7 @@ const  OAuth = ()  => {
       console.log(result);
 
       const response = await apiCall({
-        url : `${process.env.REACT_APP_SQL_API}/google`,
+        url : `${process.env.REACT_APP_SQL_API}/user/google`,
         method : 'post',
         data :         {
           name: result.user.displayName,
@@ -47,7 +47,7 @@ const  OAuth = ()  => {
       <Button
       variant="outlined"
       onClick={handleGoogleClick}
-      startIcon={<img src={googleG} />}
+      startIcon={<img src={googleG} alt="googleImage"/>}
       sx={{
         color: "black",
       }}

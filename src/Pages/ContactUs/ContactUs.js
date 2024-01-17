@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './ContactUs.module.css'
-import callIcon from "../../Assets/phone-call.png"
 import emailIcon from "../../Assets/email.png"
 import TextField from '@mui/material/TextField';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
