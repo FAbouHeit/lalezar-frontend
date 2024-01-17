@@ -1,44 +1,95 @@
-.container{
-    width: 90%;
-    margin: 0 auto;
-    /* background-color: red; */
-    display: flex;
+/* The sidepanel menu */
+.sidepanel {
+  height: 100vh;
+  width: 0;
+  position: fixed;
+  /* z-index: 1; */
+  top: 0;
+  left: 0;
+  /* background-color: purple; */
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
 }
 
+/* The sidepanel links */
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+  margin: 15px;
+}
 
-.sideBar{
-    min-width: 300px;
-    background-color: yellow;
+/* When you mouse over the navigation links, change their color */
+.sidepanel a:not(a:first-of-type):hover {
+  color: #7c0000;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style the button that is used to open the sidepanel */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #580000;
 }
 
 .sideBarTitle{
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    column-gap: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
 }
-
-.cards{
-    background-color: purple;
-    width: calc(100% - 300px);
-}
-
 
 .searchArticle , .categoryArticle{
-    border-bottom: 1px solid rgb(224, 217, 217);
-}
-
-.checkBoxLine{
-    display: flex;
-    column-gap: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  border-bottom: 1px solid rgb(110, 110, 110);
+  padding: 25px;
 }
 
 .checkBoxContainer{
-    display: flex;
-    flex-direction: column;
-    row-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }
 
-.checkBoxLine > input:checked {
-    background-color: red;
+.checkBoxLine{
+  display: flex;
+  column-gap: 10px;
+}
+
+.content {
+  transition: margin-left 0.5s; /* Add a transition to smoothly animate the margin change */
+}
+
+/* Adjust the margin when the sidebar is open */
+.sidepanel-open .content {
+  margin-left: 250px; /* Adjust the value based on your sidebar width */
+}
+
+@media screen and (min-width: 960px) {
+  .sidepanel .closebtn {
+    display: none;
+  }
+  .openbtn{
+    display: none;
+  }
 }

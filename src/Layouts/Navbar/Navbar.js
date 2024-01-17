@@ -17,7 +17,7 @@ function Navbar() {
   const [collapesed, setCollapsed] = useState(false);
 
   // nav with active
-  const [isActive, setActive] = useState([false, false, false, false, false]);
+  const [isActive, setActive] = useState([true, false, false, false, false]);
   const navigate = useNavigate();
  
 
@@ -41,9 +41,7 @@ function Navbar() {
       newActive[index] = true;
       return newActive;
     });
-
     navigate(path);
-
     setCollapsed(false);
   };
   
@@ -68,8 +66,6 @@ function Navbar() {
       return newActive;
     });
   
-    navigate(activeLink);
-  
     function updateSize() {
       if (window.innerWidth > 960) {
         setCollapsed(false);
@@ -82,7 +78,7 @@ function Navbar() {
     return () => {
       window.removeEventListener("resize", updateSize);
     };
-  }, [navigate]);
+  }, []);
   
 
   const toggleClasses = [
