@@ -1,55 +1,61 @@
 import React, { useEffect, useState } from "react";
 import StyleProducts from "./Products.module.css";
 import Icon from "@mui/icons-material/CategoryOutlined";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const Products = () => {
-  const [sidePanelWidth, setSidePanelWidth] = useState(250);
+  const [sidePanelWidth, setSidePanelWidth] = useState(400);
+
+  const top100Films = [
+    { title: "The Shawshank Redemption", year: 1994 },
+    { title: "The Godfather", year: 1972 },
+    { title: "The Godfather: Part II", year: 1974 },
+    { title: "The Dark Knight", year: 2008 },
+    { title: "12 Angry Men", year: 1957 },
+    { title: "Schindler's List", year: 1993 },
+    { title: "Pulp Fiction", year: 1994 },
+  ];
 
   const openNav = () => {
-    setSidePanelWidth(250);
+    setSidePanelWidth(400);
   };
 
   const closeNav = () => {
     setSidePanelWidth(0);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     function updateSideBar() {
       if (window.innerWidth > 960) {
-        setSidePanelWidth(250)
-      }
-      else{
-        setSidePanelWidth(0)
+        setSidePanelWidth(400);
+      } else {
+        setSidePanelWidth(0);
       }
     }
-  
+
     window.addEventListener("resize", updateSideBar);
     updateSideBar();
-  
+
     return () => {
       window.removeEventListener("resize", updateSideBar);
     };
-  },[])
+  }, []);
 
   return (
-    <>
+    <div style={{ display: "flex" }}>
       <div
         id="mySidepanel"
         className={StyleProducts.sidepanel}
         style={{
           width: sidePanelWidth + "px",
           height: "100%",
-          marginTop: "90px",
+          borderRight: "1px solid rgb(110, 110, 110)",
         }}
       >
-        <a
-          href="#"
-          className={StyleProducts.closebtn}
-          onClick={closeNav}
-        >
-          &times;
-        </a>
-
         <div>
           <section className={StyleProducts.sideBarTitle}>
             <Icon></Icon>
@@ -58,7 +64,24 @@ const Products = () => {
           <section className={StyleProducts.searchArticle}>
             <article>
               <h3>Brand</h3>
-              <h3>Search ...</h3>
+              <Stack sx={{ width: 300 }}>
+                <Autocomplete
+                  freeSolo
+                  id="free-solo-2-demo"
+                  disableClearable
+                  options={top100Films.map((option) => option.title)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Search input"
+                      InputProps={{
+                        ...params.InputProps,
+                        type: "search",
+                      }}
+                    />
+                  )}
+                />
+              </Stack>
             </article>
           </section>
 
@@ -72,6 +95,7 @@ const Products = () => {
                     id="Eastern&Western"
                     name="Eastern&Western"
                     value="Eastern&Western"
+                    className={StyleProducts.customCheckbox}
                   />
                   <label htmlFor="Eastern&Western"> Eastern & Western</label>
                 </div>
@@ -81,6 +105,7 @@ const Products = () => {
                     id="Eastern&Western"
                     name="Eastern&Western"
                     value="Eastern&Western"
+                    className={StyleProducts.customCheckbox}
                   />
                   <label htmlFor="Eastern&Western"> Eastern & Western</label>
                 </div>
@@ -90,6 +115,7 @@ const Products = () => {
                     id="Eastern&Western"
                     name="Eastern&Western"
                     value="Eastern&Western"
+                    className={StyleProducts.customCheckbox}
                   />
                   <label htmlFor="Eastern&Western"> Eastern & Western</label>
                 </div>
@@ -99,6 +125,7 @@ const Products = () => {
                     id="Eastern&Western"
                     name="Eastern&Western"
                     value="Eastern&Western"
+                    className={StyleProducts.customCheckbox}
                   />
                   <label htmlFor="Eastern&Western"> Eastern & Western</label>
                 </div>
@@ -108,15 +135,33 @@ const Products = () => {
         </div>
       </div>
 
-      <button className={StyleProducts.openbtn} onClick={openNav}>
-        &#9776;
-      </button>
+      {sidePanelWidth === 400 ? (
+        <a
+          href="#"
+          className={StyleProducts.openbtn}
+          style={{ margin: "auto 0" }}
+          onClick={closeNav}
+        >
+          <ArrowBackIosIcon
+            style={{
+              color: "#c86823",
+              borderRight: "1px solid rgb(110, 110, 110)",
+            }}
+          ></ArrowBackIosIcon>
+        </a>
+      ) : (
+        <button className={StyleProducts.openbtn} onClick={openNav}>
+          <ArrowForwardIosIcon
+            style={{ color: "#c86823" }}
+          ></ArrowForwardIosIcon>
+        </button>
+      )}
 
-      <div style={{ marginLeft: sidePanelWidth + "px" ,transition: "margin-left 0.5s" }}>
+      <div className={StyleProducts.content}>
         <h2>Collapsed Sidepanel</h2>
         <p>Content...</p>
       </div>
-    </>
+    </div>
   );
 };
 

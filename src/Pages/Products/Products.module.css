@@ -1,15 +1,16 @@
 /* The sidepanel menu */
 .sidepanel {
   height: 100vh;
-  width: 0;
-  position: fixed;
-  /* z-index: 1; */
+  width: 400px;
   top: 0;
   left: 0;
-  /* background-color: purple; */
-  overflow-x: hidden;
-  padding-top: 60px;
+  /* overflow-x:hidden; */
+  background-color: #c86823;
   transition: 0.5s;
+}
+
+.test {
+  display: flex;
 }
 
 /* The sidepanel links */
@@ -42,22 +43,30 @@
   font-size: 20px;
   cursor: pointer;
   color: black;
-  padding: 10px 15px;
+  /* padding: 10px 15px; */
   border: none;
 }
-
 .openbtn:hover {
-  background-color: #580000;
+  cursor: pointer;
 }
 
-.sideBarTitle{
+/* .closebtn{
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  margin: auto;
+} */
+
+.sideBarTitle {
   display: flex;
   justify-content: center;
   align-items: center;
   column-gap: 20px;
 }
 
-.searchArticle , .categoryArticle{
+.searchArticle,
+.categoryArticle {
   display: flex;
   flex-direction: column;
   margin-left: 15px;
@@ -65,14 +74,15 @@
   padding: 25px;
 }
 
-.checkBoxContainer{
+.checkBoxContainer {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
 }
 
-.checkBoxLine{
+.checkBoxLine {
   display: flex;
+  align-items: center;
   column-gap: 10px;
 }
 
@@ -82,14 +92,47 @@
 
 /* Adjust the margin when the sidebar is open */
 .sidepanel-open .content {
-  margin-left: 250px; /* Adjust the value based on your sidebar width */
+  margin-left: 400px;
 }
+
+.content {
+  padding: 10px;
+}
+
+.customCheckbox {
+  width: 20px;
+  height: 20px;
+}
+
+.checked:checked{
+  background-color: red;
+}
+
 
 @media screen and (min-width: 960px) {
   .sidepanel .closebtn {
     display: none;
   }
-  .openbtn{
+  .openbtn {
     display: none;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .sidepanel {
+    background-color: #c86823;
+    overflow-x: auto;
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .searchArticle,
+  .categoryArticle {
+    padding: 5px;
+    margin: 5px;
+  }
+  .sideBarTitle {
+    flex-direction: column;
   }
 }
