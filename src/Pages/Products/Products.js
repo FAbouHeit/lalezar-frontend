@@ -46,7 +46,7 @@ const Products = () => {
   }, []);
 
   return (
-    <div style={{ display: "flex" }}>
+    <div style={{ display: "flex" }} className={StyleProducts.big}>
       <div
         id="mySidepanel"
         className={StyleProducts.sidepanel}
@@ -64,7 +64,7 @@ const Products = () => {
           <section className={StyleProducts.searchArticle}>
             <article>
               <h3>Brand</h3>
-              <Stack sx={{ width: 300 }}>
+              <Stack  className={StyleProducts.stack}>
                 <Autocomplete
                   freeSolo
                   id="free-solo-2-demo"

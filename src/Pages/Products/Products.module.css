@@ -104,9 +104,6 @@
   height: 20px;
 }
 
-.checked:checked{
-  background-color: red;
-}
 
 
 @media screen and (min-width: 960px) {
@@ -116,6 +113,8 @@
   .openbtn {
     display: none;
   }
+
+  
 }
 
 @media screen and (max-width: 960px) {
@@ -124,6 +123,13 @@
     overflow-x: auto;
     width: 300px;
   }
+}
+
+@media screen and (max-width : 500px) {
+  .big{
+    flex-wrap: wrap;
+  }
+  
 }
 
 @media screen and (max-width: 350px) {
