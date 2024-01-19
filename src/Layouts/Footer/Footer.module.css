@@ -113,6 +113,12 @@
 }
 
 /* Media queries */
+@media screen and (400px < width < 640px) {
+  .linksColumn.middle , .linksColumn.right{
+    text-align: left;
+  }  
+}
+
 @media (min-width: 400px) {
   .linksColumn {
     align-items: flex-start;
@@ -145,6 +151,7 @@
     margin: 0;
   }
 }
+
 
 @media (min-width: 640px) {
   .links {
