@@ -4,11 +4,11 @@ import { AuthContext } from "../Context/AuthContext";
 import Home from "../Pages/Home/Home";
 import Outlet from '../Routes/Outlet.js'
 import ProductDetails from "../Pages/ProductDetails/ProductDetails";
-import ProductForm from "../Components/ProductForm/ProductForm.js";
+import ProductForm from "../Components/ProductForm/ProductForm";
 import Cart from "../Pages/Cart/Cart";
 import BlogsPage from "../Pages/Blogs/Blogs";
 import BlogDetails from "../Pages/BlogDetails/BlogDetails";
-import BlogForm from "../Components/BlogForm/BlogForm.js";
+import BlogForm from "../Components/BlogForm/BlogForm";
 import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 import DashOverview from "../Pages/DashOverview/DashOverview";
 import DashOrder from "../Pages/DashOrders/DashOrders";

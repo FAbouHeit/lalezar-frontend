@@ -9,6 +9,9 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Badge from "@mui/material/Badge";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 function Navbar() {
   const [collapesed, setCollapsed] = useState(false);
@@ -16,43 +19,13 @@ function Navbar() {
   // nav with active
   const [isActive, setActive] = useState([false, false, false, false, false]);
   const navigate = useNavigate();
-  const handleLinkClick = (index, path) => {
-    setActive([false, false, false, false, false]);
-    setActive((prev) => {
-      const newActive = [...prev];
-      newActive[index] = true;
-      return newActive;
-    });
-    localStorage.setItem("activeLink", path);
-    navigate(path);
-
-    setCollapsed(false);
-  };
-
-  useEffect(() => {
-    const storedActiveLink = localStorage.getItem("activeLink");
-    const activeIndex = [
-      "/home",
-      "/ProductsPage",
-      "/BlogsPage",
-      "/ContactUs",
-      "/AboutUs",
-    ].indexOf(storedActiveLink);
-    setActive([false, false, false, false]);
-    if (activeIndex !== -1) {
-      setActive((prev) => {
-        const newActive = [...prev];
-        newActive[activeIndex] = true;
-        return newActive;
-      });
-    }
-  }, [navigate]);
+ 
 
   // MUI
   const [anchorEl1, setAnchorEl1] = React.useState(null);
-  const [anchorEl2, setAnchorEl2] = React.useState(null);
+  // const [anchorEl2, setAnchorEl2] = React.useState(null);
   const open = Boolean(anchorEl1);
-  const open2 = Boolean(anchorEl2);
+  // const open2 = Boolean(anchorEl2);
   const handleClick = (event) => {
     setAnchorEl1(event.currentTarget);
   };
@@ -60,24 +33,58 @@ function Navbar() {
     setAnchorEl1(null);
   };
 
-  const handleClickMobile = (event) => {
-    setAnchorEl2(event.currentTarget);
+
+  const handleLinkClick = (index, path) => {
+    setActive([false, false, false, false, false]);
+    setActive((prev) => {
+      const newActive = [...prev];
+      newActive[index] = true;
+      return newActive;
+    });
+
+    navigate(path);
+
+    setCollapsed(false);
   };
-  const handleCloseMobile = () => {
-    setAnchorEl2(null);
-  };
+  
 
   // Navbar
   useEffect(() => {
+  
+    const defaultActiveLink = "/home";
+    const activeLink = window.location.pathname || defaultActiveLink;
+  
+    const activeIndex = [
+      "/home",
+      "/ProductsPage",
+      "/BlogsPage",
+      "/ContactUs",
+      "/AboutUs",
+    ].indexOf(activeLink);
+  
+    setActive((prev) => {
+      const newActive = Array(5).fill(false); 
+      newActive[activeIndex] = true;
+      return newActive;
+    });
+  
+    navigate(activeLink);
+  
     function updateSize() {
-      if (window.innerWidth > 600) {
+      if (window.innerWidth > 960) {
         setCollapsed(false);
       }
     }
+  
     window.addEventListener("resize", updateSize);
     updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
+  
+    return () => {
+      window.removeEventListener("resize", updateSize);
+    };
+  }, [navigate]);
+  
+
   const toggleClasses = [
     Styles.linksWrapperMobile,
     collapesed ? Styles.activeNav : "",
@@ -110,98 +117,6 @@ function Navbar() {
           </NavLink>
 
           <ul className={Styles.linksWrapperContainer}>
-            <ul className={Styles.linksWrapper}>
-              <li>
-                <Button
-                  id="demo-positioned-button"
-                  aria-controls={open ? "demo-positioned-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  endIcon={<ExpandMoreIcon />}
-                  sx={{
-                    color: "black",
-                    fontSize: "16px",
-                    textTransform: "none",
-                    "&:hover": {
-                      opacity: "1",
-                      transition: "0.5s ease",
-                      color: "#C86823",
-                      bgcolor: "transparent",
-                    },
-                  }}
-                >
-                  Categories
-                </Button>
-                <Menu
-                  id="demo-positioned-menu"
-                  aria-labelledby="demo-positioned-button"
-                  anchorEl={anchorEl1}
-                  open={open}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  sx={{
-                    mt: "3rem",
-                  }}
-                >
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    Eastern & Western
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    Artal Al Ajdad
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    AL Baset
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    Local Products
-                  </MenuItem>
-                </Menu>
-              </li>
-            </ul>
-            {/* Categoriy Drop Down ending */}
-          </ul>
-
-          <ul className={Styles.linksWrapperContainer} style={{columnGap:"5vw"}}>
             {/* Categoriy Drop Down beginning */}
 
             {/* Navbar beginning */}
@@ -243,7 +158,7 @@ function Navbar() {
                 </NavLink>
               </li>
               <li>
-                <NavLink 
+                <NavLink
                   to="/AboutUs"
                   onClick={() => handleLinkClick(4, "/AboutUs")}
                   className={isActive[4] ? Styles.activeLink : ""}
@@ -253,6 +168,106 @@ function Navbar() {
               </li>
             </ul>
             {/* Navbar Ending */}
+
+            {/* <ul className={Styles.linksWrapperContainer}>
+              <ul className={Styles.linksWrapper}>
+                <li>
+                  
+                </li>
+              </ul>
+            </ul> */}
+
+            <Button
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              endIcon={<ExpandMoreIcon />}
+              sx={{
+                color: "black",
+                fontSize: "16px",
+                textTransform: "none",
+                "&:hover": {
+                  opacity: "1",
+                  transition: "0.5s ease",
+                  color: "#C86823",
+                  bgcolor: "transparent",
+                },
+              }}
+            >
+              En
+            </Button>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl1}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              sx={{
+                mt: "3rem",
+              }}
+            >
+              {/* <MenuItem
+                onClick={handleClose}
+                sx={{
+                  "&:hover": {
+                    bgcolor: "transparent",
+                    color: "#C86823",
+                  },
+                }}
+              >
+                English
+              </MenuItem> */}
+              <MenuItem
+                onClick={handleClose}
+                sx={{
+                  "&:hover": {
+                    bgcolor: "transparent",
+                    color: "#C86823",
+                  },
+                }}
+              >
+                عربي
+              </MenuItem>
+            </Menu>
+
+            {/* Categoriy Drop Down ending */}
+
+            {/* Badge beginning */}
+
+            <IconButton
+              aria-label="cart"
+              sx={{
+                "&:hover": {
+                  background: "transparent",
+                },
+              }}
+            >
+              <Badge
+                badgeContent={4}
+                color="secondary"
+                sx={{
+                  color: "black",
+                  "& .MuiBadge-badge": { bgcolor: "#C86823" },
+                  "& .MuiBadge-badge:hover": {
+                    bgcolor: "#A0471D",
+                  },
+                }}
+              >
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+
+            {/* Badge ending */}
 
             {/* SignUp LogIn beginning */}
             <ul className={Styles.linksWrapper}>
@@ -265,7 +280,7 @@ function Navbar() {
                       color: "#C86823",
                       borderColor: "#C86823",
                       transition: "background-color 0.3s ease, color 0.3s ease",
-                      textTransform:"none",
+                      textTransform: "none",
                       "&:hover": {
                         borderColor: "#C86823",
                         backgroundColor: "#C86823",
@@ -282,10 +297,10 @@ function Navbar() {
                     sx={{
                       bgcolor: "#C86823",
                       transition: "background-color 0.3s ease, color 0.3s ease",
-                      textTransform:"none",
+                      textTransform: "none",
                       "&:hover": {
-                        bgcolor: "white",
-                        color: "#C86823",
+                        bgcolor: "#A0471D",
+                        color: "white",
                       },
                     }}
                   >
@@ -360,7 +375,7 @@ function Navbar() {
               </NavLink>
             </li>
 
-            <li>
+            {/* <li>
               <div>
                 <Button
                   id="demo-positioned-button"
@@ -418,7 +433,7 @@ function Navbar() {
                   </MenuItem>
                 </Menu>
               </div>
-            </li>
+            </li> */}
 
             <li>
               <Stack
@@ -455,8 +470,8 @@ function Navbar() {
                     transition: "background-color 0.3s ease, color 0.3s ease",
                     // width:"100px",
                     "&:hover": {
-                      bgcolor: "white",
-                      color: "#C86823",
+                      bgcolor: "#A0471D",
+                      color: "white",
                     },
                   }}
                 >

@@ -1,10 +1,14 @@
 .header {
-  /* position: absolute; */
+  position: relative;
   left: 0;
   top: 0;
-  z-index: 5;
+  z-index: 9999;
   width: 100%;
-  /* background-color: yellow; */
+  border-bottom: 1px solid rgb(233, 233, 233);
+
+  /* Add blur effect */
+  backdrop-filter: blur(10px); /* You can adjust the blur amount */
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .navBar {
@@ -25,7 +29,7 @@
 
 .linksWrapperContainer {
   display: flex;
-  column-gap: 15px;
+  column-gap: 60px;
   list-style: none;
   /* background-color: green; */
 }
@@ -44,6 +48,7 @@
 .linksWrapperMobile > li > a {
   text-decoration: none;
   color: black;
+  padding: 10px;
   font-size: 16px;
   transition: 0.3s opacity ease-in-out;
 }
@@ -60,8 +65,8 @@
 
 .burgerButton {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   display: none;
   cursor: pointer;
 }
@@ -103,7 +108,7 @@
   position: absolute;
   height: 0;
   left: 0;
-  top: 60px;
+  top: 72px;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -135,27 +140,45 @@
 /* for switching between navbar */
 .activeLink {
   /* background-color: red; */
-  padding: 10px;
+  /* padding: 10px; */
+  /* border-bottom: 1px solid #c86823; */
   border-bottom: 1px solid #c86823;
   transition: border-bottom 0.3 step-end;
 }
 
-@media screen and (min-width: 901px) and (max-width : 1000px) {
-  .navBar {
-    width: 95%;
+@media screen and (max-width : 1280px){
+  .linksWrapperContainer {
     display: flex;
-    justify-content: space-around;
-  }
-  .linksWrapper {
-    padding: 10px;
-    display: flex;
-    column-gap: 10px;
+    column-gap: 1px;
+    list-style: none;
+    /* background-color: green; */
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (min-width: 901px) and (max-width : 1150px) {
+  .linksWrapperContainer {
+    display: flex;
+    column-gap: 1px;
+    list-style: none;
+    /* background-color: green; */
+  }
   .navBar {
-    width: 92%;
+    width: 96%;
+    display: flex;
+    justify-content: space-between;
+    /* justify-content: space-around; */
+  }
+  
+  .linksWrapper {
+    /* padding: 10px; */
+    display: flex;
+    column-gap: 0px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .navBar {
+    width: 90%;
   }
 
   .linksWrapper {

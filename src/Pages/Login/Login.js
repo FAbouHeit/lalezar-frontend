@@ -7,17 +7,19 @@ import { NavLink } from "react-router-dom";
 function Login() {
   return (
     <>
-    <main className={Styles.pageContainer}>
-      <form className={Styles.formContainer} >
-        <div>
+    <main className={Styles.mainContainer}>
+      <section className={Styles.pageContainer}>
+      <div>
           <h1 className={Styles.title}>Login to your account</h1>
           <div className={Styles.linkPhrase}>
-          <p>Don't have one? </p> <NavLink
-              to="/AboutUs" className={Styles.linkLogin}>
+          <p className={Styles.p}>Don't have one? </p> <NavLink
+              to="/signup" className={Styles.linkLogin}>
               Sign Up
             </NavLink>
             </div>
         </div>
+        <div>
+      <form className={Styles.formContainer} >
         <div className={Styles.inputContainer}>
          <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" sx={{
               "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
@@ -78,6 +80,8 @@ function Login() {
               </Button>
         </div>
       </form>
+      </div>
+      </section>
     </main>
   </>
   )

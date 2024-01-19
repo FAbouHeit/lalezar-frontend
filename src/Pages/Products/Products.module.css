@@ -1,0 +1,44 @@
+.container{
+    width: 90%;
+    margin: 0 auto;
+    /* background-color: red; */
+    display: flex;
+}
+
+
+.sideBar{
+    min-width: 300px;
+    background-color: yellow;
+}
+
+.sideBarTitle{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    column-gap: 15px;
+}
+
+.cards{
+    background-color: purple;
+    width: calc(100% - 300px);
+}
+
+
+.searchArticle , .categoryArticle{
+    border-bottom: 1px solid rgb(224, 217, 217);
+}
+
+.checkBoxLine{
+    display: flex;
+    column-gap: 10px;
+}
+
+.checkBoxContainer{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.checkBoxLine > input:checked {
+    background-color: red;
+}
