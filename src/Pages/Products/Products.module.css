@@ -1,44 +1,144 @@
-.container{
-    width: 90%;
-    margin: 0 auto;
-    /* background-color: red; */
-    display: flex;
+/* The sidepanel menu */
+.sidepanel {
+  height: 100vh;
+  width: 400px;
+  top: 0;
+  left: 0;
+  /* overflow-x:hidden; */
+  background-color: #c86823;
+  transition: 0.5s;
+}
+
+.test {
+  display: flex;
+}
+
+/* The sidepanel links */
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+  display: block;
+  transition: 0.3s;
+  margin: 15px;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidepanel a:not(a:first-of-type):hover {
+  color: #7c0000;
+}
+
+/* Position and style the close button (top right corner) */
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style the button that is used to open the sidepanel */
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  color: black;
+  /* padding: 10px 15px; */
+  border: none;
+}
+.openbtn:hover {
+  cursor: pointer;
+}
+
+/* .closebtn{
+  font-size: 20px;
+  cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  margin: auto;
+} */
+
+.sideBarTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.searchArticle,
+.categoryArticle {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  border-bottom: 1px solid rgb(110, 110, 110);
+  padding: 25px;
+}
+
+.checkBoxContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.checkBoxLine {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.content {
+  transition: margin-left 0.5s; /* Add a transition to smoothly animate the margin change */
+}
+
+/* Adjust the margin when the sidebar is open */
+.sidepanel-open .content {
+  margin-left: 400px;
+}
+
+.content {
+  padding: 10px;
+}
+
+.customCheckbox {
+  width: 20px;
+  height: 20px;
 }
 
 
-.sideBar{
-    min-width: 300px;
-    background-color: yellow;
+
+@media screen and (min-width: 960px) {
+  .sidepanel .closebtn {
+    display: none;
+  }
+  .openbtn {
+    display: none;
+  }
+
+  
 }
 
-.sideBarTitle{
-    display: flex;
-    /* justify-content: center; */
-    align-items: center;
-    column-gap: 15px;
+@media screen and (max-width: 960px) {
+  .sidepanel {
+    background-color: #c86823;
+    overflow-x: auto;
+    width: 300px;
+  }
 }
 
-.cards{
-    background-color: purple;
-    width: calc(100% - 300px);
+@media screen and (max-width : 500px) {
+  .big{
+    flex-wrap: wrap;
+  }
+  
 }
 
-
-.searchArticle , .categoryArticle{
-    border-bottom: 1px solid rgb(224, 217, 217);
-}
-
-.checkBoxLine{
-    display: flex;
-    column-gap: 10px;
-}
-
-.checkBoxContainer{
-    display: flex;
+@media screen and (max-width: 350px) {
+  .searchArticle,
+  .categoryArticle {
+    padding: 5px;
+    margin: 5px;
+  }
+  .sideBarTitle {
     flex-direction: column;
-    row-gap: 20px;
-}
-
-.checkBoxLine > input:checked {
-    background-color: red;
+  }
 }
