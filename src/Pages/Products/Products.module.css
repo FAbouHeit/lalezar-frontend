@@ -5,7 +5,6 @@
   top: 0;
   left: 0;
   /* overflow-x:hidden; */
-  background-color: #c86823;
   transition: 0.5s;
 }
 
@@ -111,6 +110,7 @@
 
 .addToCart{
     background-color: #c86823;
+    border: 0;
     width:300px;
     border-radius: 10px;
     display: flex;

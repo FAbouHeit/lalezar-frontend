@@ -75,7 +75,6 @@ const Products = () => {
         style={{
           width: sidePanelWidth + "px",
           height: "100%",
-          borderRight: "1px solid rgb(110, 110, 110)",
         }}
       >
         <div>

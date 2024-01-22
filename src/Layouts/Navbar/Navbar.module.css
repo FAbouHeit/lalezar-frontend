@@ -45,6 +45,10 @@
   align-items: center;
 }
 
+.activeLink{
+  border-bottom: 1px solid #c86823;
+}
+
 .linksWrapper > li > a,
 .linksWrapperMobile > li > a {
   text-decoration: none;
@@ -53,6 +57,10 @@
   font-size: 16px;
   transition: 0.3s opacity ease-in-out;
 }
+
+/* .linksWrapper > li > a.active{
+  color: red;
+} */
 
 .linksWrapperMobile > li {
   padding-left: 10px;
@@ -140,13 +148,11 @@
 }
 
 /* for switching between navbar */
-.activeLink {
-  /* background-color: red; */
-  /* padding: 10px; */
-  /* border-bottom: 1px solid #c86823; */
+/* .activeLink {
+
   border-bottom: 1px solid #c86823;
   transition: border-bottom 0.3 step-end;
-}
+} */
 
 @media screen and (max-width : 1280px){
   .linksWrapperContainer {
