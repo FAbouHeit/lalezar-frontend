@@ -5,7 +5,6 @@
   top: 0;
   left: 0;
   /* overflow-x:hidden; */
-  background-color: #c86823;
   transition: 0.5s;
 }
 
@@ -111,6 +110,7 @@
 
 .addToCart{
     background-color: #c86823;
+    border: 0;
     width:300px;
     border-radius: 10px;
     display: flex;
@@ -142,12 +142,13 @@
   align-items: center;
 
   /* Optional: Add a transition for smoother effects */
-  transition: background-color 0.3s, transform 0.3s;
+  transition: background-color 0.3s, opacity 0.3s;
 }
 
 .oneCart:hover {
   background-color: #f8f8f8;
-  transform: scale(1.02);
+  /* transform: scale(1.02); */
+  opacity: 0.8;
 }
 
 .imgCart{
@@ -199,7 +200,7 @@
 
 @media screen and (max-width: 960px) {
   .sidepanel {
-    background-color: #c86823;
+    /* background-color: #c86823; */
     overflow-x: auto;
     width: 300px;
   }
