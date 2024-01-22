@@ -55,7 +55,7 @@ function Navbar() {
     const activeIndex = [
       "/home",
       "/ProductsPage",
-      "/BlogsPage",
+      "/Blogs",
       "/ContactUs",
       "/AboutUs",
     ].indexOf(activeLink);
@@ -142,8 +142,8 @@ function Navbar() {
               </li>
               <li>
                 <NavLink
-                  to="/BlogsPage"
-                  onClick={() => handleLinkClick(2, "/BlogsPage")}
+                  to="/Blogs"
+                  onClick={() => handleLinkClick(2, "/Blogs")}
                   className={isActive[2] ? Styles.activeLink : ""}
                 >
                   Blogs
@@ -349,8 +349,8 @@ function Navbar() {
             </li>
             <li>
               <NavLink
-                to="/BlogsPage"
-                onClick={() => handleLinkClick(2, "/BlogsPage")}
+                to="/Blogs"
+                onClick={() => handleLinkClick(2, "/Blogs")}
                 className={isActive[2] ? Styles.activeLink : ""}
               >
                 Blogs
