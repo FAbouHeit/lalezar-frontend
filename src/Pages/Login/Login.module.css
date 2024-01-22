@@ -1,12 +1,12 @@
 .mainContainer {
-    height: 100vh;
-    width: 100vw;
+    height: 91vh;
     background-image: url('../../Assets/login1.png');
     background-size:cover;
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
     justify-content: flex-start;
+    margin-top: 5.5rem;
     /* position: relative; */
 }
 .pageContainer{
@@ -18,6 +18,12 @@
   justify-content:center;
   margin-left: 10rem;
 
+}
+
+.div , .inputContainer , .p , .pageContainer{
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
 }
 
 .title {
@@ -56,7 +62,6 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    gap: 1rem;
 }
 
 .buttonContainer {

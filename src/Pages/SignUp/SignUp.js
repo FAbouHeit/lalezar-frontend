@@ -17,7 +17,7 @@ function SignUp() {
     <>
       <main className={Styles.mainContainer}>
         <section className={Styles.pageContainer}>
-          <div>
+          <div className={Styles.div}>
             <h1 className={Styles.title}>Register your account</h1>
             <div className={Styles.linkPhrase}>
               <p className={Styles.p}>Already have one?</p> 
