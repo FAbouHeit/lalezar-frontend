@@ -2,6 +2,7 @@ import React from 'react'
 import Styles from './Login.module.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import OAuth from "../../Components/OAuth/OAuth.js"
 import { NavLink } from "react-router-dom";
 
 function Login() {
@@ -63,21 +64,7 @@ function Login() {
               Login
             </Button>
             <p className={Styles.orPhrase}>Or</p>
-            <Button
-                variant="outlined"
-                sx={{
-                  color: "#C86823",
-                  borderColor: "#C86823",
-                  transition: "background-color 0.3s ease, color 0.3s ease",
-                  // width:"100px",
-                  "&:hover": {
-                    bgcolor: "#A471D",
-                    color: "white",
-                  },
-                }}
-              >
-                SignUp with Google
-              </Button>
+            <OAuth/>
         </div>
       </form>
       </div>

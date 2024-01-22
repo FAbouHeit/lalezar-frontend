@@ -99,6 +99,11 @@ function Navbar() {
     navigate("/SignUp");
   };
 
+  // Go to cart page 
+  const goToCardPage = () => {
+    navigate("/cart");
+  };
+
   return (
     <section className={Styles.heroSection}>
       <header className={Styles.header}>
@@ -241,6 +246,7 @@ function Navbar() {
             {/* Badge beginning */}
 
             <IconButton
+             onClick={goToCardPage}
               aria-label="cart"
               sx={{
                 "&:hover": {
@@ -259,7 +265,7 @@ function Navbar() {
                   },
                 }}
               >
-                <ShoppingCartIcon />
+               <ShoppingCartIcon />
               </Badge>
             </IconButton>
 

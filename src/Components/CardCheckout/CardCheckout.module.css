@@ -1,0 +1,42 @@
+.cardPage{
+    border: 1px solid #C86823 ;
+    width: 100%;
+    align-items: center;
+    padding: 20px;
+    gap: 5rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 3%;
+}
+
+.price{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8rem;
+}
+.delevryPart{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5rem;
+}
+.totalPrice{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5rem;
+    border-top: 1px solid #555555;
+}
+p{
+    color: #555555;
+}
+.titleCard{
+    font-weight: bold;
+    font-size: larger;
+}
+.buttonConainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
