@@ -1,12 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Footer.module.css";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../Assets/logo.svg";
 
 function Footer() {
+  const [isActive, setActive] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const defaultActiveLink = "/";
+    const activeLink = window.location.pathname || defaultActiveLink;
+
+    const activeIndex = [
+      "/",
+      "/ProductsPage",
+      "/BlogsPage",
+      "/AboutUs",
+      "/Profile",
+      "/Cart",
+      "/ContactUs",
+      "/PrivacyPolicy",
+    ].indexOf(activeLink);
+
+    setActive((prev) => {
+      const newActive = Array(7).fill(false);
+      newActive[activeIndex] = true;
+      return newActive;
+    });
+
+    navigate(activeLink);
+  }, [navigate]);
+
+  const handleLinkClick = (index, path) => {
+    setActive((prev) => {
+      const newActive = Array(7).fill(false);
+      newActive[index] = true;
+      return newActive;
+    });
+
+    navigate(path);
+  };
   return (
     <>
       <footer className={styles.footer}>
@@ -31,34 +75,66 @@ function Footer() {
               </div>
             </div>
             <div className={`${styles.linksColumn} ${styles.middle}`}>
-              <h2 className={styles.h2}>Pages</h2>
-              <Link className={styles.link} to={"/"}>
+              <p className={styles.h2}>Pages</p>
+              <NavLink
+                to={"/"}
+                onClick={() => handleLinkClick(0, "/home")}
+                className={isActive[0] ? styles.activeLink : styles.link}
+              >
                 Home
-              </Link>
-              <Link className={styles.link} to={"/ProductsPage"}>
+              </NavLink>
+              <NavLink
+                className={isActive[1] ? styles.activeLink : styles.link}
+                to={"/ProductsPage"}
+                onClick={() => handleLinkClick(1, "/ProductsPage")}
+              >
                 Products
-              </Link>
-              <Link className={styles.link} to={"/BlogsPage"}>
+              </NavLink>
+              <NavLink
+                className={isActive[2] ? styles.activeLink : styles.link}
+                to={"/BlogsPage"}
+                onClick={() => handleLinkClick(2, "/BlogsPage")}
+              >
                 Blogs
-              </Link>
-              <Link className={styles.link} to={"/AboutUs"}>
+              </NavLink>
+              <NavLink
+                className={isActive[3] ? styles.activeLink : styles.link}
+                to={"/AboutUs"}
+                onClick={() => handleLinkClick(3, "/AboutUs")}
+              >
                 About Us
-              </Link>
+              </NavLink>
             </div>
             <div className={`${styles.linksColumn} ${styles.right}`}>
-              <h2 className={styles.h2}>Help</h2>
-              <Link className={styles.link} to={"/Profile"}>
+              <p className={styles.h2}>Help</p>
+              <NavLink
+                className={isActive[4] ? styles.activeLink : styles.link}
+                to={"/Profile"}
+                onClick={() => handleLinkClick(4, "/Profile")}
+              >
                 My Account
-              </Link>
-              <Link className={styles.link} to={"/Cart"}>
+              </NavLink>
+              <NavLink
+                className={isActive[5] ? styles.activeLink : styles.link}
+                to={"/Cart"}
+                onClick={() => handleLinkClick(5, "/Cart")}
+              >
                 My Cart
-              </Link>
-              <Link className={styles.link} to={"/BlogsPage"}>
+              </NavLink>
+              <NavLink
+                className={isActive[6] ? styles.activeLink : styles.link}
+                to={"/ContactUs"}
+                onClick={() => handleLinkClick(6, "/ContactUs")}
+              >
                 Contact Us
-              </Link>
-              <Link className={styles.link} to={"/PrivacyPolicy"}>
+              </NavLink>
+              <NavLink
+                className={isActive[7] ? styles.activeLink : styles.link}
+                to={"/PrivacyPolicy"}
+                onClick={() => handleLinkClick(7, "/PrivacyPolicy")}
+              >
                 Privacy Policy
-              </Link>
+              </NavLink>
             </div>
           </div>
         </div>
