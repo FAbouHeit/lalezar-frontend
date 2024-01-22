@@ -1,0 +1,17 @@
+.textContainer{
+
+}
+
+.textContainer > h1{
+color: rebeccapurple;
+}
+
+.textContainer > h2{
+    color: blue;
+
+}
+
+.textContainer > p{
+    color: red;
+
+}
