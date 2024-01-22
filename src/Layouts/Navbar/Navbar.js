@@ -22,9 +22,8 @@ function Navbar() {
 
   // MUI
   const [anchorEl1, setAnchorEl1] = React.useState(null);
-  // const [anchorEl2, setAnchorEl2] = React.useState(null);
   const open = Boolean(anchorEl1);
-  // const open2 = Boolean(anchorEl2);
+
   const handleClick = (event) => {
     setAnchorEl1(event.currentTarget);
   };
@@ -113,7 +112,6 @@ function Navbar() {
           </NavLink>
 
           <ul className={Styles.linksWrapperContainer}>
-            {/* Categoriy Drop Down beginning */}
 
             {/* Navbar beginning */}
             <ul className={Styles.linksWrapper}>
@@ -217,8 +215,6 @@ function Navbar() {
               </li>
             </ul>
             {/* Navbar Ending */}
-
-            {/* Categoriy Drop Down ending */}
 
             {/* SignUp LogIn beginning */}
             <ul className={Styles.linksWrapper}>

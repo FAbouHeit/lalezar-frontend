@@ -1,11 +1,15 @@
 /* The sidepanel menu */
 .sidepanel {
-  height: 100vh;
-  width: 400px;
   top: 0;
   left: 0;
-  /* overflow-x:hidden; */
+  padding: 10px 0px;
   transition: 0.5s;
+}
+
+.big{
+  display: flex;
+  width: 95%;
+  margin: 0 auto;
 }
 
 .test {
@@ -23,11 +27,6 @@
   margin: 15px;
 }
 
-/* When you mouse over the navigation links, change their color */
-.sidepanel a:not(a:first-of-type):hover {
-  color: #7c0000;
-}
-
 /* Position and style the close button (top right corner) */
 .sidepanel .closebtn {
   position: absolute;
@@ -42,33 +41,25 @@
   font-size: 20px;
   cursor: pointer;
   color: black;
-  /* padding: 10px 15px; */
+  margin: auto 0;
   border: none;
 }
 .openbtn:hover {
   cursor: pointer;
 }
 
-/* .closebtn{
-  font-size: 20px;
-  cursor: pointer;
-  padding: 10px 15px;
-  border: none;
-  margin: auto;
-} */
-
 .sideBarTitle {
   display: flex;
-  justify-content: center;
   align-items: center;
   column-gap: 20px;
+  padding: 0px 25px;
 }
 
 .searchArticle,
 .categoryArticle {
   display: flex;
   flex-direction: column;
-  margin-left: 15px;
+  margin-left: 10px;
   border-bottom: 1px solid rgb(110, 110, 110);
   padding: 25px;
 }
@@ -77,6 +68,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+  padding: 10px 0px;
 }
 
 .checkBoxLine {
@@ -86,7 +78,7 @@
 }
 
 .content {
-  transition: margin-left 0.5s; /* Add a transition to smoothly animate the margin change */
+  transition: margin-left 0.5s; 
 }
 
 /* Adjust the margin when the sidebar is open */
@@ -95,6 +87,10 @@
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  row-gap: 30px;
   padding: 10px;
 }
 
@@ -104,7 +100,10 @@
 }
 
 .infoCart{
-  width: 90%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  width: 100%;
   margin: 20px auto;
 }
 
@@ -129,14 +128,11 @@
 }
 
 .oneCart{
-  /* background-color: yellow; */
   border: 1px solid #ddd;
   border-radius: 8px;
-  width: 95%;
+  width: fit-content;
   padding: 10px;
-  margin: 10px 0;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -147,12 +143,25 @@
 
 .oneCart:hover {
   background-color: #f8f8f8;
-  /* transform: scale(1.02); */
   opacity: 0.8;
 }
 
 .imgCart{
-  width: 350px;
+  width: 300px;
+}
+
+.cartContainer{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+@media screen and (max-width : 1140px) {
+  .oneCart{
+    width: 320px;
+  }
 }
 
 @media screen and (max-width : 650px) {
@@ -170,9 +179,6 @@
 }
 
 @media screen and (max-width : 430px) {
-  /* .oneCart{
-    width: 80%;
-  } */
   .imgCart{
     width:100%;
   }
@@ -194,8 +200,12 @@
   .openbtn {
     display: none;
   }
+}
 
-  
+@media screen and (max-width : 750px) {
+  .openbtn{
+    display: none;
+  }
 }
 
 @media screen and (max-width: 960px) {
@@ -206,7 +216,14 @@
   }
 }
 
-@media screen and (max-width : 500px) {
+@media screen and (max-width : 750px) {
+  .big{
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width : 430px) {
   .big{
     flex-wrap: wrap;
   }
@@ -226,6 +243,7 @@
     margin: 5px;
   }
   .sideBarTitle {
-    flex-direction: column;
+    
+    padding: 10px;
   }
 }
