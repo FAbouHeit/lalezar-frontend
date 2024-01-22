@@ -1,0 +1,76 @@
+.commentsMainContainer{
+    width: 100%;
+    height: 200px;
+    /* background-color: red; */
+    border: 2px solid black;
+    border-radius: 15px;
+}
+
+.addComment{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.commentInput{
+    width: 100%;
+    min-height: 50px;
+    height: auto;
+    font-size: 1.5em;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    border: none;
+    outline: none;
+    padding: 10px;
+}
+
+
+.addComment > button{
+    width: 100px;
+    height: 40px;
+    margin-right: 2vw;
+    float: right;
+}
+
+.commentButtonContainer{
+    margin: 10px;
+    align-self: flex-end;
+}
+
+.commentButtonContainer > button{
+    width: 100px;
+    height: 40px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: none;
+    border: none;
+    font-size: 1em;
+}
+
+.buttonReset{
+    background-color: white;
+    color: var(--color1);
+}
+.buttonSubmit{
+    background-color: var(--color1);
+    color: white;
+}
+
+.allComments{
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+@media screen and (max-width: 600px) {
+    .commentButtonContainer{
+        align-self: center;
+    }
+    .commentButtonContainer > button{
+        margin: 5px;
+    }
+}

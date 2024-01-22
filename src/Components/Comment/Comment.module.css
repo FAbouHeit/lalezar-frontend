@@ -1,0 +1,55 @@
+.commentComponentContainer{
+    display: flex;
+    margin: 10px 0;
+}
+
+.typeComment{
+    width: 100%;
+}
+
+.typeReply{
+    width: 95%;
+    float: right;
+}
+
+
+.commentComponentContainer > img {
+    margin: 0 15px 0 0
+}
+
+.commentComponentInfo{
+    border: 1px solid black;
+    width: 100%;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.commentUser{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.commentDate{
+    font-size: 0.9em;
+}
+
+.commentDescription{
+    font-size: 1.3em;
+    margin: 10px 0;
+}
+
+.commentBottomPart{
+    color: var(--color1);
+}
+
+.commentBottomPart .yesReplies{
+}
+
+.commentBottomPart.yesReplies > *{
+    margin-right: 10px;
+}
+
+.commentBottomPart > *:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}

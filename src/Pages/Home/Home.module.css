@@ -6,3 +6,15 @@
 .Category{
     margin-top: 4rem;
 }
+
+.Blogs{
+    display: flex;
+    justify-content: space-between;
+    column-gap: 5%;
+}
+
+@media screen and (max-width: 800px) {
+    .Blogs{
+        flex-direction: column;
+    }   
+}
