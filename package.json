@@ -24,8 +24,6 @@
     "typed-js": "^0.2.3",
     "typed.js": "^2.1.0",
     "react-markdown": "^9.0.1",
-    "react-router-dom": "^6.21.1",
-    "react-scripts": "5.0.1",
     "react-youtube": "^10.1.0",
     "web-vitals": "^2.1.4"
   },
