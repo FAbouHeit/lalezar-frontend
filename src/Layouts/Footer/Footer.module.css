@@ -53,8 +53,8 @@
 }
 
 .linksColumn.right {
-    text-align: center;
-  }
+  text-align: center;
+}
 
 .footer .h2 {
   width: 100%;
@@ -90,8 +90,8 @@
   font-size: 24px;
 }
 
-.socialIcon{
-    color: black;
+.socialIcon {
+  color: black;
 }
 
 .socialIcon:hover {
@@ -112,11 +112,18 @@
   color: var(--color-orange);
 }
 
+.activeLink {
+  color: var(--color-orange);
+  list-style: none;
+  width: 100%;
+}
+
 /* Media queries */
 @media screen and (400px < width < 640px) {
-  .linksColumn.middle , .linksColumn.right{
+  .linksColumn.middle,
+  .linksColumn.right {
     text-align: left;
-  }  
+  }
 }
 
 @media (min-width: 400px) {
@@ -152,7 +159,6 @@
   }
 }
 
-
 @media (min-width: 640px) {
   .links {
     margin-bottom: 0;
@@ -167,7 +173,7 @@
   }
 
   .top .links {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 45%);
   }
 
   .top .socials {

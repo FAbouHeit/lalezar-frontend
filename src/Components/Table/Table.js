@@ -48,6 +48,7 @@ const Table = ({
         visibleFields = [
           "firstName",
           'lastName' ,
+          'role',
           "email",
           "phoneNumber",
           "image"
