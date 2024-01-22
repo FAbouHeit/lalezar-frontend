@@ -25,7 +25,7 @@ const Home = () => {
     <div
       style={{
         width: "90%",
-        margin: "auto",
+        margin: "5rem auto",
       }}
     >
       <HeroSection />

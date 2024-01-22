@@ -66,10 +66,10 @@ const AppRouter = () => {
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/AboutUs" element={<AboutUs />} />
+        <Route path="/Login" exact element={<Login />} />
+        <Route path="/SignUp" exact element={<SignUp />} />
       </Route>
 
-      <Route path="/Login" exact element={<Login />} />
-      <Route path="/SignUp" exact element={<SignUp />} />
       <Route path="/Unauthorized" exact element={<Unauthorized />} />
       <Route path="/" element={<DashOutlet />}>
         <Route

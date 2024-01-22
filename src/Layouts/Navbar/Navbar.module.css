@@ -13,7 +13,6 @@
 
 .navBar {
   width: 90%;
-  padding: 0px 15px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -22,6 +21,7 @@
   height: 90px;
 }
 .logoContainer {
+  margin-left: -6px;
   transition: 0.3s opacity ease-in-out;
 }
 .logoContainer:hover {
@@ -109,7 +109,7 @@
   position: absolute;
   height: 0;
   left: 0;
-  top: 72px;
+  top: 90px;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -124,7 +124,7 @@
 }
 
 .linksWrapperMobile.activeNav {
-  height: 500px;
+  height: 530px;
   width: 100%;
 }
 

@@ -1,6 +1,6 @@
 .mainContainer {
-    height: 100vh;
-    width: 100vw;
+    margin-top: 5.5rem;
+    height: 91vh;
     background-image: url('../../Assets/login1.png');
     background-size:cover;
     background-repeat: no-repeat;
@@ -18,6 +18,12 @@
   justify-content:center;
   margin-left: 10rem;
 
+}
+
+.div , .p , .pageContainer , .inputContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
 }
 
 .title {
