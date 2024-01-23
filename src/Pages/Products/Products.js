@@ -43,7 +43,7 @@ const Products = () => {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_ENDPOINT}products?pageNumber=${currentPage}&pageSize=${10}`
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}products?pageNumber=${currentPage}&pageSize=${12}`
         );
         return response.data;
       } catch (error) {
