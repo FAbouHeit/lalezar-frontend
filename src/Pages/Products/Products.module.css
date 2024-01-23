@@ -202,6 +202,9 @@
 }
 
 @media screen and (max-width:650px) {
+  .sidepanel{
+    margin: 0 auto;
+  }
   .openbtn{
     display: none;
   }

@@ -17,7 +17,7 @@ function Navbar() {
   const [collapesed, setCollapsed] = useState(false);
 
   // nav with active
-  const [isActive, setActive] = useState([true, false, false, false, false]);
+  // const [isActive, setActive] = useState([true, false, false, false, false]);
   const navigate = useNavigate();
 
   // MUI
@@ -31,35 +31,35 @@ function Navbar() {
     setAnchorEl1(null);
   };
 
-  const handleLinkClick = (index, path) => {
-    setActive([false, false, false, false, false]);
-    setActive((prev) => {
-      const newActive = [...prev];
-      newActive[index] = true;
-      return newActive;
-    });
-    navigate(path);
-    setCollapsed(false);
-  };
+  // const handleLinkClick = (index, path) => {
+  //   setActive([false, false, false, false, false]);
+  //   setActive((prev) => {
+  //     const newActive = [...prev];
+  //     newActive[index] = true;
+  //     return newActive;
+  //   });
+  //   navigate(path);
+  //   setCollapsed(false);
+  // };
 
   // Navbar
   useEffect(() => {
-    const defaultActiveLink = "/home";
-    const activeLink = window.location.pathname || defaultActiveLink;
+    // const defaultActiveLink = "/home";
+    // const activeLink = window.location.pathname || defaultActiveLink;
 
-    const activeIndex = [
-      "/home",
-      "/ProductsPage",
-      "/Blogs",
-      "/ContactUs",
-      "/AboutUs",
-    ].indexOf(activeLink);
+    // const activeIndex = [
+    //   "/home",
+    //   "/ProductsPage",
+    //   "/Blogs",
+    //   "/ContactUs",
+    //   "/AboutUs",
+    // ].indexOf(activeLink);
 
-    setActive((prev) => {
-      const newActive = Array(5).fill(false);
-      newActive[activeIndex] = true;
-      return newActive;
-    });
+    // setActive((prev) => {
+    //   const newActive = Array(5).fill(false);
+    //   newActive[activeIndex] = true;
+    //   return newActive;
+    // });
 
     function updateSize() {
       if (window.innerWidth > 960) {
@@ -93,7 +93,7 @@ function Navbar() {
     navigate("/SignUp");
   };
 
-  // Go to cart page 
+  // Go to cart page
   const goToCardPage = () => {
     navigate("/cart");
   };
@@ -104,7 +104,7 @@ function Navbar() {
         <nav className={Styles.navBar}>
           <NavLink
             to="/home"
-            onClick={() => handleLinkClick(0, "/home")}
+            // onClick={() => handleLinkClick(0, "/home")}
             className={Styles.logoContainer}
             aria-label="Go to homepage"
           >
@@ -112,14 +112,14 @@ function Navbar() {
           </NavLink>
 
           <ul className={Styles.linksWrapperContainer}>
-
             {/* Navbar beginning */}
             <ul className={Styles.linksWrapper}>
               <li>
                 <NavLink
-                  to="/home"
-                  onClick={() => handleLinkClick(0, "/home")}
-                  className={isActive[0] ? Styles.activeLink : ""}
+                  to="/"
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? Styles.active : ""
+                  }
                 >
                   Home
                 </NavLink>
@@ -127,8 +127,9 @@ function Navbar() {
               <li>
                 <NavLink
                   to="/ProductsPage"
-                  onClick={() => handleLinkClick(1, "/ProductsPage")}
-                  className={isActive[1] ? Styles.activeLink : ""}
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? Styles.active : ""
+                  }
                 >
                   Products
                 </NavLink>
@@ -136,8 +137,9 @@ function Navbar() {
               <li>
                 <NavLink
                   to="/Blogs"
-                  onClick={() => handleLinkClick(2, "/Blogs")}
-                  className={isActive[2] ? Styles.activeLink : ""}
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? Styles.active : ""
+                  }
                 >
                   Blogs
                 </NavLink>
@@ -145,8 +147,9 @@ function Navbar() {
               <li>
                 <NavLink
                   to="/ContactUs"
-                  onClick={() => handleLinkClick(3, "/ContactUs")}
-                  className={isActive[3] ? Styles.activeLink : ""}
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? Styles.active : ""
+                  }
                 >
                   ContactUs
                 </NavLink>
@@ -154,8 +157,9 @@ function Navbar() {
               <li>
                 <NavLink
                   to="/AboutUs"
-                  onClick={() => handleLinkClick(4, "/AboutUs")}
-                  className={isActive[4] ? Styles.activeLink : ""}
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? Styles.active : ""
+                  }
                 >
                   AboutUs
                 </NavLink>
@@ -257,7 +261,7 @@ function Navbar() {
               </li>
             </ul>
             {/* SignUp LogIn ending */}
-            <ul style={{margin:"auto"}}>
+            <ul style={{ margin: "auto" }}>
               <li style={{ listStyle: "none" }}>
                 {/* Badge beginning */}
 
@@ -306,9 +310,11 @@ function Navbar() {
           <ul className={toggleClasses}>
             <li>
               <NavLink
-                to="/home"
-                onClick={() => handleLinkClick(0, "/home")}
-                className={isActive[0] ? Styles.activeLink : ""}
+                to="/"
+                onClick={()=> setCollapsed(false)}
+                className={({ isActive, isPending }) =>
+                  isPending ? "pending" : isActive ? Styles.active : ""
+                }
               >
                 Home
               </NavLink>
@@ -316,8 +322,10 @@ function Navbar() {
             <li>
               <NavLink
                 to="/ProductsPage"
-                onClick={() => handleLinkClick(1, "/ProductsPage")}
-                className={isActive[1] ? Styles.activeLink : ""}
+                onClick={()=> setCollapsed(false)}
+                className={({ isActive, isPending }) =>
+                  isPending ? "pending" : isActive ? Styles.active : ""
+                }
               >
                 Products
               </NavLink>
@@ -325,8 +333,10 @@ function Navbar() {
             <li>
               <NavLink
                 to="/Blogs"
-                onClick={() => handleLinkClick(2, "/Blogs")}
-                className={isActive[2] ? Styles.activeLink : ""}
+                onClick={()=> setCollapsed(false)}
+                className={({ isActive, isPending }) =>
+                  isPending ? "pending" : isActive ? Styles.active : ""
+                }
               >
                 Blogs
               </NavLink>
@@ -335,8 +345,10 @@ function Navbar() {
             <li>
               <NavLink
                 to="/ContactUs"
-                onClick={() => handleLinkClick(3, "/ContactUs")}
-                className={isActive[3] ? Styles.activeLink : ""}
+                onClick={()=> setCollapsed(false)}
+                className={({ isActive, isPending }) =>
+                  isPending ? "pending" : isActive ? Styles.active : ""
+                }
               >
                 Contact Us
               </NavLink>
@@ -345,8 +357,10 @@ function Navbar() {
             <li>
               <NavLink
                 to="/AboutUs"
-                onClick={() => handleLinkClick(4, "/AboutUs")}
-                className={isActive[4] ? Styles.activeLink : ""}
+                onClick={()=> setCollapsed(false)}
+                className={({ isActive, isPending }) =>
+                  isPending ? "pending" : isActive ? Styles.active : ""
+                }
               >
                 About Us
               </NavLink>
