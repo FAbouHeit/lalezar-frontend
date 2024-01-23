@@ -9,7 +9,8 @@
 .big{
   display: flex;
   width: 95%;
-  margin: 0 auto;
+  margin: 6rem auto;
+
 }
 
 .test {
@@ -41,7 +42,7 @@
   font-size: 20px;
   cursor: pointer;
   color: black;
-  margin: auto 0;
+  /* margin: auto 0; */
   border: none;
 }
 .openbtn:hover {
@@ -170,6 +171,9 @@
     font-size: 15px;
     padding: 10px;
   }
+  .big{
+    flex-wrap: wrap;
+  }
 }
 
 @media screen and (max-width : 500px) {
@@ -191,6 +195,18 @@
   }
 }
 
+@media screen and (max-width:639px) {
+  .openbtn{
+    display: none;
+  }
+}
+
+@media screen and (max-width:650px) {
+  .openbtn{
+    display: none;
+  }
+}
+
 
 
 @media screen and (min-width: 960px) {
@@ -203,9 +219,9 @@
 }
 
 @media screen and (max-width : 750px) {
-  .openbtn{
+  /* .openbtn{
     display: none;
-  }
+  } */
 }
 
 @media screen and (max-width: 960px) {
@@ -219,7 +235,7 @@
 @media screen and (max-width : 750px) {
   .big{
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
   }
 }
 

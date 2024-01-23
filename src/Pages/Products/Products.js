@@ -7,12 +7,14 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import productImage from "../../Assets/category1.jpg";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 const Products = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [sidePanelWidth, setSidePanelWidth] = useState(400);
   const {
@@ -43,7 +45,9 @@ const Products = () => {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_ENDPOINT}products?pageNumber=${currentPage}&pageSize=${10}`
+          `${
+            process.env.REACT_APP_BACKEND_ENDPOINT
+          }products?pageNumber=${currentPage}&pageSize=${10}`
         );
         return response.data;
       } catch (error) {
@@ -52,6 +56,29 @@ const Products = () => {
       }
     },
   });
+
+  const handleSearchInputChange = (event, newValue) => {
+    if (typeof newValue === "object" && newValue !== null) {
+      setSearchInput(newValue.name || "");
+    } else {
+      setSearchInput(newValue || "");
+    }
+  };
+
+  const handleCheckboxChange = (event) => {
+    const categoryId = event.target.getAttribute("data-id");
+    const categoryName = event.target.value;
+  
+    setSelectedCategories((prevSelected) =>
+      event.target.checked
+        ? [...prevSelected, { id: categoryId, name: categoryName }]
+        : prevSelected.filter((category) => category.id !== categoryId)
+    );
+  };
+  
+
+  console.log("Selected Categories:", selectedCategories);
+  
 
   const updateSideBar = () => {
     if (window.innerWidth > 960) {
@@ -79,9 +106,6 @@ const Products = () => {
     return "An error occured while fetching Data";
   }
 
-  // console.log("Categories data:", categoriesData);
-  // console.log("Products data:", productsData);
-
   const openNav = () => {
     setSidePanelWidth(400);
   };
@@ -89,16 +113,6 @@ const Products = () => {
   const closeNav = () => {
     setSidePanelWidth(0);
   };
-
-  const top100Films = [
-    { title: "The Shawshank Redemption", year: 1994 },
-    { title: "The Godfather", year: 1972 },
-    { title: "The Godfather: Part II", year: 1974 },
-    { title: "The Dark Knight", year: 2008 },
-    { title: "12 Angry Men", year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: "Pulp Fiction", year: 1994 },
-  ];
 
   return (
     <div className={StyleProducts.big}>
@@ -118,6 +132,7 @@ const Products = () => {
           <section className={StyleProducts.searchArticle}>
             <article>
               <h3>Brand</h3>
+
               <Stack
                 className={StyleProducts.stack}
                 sx={{ padding: "10px 0px" }}
@@ -126,7 +141,8 @@ const Products = () => {
                   freeSolo
                   id="free-solo-2-demo"
                   disableClearable
-                  options={top100Films.map((option) => option.title)}
+                  options={productsData}
+                  getOptionLabel={(option) => option.name}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -137,6 +153,7 @@ const Products = () => {
                       }}
                     />
                   )}
+                  onChange={handleSearchInputChange}
                 />
               </Stack>
             </article>
@@ -153,7 +170,9 @@ const Products = () => {
                       id={category.name}
                       name={category.name}
                       value={category.name}
+                      data-id={category.id}
                       className={StyleProducts.customCheckbox}
+                      onChange={handleCheckboxChange}
                     />
                     <label htmlFor={category.name}>{category.name}</label>
                   </div>
@@ -183,26 +202,33 @@ const Products = () => {
 
       <div className={StyleProducts.content}>
         <div className={StyleProducts.cartContainer}>
-          {productsData.map((product) => (
-            <div key={product.id} className={StyleProducts.oneCart}>
-              <img src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`} className={StyleProducts.imgCart} />
-              <div>
-                <section className={StyleProducts.infoCart}>
-                  <strong style={{ fontSize: "25px" }}>{product.name}</strong>
-                  {/* <p style={{ fontSize: "20px" }}>{product.category}</p> */}
-                  {
-                        categoriesData.find(
-                          (category) => category._id === product.category
-                        )?.name
-                      }
-                  <p style={{ fontSize: "20px" }}>${product.price}</p>
-                </section>
-                <button className={StyleProducts.addToCart}>
-                  {<AddShoppingCartIcon />}Add to Cart
-                </button>
+          {productsData
+            .filter((product) =>
+              product.name.toLowerCase().includes(searchInput.toLowerCase())
+            )
+            .map((product) => (
+              <div key={product.id} className={StyleProducts.oneCart}>
+                <img
+                  src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
+                  className={StyleProducts.imgCart}
+                />
+                <div>
+                  <section className={StyleProducts.infoCart}>
+                    <strong style={{ fontSize: "25px" }}>{product.name}</strong>
+                    {/* <p style={{ fontSize: "20px" }}>{product.category}</p> */}
+                    {
+                      categoriesData.find(
+                        (category) => category._id === product.category
+                      )?.name
+                    }
+                    <p style={{ fontSize: "20px" }}>${product.price}</p>
+                  </section>
+                  <button className={StyleProducts.addToCart}>
+                    {<AddShoppingCartIcon />}Add to Cart
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Stack spacing={2}>
@@ -211,7 +237,14 @@ const Products = () => {
               page={currentPage}
               onChange={(event, page) => setCurrentPage(page)}
               variant="outlined"
-              shape="rounded"
+              sx={{
+                "& .MuiPaginationItem-root:hover": {
+                  bgcolor: "#c86823",
+                },
+                "& .MuiPaginationItem-root.Mui-selected": {
+                  bgcolor: "#c86823",
+                },
+              }}
             />
           </Stack>
         </div>
