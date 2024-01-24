@@ -8,6 +8,8 @@
   color: white;
   margin-top: 3rem;
   margin-bottom: 3rem;
+  position: relative;
+  overflow: hidden;
 }
 
 .img {
@@ -22,11 +24,16 @@
   flex-direction: column;
   width: 100%;
   position: absolute;
-  bottom: 0;
+  bottom: -10rem;
   padding: 1rem 0;
   background-color: #454545;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.container:hover .bottom {
+  bottom: 0;
 }
 
 .bottomFirst {
@@ -101,6 +108,7 @@
   }
 
   .bottom {
+    bottom: 0rem;
     background-color: transparent;
     height: 100%;
     transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);

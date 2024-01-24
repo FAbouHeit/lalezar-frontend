@@ -1,0 +1,242 @@
+.container {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 3rem;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.topLeft {
+  width: 60%;
+}
+
+.topRight {
+  width: auto;
+  position: relative;
+}
+
+.title {
+  width: 100%;
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.aboveTitle {
+  color: #555555;
+  margin-bottom: 0.5rem;
+  padding-left: 2px;
+}
+
+.titleSpan {
+  color: var(--color1);
+}
+
+.section {
+  width: 100%;
+}
+
+.section.description {
+  color: #555555;
+  line-height: 1.7rem;
+  margin-bottom: 3rem;
+}
+
+.section.services {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  row-gap: 2rem;
+}
+
+.serviceDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 0.5rem;
+  box-shadow: 0 0 5px gray;
+  border-radius: 50%;
+  width: 12rem;
+  height: 12rem;
+  padding: 10px;
+  position: relative;
+  vertical-align: middle;
+  background: none;
+  border: 0;
+  box-sizing: border-box;
+  margin: 1em;
+}
+
+.serviceDiv::before,
+.serviceDiv::after {
+  box-sizing: inherit;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.spin::before,
+.spin::after {
+  top: 0;
+  left: 0;
+}
+
+.spin::before {
+  border: 4px solid transparent;
+}
+
+.spin:hover::before {
+  border-top-color: var(--color1);
+  border-right-color: var(--color1);
+  border-bottom-color: var(--color1);
+  transition: border-top-color 0.15s linear,
+    border-right-color 0.15s linear 0.1s, border-bottom-color 0.15s linear 0.2s;
+}
+
+.spin::after {
+  border: 0 solid transparent;
+}
+
+.spin:hover::after {
+  border-top: 4px solid var(--color1);
+  border-left-width: 4px;
+  border-right-width: 4px;
+  transform: rotate(270deg);
+  transition: transform 0.4s linear 0s, border-left-width 0s linear 0.35s;
+}
+
+/* .circle styles */
+.circle {
+  border-radius: 100%;
+}
+
+.circle::before,
+.circle::after {
+  border-radius: 100%;
+}
+
+.serviceNumber {
+  color: var(--color1);
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-top: -15px;
+}
+
+.serviceText {
+  font-weight: 500;
+}
+
+.quoteSvg,
+.quoteSvg2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.quoteSvg {
+  top: -2.5rem;
+  left: 0rem;
+}
+
+.quoteSvg2 {
+  bottom: -2.5rem;
+  right: 0rem;
+  transform: rotateY(180deg);
+}
+
+.topRight {
+  background-color: #c5bebe61;
+  display: flex;
+  min-height: 12rem;
+  width: 25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.quoteText {
+  width: 70%;
+  font-size: 1.3rem;
+}
+
+.quote {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .top{
+    margin-bottom: 0;
+  }
+  .topRight {
+    display: none;
+  }
+  .quote {
+    display: flex;
+    width: 30rem;
+    position: relative;
+    background-color: #c5bebe61;
+    display: flex;
+    min-height: 12rem;
+    width: 25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  .quoteContainer{
+    width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 5rem auto;
+  }
+
+  .quoteSvgg,
+  .quoteSvgg2 {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    position: absolute;
+  }
+  .quoteSvgg {
+    top: -2.5rem;
+    left: 0rem;
+  }
+
+  .quoteSvgg2 {
+    bottom: -2.5rem;
+    right: 0rem;
+    transform: rotateY(180deg);
+  }
+
+  .topLeft {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 355px) {
+  .section.section.services {
+    justify-content: center;
+  }
+  .section.description{
+    font-size: 0.9rem;
+  }
+}

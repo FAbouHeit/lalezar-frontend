@@ -18,3 +18,9 @@
         flex-direction: column;
     }   
 }
+
+@media screen and (max-width : 460px) {
+    .h2{
+        text-align: center;
+    }
+}

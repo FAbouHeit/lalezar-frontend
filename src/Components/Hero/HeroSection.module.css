@@ -88,6 +88,13 @@
   }
 }
 
+@media screen and (max-width: 460px) {
+  .p , .SloganContainer , .left{
+    align-items: center;
+    text-align: center;
+  }
+}
+
 @media screen and (max-width : 350px ) {
   .SloganContainer{
     height: 12rem;
