@@ -1,56 +1,246 @@
-.pageContainer{
-    width: 90%;
+.img {
+    width: 8rem;
+    height: 8rem;
 }
 
-.cardWrapper{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 8rem;
-    margin-top: 2rem;
-    margin-left: 5rem;
-    align-items: center;
-}
-.imageContainer{
-    width: 19%;
-}
-.img{
-    object-fit: cover;
-    width: 100%;
-}
-span:hover {
-    cursor: pointer;
-  }
-
-.priceTotal{
+.priceTotal {
+    width: 5%;
+    background-color: blueviolet;
+    overflow-wrap: break-word;
 
 }
 
-.color{
+.color {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
+    margin-right: 1rem;
 }
-.deleteIcon:hover{
-cursor: pointer;
-color:rgb(49, 43, 43);
-}
-.countContainer{
-    border: 0.5px solid #555555;
-    width: 4%;
-    justify-content: center;
+
+.countContainer {
+    width: 85px;
+    justify-content: space-around;
+    /* background-color: chartreuse; */
     display: flex;
+    align-items: center;
     flex-direction: row;
-    gap: 1.7rem;
+    gap: 0.5rem;
     height: fit-content;
-    padding: 5px;
     border-radius: 5px;
 }
-.colorButton{
-    border: 1px solid red;
+
+.colorButton {
     width: 10px;
     border-radius: 100%;
     height: 10px;
-    background-color: red;
+}
+
+.section {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    border-radius: 10px;
+    border: 1px solid var(--color1);
+    align-items: center;
+    padding: 0.7rem;
+}
+
+.item {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.title {
+    width: 15%;
+    display: flex;
+    display: flex;
+    align-items: center;
+}
+
+.price {
+    width: 6rem;
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    border: 1px solid gray;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 10px;
+    width: 4rem;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input:focus-visible {
+    border: none !important;
+}
+
+.top,
+.bottom {
+    display: flex;
+    width: 50%;
+    justify-content: space-around;
+}
+
+.imgContainer{
+    position: relative;
+    overflow: hidden;
+}
+
+
+.color{
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+}
+@media screen and (min-width : 1201px) {
+
+    .img {
+        width: 8rem;
+        height: 8rem;
+    }
+
+    .section {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .top,
+    .bottom {
+        width: 90%;
+    }
+    .color{
+        position: absolute;
+        top: -1.5rem;
+        left: -1.5rem;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+    }
+}
+
+@media screen and (max-width : 1200px) {
+    .section {
+        flex-direction: column;
+        padding: 0.5rem;
+        justify-content: space-between;
+    }
+
+    .img {
+        width: 5rem;
+        height: 5rem;
+    }
+
+    .top,
+    .bottom {
+        width: 90%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .bottom {
+        padding: 0 2rem;
+    }
+    .color{
+        position: absolute;
+        top: -1rem;
+        left: -1rem;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+    }
+
+
+}
+
+
+@media screen and (max-width : 1000px) {
+
+    .top,
+    .bottom {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .section {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .title {
+        width: fit-content;
+    }
+    .color{
+        position: absolute;
+        top: -1rem;
+        left: -1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+    }
+}
+
+@media screen and (max-width : 500px) {
+
+    .top,
+    .bottom {
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .bottom{
+        row-gap: 0.5rem;
+    }
+
+    .section {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .title {
+        min-width: 10rem;
+    }
+    .color{
+        position: absolute;
+        top: -1rem;
+        left: -1rem;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+    }
+}
+
+@media screen and (max-width : 380px) {
+    .section , .top , .bottom{
+        flex-direction: column;
+        align-items: center;
+        row-gap: 1rem;
+    }
+
+    .title , .price{
+        min-width: 0;
+        width: fit-content;
+    }
+    .color{
+        position: absolute;
+        top: -0.5rem;
+        left: -0.5rem;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+    }
 }

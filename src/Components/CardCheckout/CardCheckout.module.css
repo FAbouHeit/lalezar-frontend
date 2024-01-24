@@ -1,30 +1,37 @@
 .cardPage{
     border: 1px solid #C86823 ;
-    width: 100%;
+    width: 90%;
+    height: 300px;
     align-items: center;
     padding: 20px;
-    gap: 5rem;
+    /* gap: 5rem; */
+    justify-content: space-around;
     display: flex;
     flex-direction: column;
-    border-radius: 3%;
+    border-radius: 10px;
+    /* padding: 4rem; */
 }
 
 .price{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 8rem;
+    /* background-color: #C86823; */
 }
 .delevryPart{
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 5rem;
+    justify-content: space-between;
+    gap: 6rem;
 }
 .totalPrice{
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     gap: 5rem;
     border-top: 1px solid #555555;
 }
@@ -34,9 +41,47 @@ p{
 .titleCard{
     font-weight: bold;
     font-size: larger;
+    justify-content: space-between;
+    /* background-color: #443a32; */
 }
 .buttonConainer{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.cardWrapper{
+    /* background-color: cadetblue; */
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (max-width : 1200px) {
+    .cardPage{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width : 300px) {
+    .price{
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        gap: 1rem;
+    }
+    .delevryPart{
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        gap: 1rem;
+    }
+    .totalPrice{
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+     
+        gap: 1rem;
+        border-top: 1px solid #555555;
+    }
 }

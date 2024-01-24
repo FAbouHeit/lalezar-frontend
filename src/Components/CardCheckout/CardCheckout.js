@@ -12,30 +12,30 @@ export default function CardCheckout() {
           <span>$99.8</span>
         </div>
         <div className={styles.delevryPart}>
-        <p>Delevery fees</p>
-        <div>3$</div>
+          <p>Delevery fees</p>
+          <div>3$</div>
         </div>
         <div className={styles.totalPrice}>
           <p>Total Price</p>
           <div>$110.13</div>
         </div>
         <div className={styles.buttonConainer}>
-        <Button
-              variant="contained"
-              sx={{
-                bgcolor: "#C86823",
-                transition: "background-color 0.3s ease, color 0.3s ease",
-                "&:hover": {
-                  bgcolor: "#A0471D",
-                  color: "white",
-                },
-              }}
-            >
-              CHECKOUT
-            </Button>
+          <Button
+            variant="contained"
+            sx={{
+              bgcolor: "#C86823",
+              transition: "background-color 0.3s ease, color 0.3s ease",
+              "&:hover": {
+                bgcolor: "#A0471D",
+                color: "white",
+              },
+            }}
+          >
+            CHECKOUT
+          </Button>
         </div>
       </div>
-     
+
     </div>
   )
 }
