@@ -137,15 +137,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  
 
   /* Optional: Add a transition for smoother effects */
   transition: background-color 0.3s, opacity 0.3s;
 }
 
-.oneCart:hover {
+/* .oneCart:hover {
   background-color: #f8f8f8;
   opacity: 0.8;
-}
+} */
 
 .imgCart{
   width: 300px;

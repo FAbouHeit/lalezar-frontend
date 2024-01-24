@@ -1,17 +1,17 @@
 .container {
   display: flex;
-  margin: 6rem auto;
+  margin: 8rem auto;
 }
 
 .imageArticle {
   width: 50%;
-  padding: 30px;
+  padding: 15px;
   display: flex;
   justify-content: center;
 }
 
 .imageProduct {
-  width: 600px;
+  width: 800px;
 }
 
 .nameContainer {
@@ -24,9 +24,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  row-gap: 60px;
+  row-gap: 30px;
   width: 50%;
-  padding: 30px;
+  margin: 25px;
+  /* padding: 30px; */
 }
 
 .colorContainer {
@@ -50,6 +51,22 @@
   border: 1px solid black;
   padding: 8px 20px;
 }
+
+.descriptionContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
+.ingredientsContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
+.weightContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
 .increase,
 .decrease {
   user-select: none;
@@ -70,8 +87,12 @@
 
 .categoryContainer span,
 .colorContainer span,
-.quantityContainer span {
+.quantityContainer span,
+.descriptionContainer span,
+.ingredientsContainer span,
+.weightContainer span {
   width: 100px;
+  /* background-color: red; */
 }
 
 .addToCart {
@@ -100,11 +121,16 @@
   cursor: not-allowed;
 }
 
-@media screen and (max-width: 650px) {
-  .addToCart {
-    width: 250px;
-    font-size: 15px;
-    padding: 10px;
+@media screen and (max-width:1500px) {
+  .contentArticle{
+    row-gap: 15px;
+  }
+}
+
+
+@media screen and (max-width:1250px) {
+  .imageProduct{
+    width: 100%;
   }
 }
 
@@ -114,9 +140,13 @@
     justify-content: center;
     align-content: center;
     align-items: center;
+    margin: 6rem auto;
   }
   .imageArticle {
-    width: fit-content;
+    width: 100%;
+  }
+  .imageProduct{
+    width: 100%;
   }
   .contentArticle {
     width: fit-content;
@@ -126,5 +156,13 @@
 @media screen and (max-width: 750px) {
   .imageProduct {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .addToCart {
+    width: 250px;
+    font-size: 15px;
+    padding: 10px;
   }
 }

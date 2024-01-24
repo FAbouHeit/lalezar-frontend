@@ -25,7 +25,7 @@ function ProductDetails() {
         `${process.env.REACT_APP_BACKEND_ENDPOINT}products/product/${slug}`
       );
       if (response) {
-        console.log(response);
+        // console.log(response);
         setProduct(response.data);
         setLoading(false);
       }
@@ -37,8 +37,7 @@ function ProductDetails() {
   useEffect(() => {
     getProduct();
   }, [slug]);
-  
-  
+
   const {
     isPending: isCategoriesPending,
     error: categoriesError,
@@ -58,7 +57,54 @@ function ProductDetails() {
     },
   });
 
+  const {
+    isPending: isColorsPending,
+    error: colorsError,
+    data: colorsData,
+  } = useQuery({
+    queryKey: ["colorsData"],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}colors`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching colors:", error);
+        throw error;
+      }
+    },
+  });
 
+  if (isCategoriesPending || isColorsPending) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h1>Loading ...</h1>
+      </div>
+    );
+  }
+
+  if (categoriesError || colorsError) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h1>An error occured while fetching Data</h1>
+      </div>
+    );
+  }
 
   return (
     !loading && (
@@ -90,7 +136,7 @@ function ProductDetails() {
               <p>$1.85</p>
             </div>
             <div className={StyleSingleProduct.categoryContainer}>
-              <span>Category : </span>
+              <span>Category :</span>
               <p>
                 {
                   categoriesData.find(
@@ -99,13 +145,21 @@ function ProductDetails() {
                 }
               </p>
             </div>
+            <div className={StyleSingleProduct.weightContainer}>
+              <span>Weight : </span>
+              <p>{product.quantity} Gr.</p>
+            </div>
             <div className={StyleSingleProduct.colorContainer}>
               <span>Color : </span>
               <div
                 style={{
                   width: "20px",
                   height: "20px",
-                  backgroundColor: "yellow",
+                  backgroundColor: `${
+                    colorsData.find(
+                      (color) => color._id === product.color
+                    )?.hex
+                  }`,
                   borderRadius: "100%",
                 }}
               ></div>
@@ -132,7 +186,14 @@ function ProductDetails() {
                 </div>
               </section>
             </section>
-            <p>{product.description}</p>
+            <div className={StyleSingleProduct.descriptionContainer}>
+              <span>Description: </span>
+              <p>{product.description}</p>
+            </div>
+            <div className={StyleSingleProduct.ingredientsContainer}>
+              <span>Ingredients:</span>
+              <p style={{width:"70%"}}>{product.ingredients}</p>
+            </div>
             <button className={StyleSingleProduct.addToCart}>
               {<AddShoppingCartIcon />}Add to Cart
             </button>
