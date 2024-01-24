@@ -23,6 +23,7 @@
 
 .main {
     min-height: 100vh;
+    margin-top: 7rem;
     /* background-color: rgb(88, 181, 22); */
 }
 @media screen and (max-width : 1600px) {
