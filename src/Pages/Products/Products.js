@@ -11,6 +11,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
 
 const Products = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -49,7 +50,7 @@ const Products = () => {
         const response = await axios.get(
           `${
             process.env.REACT_APP_BACKEND_ENDPOINT
-          }products?pageNumber=${currentPage}&pageSize=${10}`
+          }products?pageNumber=${currentPage}&pageSize=${12}`
         );
         return response.data;
       } catch (error) {
@@ -259,7 +260,13 @@ const Products = () => {
         <div className={StyleProducts.content}>
           <div className={StyleProducts.cartContainer}>
             {filteredProducts.map((product) => (
-              <div key={product._id} className={StyleProducts.oneCart}>
+              <Link
+                style={{ textDecoration: "none", color: "inherit" }}
+                to={`/ProductDetails/${product.slug}`}
+                key={product._id}
+                className={StyleProducts.oneCart}
+                // state={{ id: product._id }}
+              >
                 <img
                   src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
                   className={StyleProducts.imgCart}
@@ -278,7 +285,7 @@ const Products = () => {
                     {<AddShoppingCartIcon />}Add to Cart
                   </button>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
