@@ -267,6 +267,7 @@ function Navbar() {
 
                 <IconButton
                   aria-label="cart"
+                  onClick={goToCardPage}
                   sx={{
                     "&:hover": {
                       background: "transparent",

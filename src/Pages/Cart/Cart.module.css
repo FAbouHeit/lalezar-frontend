@@ -36,7 +36,8 @@
     }
 }
  
-@media only screen and (max-width: 550px) {
+
+@media only screen and (max-width: 800px) {
     .pageWrapper {
         flex-direction: column;
     }
@@ -52,6 +53,18 @@
   }
 
 
-@media screen and (max) {
-    
-}
+@media only screen and (max-width: 500px) {
+    .pageWrapper {
+        flex-direction: column;
+    }
+    .cardContainer{
+        width: 100%;
+    }
+
+    .checkoutContainer{
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0;
+    }
+  }
+

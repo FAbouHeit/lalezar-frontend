@@ -63,6 +63,11 @@ p{
     }
 }
 
+
+@media screen  and (max-width : 500px){
+    
+}
+
 @media screen and (max-width : 300px) {
     .price{
         display: flex;
