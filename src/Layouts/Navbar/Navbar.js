@@ -146,10 +146,10 @@ function Navbar() {
                   <option value="en">English</option>
                   <option value="ar">العربية</option>
                 </select>
-                <p>
+                {/* <p>
                   You selected:{" "}
                   {selectedLanguage === "en" ? "English" : "العربية"}
-                </p>
+                </p> */}
               </div>
             </ul>
             {/* Navbar Ending */}

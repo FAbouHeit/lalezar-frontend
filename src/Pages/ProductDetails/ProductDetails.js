@@ -8,16 +8,16 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 function ProductDetails() {
-  const [quantity, setQuantity] = useState(1);
+  const [count, setCount] = useState(1);
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(true);
   const { slug } = useParams();
 
   function handleIncrease() {
-    setQuantity((prev) => prev + 1);
+    setCount((prev) => prev + 1);
   }
   function handleDecrease() {
-    setQuantity((prev) => prev - 1);
+    setCount((prev) => prev - 1);
   }
   async function getProduct() {
     try {
@@ -106,6 +106,25 @@ function ProductDetails() {
     );
   }
 
+  const addToCart = (product) => {
+    const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const existingItemIndex = currentItems.findIndex(
+      (item) => item.id === product._id
+    );
+
+    if (existingItemIndex !== -1) {
+      currentItems[existingItemIndex].quantity += count;
+    } else {
+      currentItems.push({
+        id: product._id,
+        name: product.name,
+        quantity: count,
+      });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(currentItems));
+  };
+
   return (
     !loading && (
       <>
@@ -156,9 +175,7 @@ function ProductDetails() {
                   width: "20px",
                   height: "20px",
                   backgroundColor: `${
-                    colorsData.find(
-                      (color) => color._id === product.color
-                    )?.hex
+                    colorsData.find((color) => color._id === product.color)?.hex
                   }`,
                   borderRadius: "100%",
                 }}
@@ -169,14 +186,14 @@ function ProductDetails() {
               <section className={StyleSingleProduct.quantityControl}>
                 <div
                   className={`${StyleSingleProduct.decrease} ${
-                    quantity === 0 ? StyleSingleProduct.disabled : ""
+                    count === 0 ? StyleSingleProduct.disabled : ""
                   }`}
-                  onClick={quantity > 0 ? handleDecrease : null}
+                  onClick={count > 0 ? handleDecrease : null}
                 >
                   -
                 </div>
                 <div className={StyleSingleProduct.currentQuantity}>
-                  {quantity}
+                  {count}
                 </div>
                 <div
                   className={StyleSingleProduct.increase}
@@ -192,9 +209,12 @@ function ProductDetails() {
             </div>
             <div className={StyleSingleProduct.ingredientsContainer}>
               <span>Ingredients:</span>
-              <p style={{width:"70%"}}>{product.ingredients}</p>
+              <p style={{ width: "70%" }}>{product.ingredients}</p>
             </div>
-            <button className={StyleSingleProduct.addToCart}>
+            <button
+              className={StyleSingleProduct.addToCart}
+              onClick={() => addToCart(product)}
+            >
               {<AddShoppingCartIcon />}Add to Cart
             </button>
           </article>
