@@ -1,17 +1,23 @@
 .textContainer{
-
+    margin: 50px 0;
 }
 
 .textContainer > h1{
-color: rebeccapurple;
+    font-size: 2em;
+    margin: 20px 0;
 }
 
 .textContainer > h2{
-    color: blue;
-
+    margin: 10px 0;
 }
 
 .textContainer > p{
-    color: red;
-
+    font-size: 1.3em;
 }
+
+.textContainer > ul, .textContainer > ol{
+    font-size: 1.3em;
+    padding: 20px;
+    /* margin: 30px; */
+}
+

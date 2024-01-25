@@ -1,3 +1,168 @@
-.container{
+.container {
+  display: flex;
+  margin: 8rem auto;
+}
+
+.imageArticle {
+  width: 50%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.imageProduct {
+  width: 800px;
+}
+
+.nameContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.contentArticle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 30px;
+  width: 50%;
+  margin: 25px;
+  /* padding: 30px; */
+}
+
+.colorContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
+.categoryContainer {
+  display: flex;
+  column-gap: 20px;
+}
+.quantityContainer {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.quantityControl {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border: 1px solid black;
+  padding: 8px 20px;
+}
+
+.descriptionContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
+.ingredientsContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
+.weightContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
+.increase,
+.decrease {
+  user-select: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+/* .circle{
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+    border-radius: 100%;
+} */
+
+/* span{
+    width: 80px;
+} */
+
+.categoryContainer span,
+.colorContainer span,
+.quantityContainer span,
+.descriptionContainer span,
+.ingredientsContainer span,
+.weightContainer span {
+  width: 100px;
+  /* background-color: red; */
+}
+
+.addToCart {
+  background-color: #c86823;
+  border: 0;
+  width: 300px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+  color: white;
+  font-size: 20px;
+  padding: 10px 10px;
+  transition: background-color 0.3s;
+}
+
+.addToCart:hover {
+  background-color: #a0471d;
+  cursor: pointer;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width:1500px) {
+  .contentArticle{
+    row-gap: 15px;
+  }
+}
+
+
+@media screen and (max-width:1250px) {
+  .imageProduct{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .container {
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
     margin: 6rem auto;
+  }
+  .imageArticle {
+    width: 100%;
+  }
+  .imageProduct{
+    width: 100%;
+  }
+  .contentArticle {
+    width: fit-content;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .imageProduct {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .addToCart {
+    width: 250px;
+    font-size: 15px;
+    padding: 10px;
+  }
 }

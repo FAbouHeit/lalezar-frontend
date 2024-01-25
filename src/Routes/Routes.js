@@ -26,30 +26,33 @@ import DashOutlet from "./DashOutlet.js";
 const PrivatRoute = ({ element, roles }) => {
   const { user, checkUser } = useContext(AuthContext);
 
-  while (checkUser) {
-    if (!user) {
-      return (
-        <div
-          style={{
-            width: "100vw",
-            height: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontSize: "3rem",
-          }}
-        >
-          Loading...
-        </div>
-      );
-    } else {
-      if (user && roles && roles.includes(user.role)) {
-        return element;
-      } else {
-        return <Navigate to="/unauthorized" />;
-      }
-    }
-  }
+  // if (checkUser) {
+  //   return (
+  //     <div
+  //       style={{
+  //         width: "100vw",
+  //         height: "100vh",
+  //         display: "flex",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //         fontSize: "3rem",
+  //       }}
+  //     >
+  //       Loading...
+  //     </div>
+  //   );
+  // }
+
+  // if (!user && !checkUser) {
+  //   return <Navigate to="/unauthorized" />;
+  // }
+
+  // if (user && roles && roles.includes(user.role)) {
+  //   return element;
+  // } else {
+  //   return <Navigate to="/unauthorized" />;
+  // }
+  return element
 };
 
 const AppRouter = () => {
@@ -59,10 +62,10 @@ const AppRouter = () => {
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/ProductsPage" element={<Products />} />
-        <Route path="/ProductDetails" element={<ProductDetails />} />
+        <Route path="/ProductDetails/:slug" element={<ProductDetails />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Blogs" element={<BlogsPage />} />
-        <Route path="/BlogDetails" element={<BlogDetails />} />
+        <Route path="/Blogs/:slug" element={<BlogDetails />} />
         <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
         <Route path="/ContactUs" element={<ContactUs />} />
         <Route path="/AboutUs" element={<AboutUs />} />
@@ -76,55 +79,59 @@ const AppRouter = () => {
           path="/dashboard/blogs"
           exact
           element={
-            <PrivatRoute>
-              <DashBlogs />
-            </PrivatRoute>
-          }
+            <PrivatRoute 
+              element={<DashBlogs />} 
+              roles={["Admin"]} 
+          />}
         />
         <Route
           path="/dashboard"
           exact
           element={
-            <PrivatRoute>
-              <DashOverview />
-            </PrivatRoute>
+            <PrivatRoute
+            element={<DashOverview />}
+            roles={['Admin']}
+            />
           }
         />
         <Route
           path="/dashboard/order"
           exact
           element={
-            <PrivatRoute>
-              <DashOrder />
-            </PrivatRoute>
+            <PrivatRoute
+            element={<DashOrder />}
+            roles={['Admin']}
+            />
           }
         />
         <Route
           path="/dashboard/product"
           exact
           element={
-            <PrivatRoute>
-              <DashProduct />
-            </PrivatRoute>
+            <PrivatRoute
+            element={<DashProduct />}
+            roles={['Admin']}
+            />
           }
         />
         <Route
           path="/dashboard/user"
           exact
           element={
-            <PrivatRoute>
-              <DashUser />
-            </PrivatRoute>
-          }
+            <PrivatRoute 
+              element={<DashUser />} 
+              roles={["Admin"]} 
+            />}
         />
       </Route>
       <Route
-        path="/ProfilePage"
+        path="/profile"
         exact
         element={
-          <PrivatRoute>
-            <ProfilePage />
-          </PrivatRoute>
+          <PrivatRoute
+            element={<ProfilePage />}
+            roles={["Admin", "Customer"]}
+          />
         }
       />
       <Route path="/*" exact element={<NotFound />} />

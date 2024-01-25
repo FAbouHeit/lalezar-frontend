@@ -11,11 +11,14 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Helmet } from "react-helmet-async";
+import { Link } from "react-router-dom";
+import { red } from "@mui/material/colors";
 
 const Products = () => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [checkboxes, setCheckboxes] = useState({});
+  const [cartItems, setCartItems] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [sidePanelWidth, setSidePanelWidth] = useState(400);
@@ -49,7 +52,7 @@ const Products = () => {
         const response = await axios.get(
           `${
             process.env.REACT_APP_BACKEND_ENDPOINT
-          }products?pageNumber=${currentPage}&pageSize=${10}`
+          }products?pageNumber=${currentPage}&pageSize=${12}`
         );
         return response.data;
       } catch (error) {
@@ -152,6 +155,13 @@ const Products = () => {
 
       return matchesCategory;
     });
+
+  const addToCart = (product) => {
+    const updatedCart = [...cartItems , {id:product._id , name:product.name}]
+    setCartItems(updatedCart);
+
+    localStorage.setItem('cart',JSON.stringify(updatedCart))
+  };
 
   return (
     <>
@@ -259,25 +269,45 @@ const Products = () => {
         <div className={StyleProducts.content}>
           <div className={StyleProducts.cartContainer}>
             {filteredProducts.map((product) => (
-              <div key={product._id} className={StyleProducts.oneCart}>
-                <img
-                  src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
-                  className={StyleProducts.imgCart}
-                />
-                <div>
-                  <section className={StyleProducts.infoCart}>
-                    <strong style={{ fontSize: "25px" }}>{product.name}</strong>
-                    {
-                      categoriesData.find(
-                        (category) => category._id === product.category
-                      )?.name
-                    }
-                    <p style={{ fontSize: "20px" }}>${product.price}</p>
-                  </section>
-                  <button className={StyleProducts.addToCart}>
-                    {<AddShoppingCartIcon />}Add to Cart
-                  </button>
-                </div>
+              <div className={StyleProducts.oneCart}>
+                <Link
+                  style={{
+                    textDecoration: "none",
+                    color: "inherit",
+                    transition: "background-color 0.5s, opacity 0.3s",
+                  }}
+                  to={`/ProductDetails/${product.slug}`}
+                  key={product._id}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = "#f8f8f8";
+                    e.currentTarget.style.opacity = 0.8;
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = "white";
+                    e.currentTarget.style.opacity = 0.8;
+                  }}
+                >
+                  <img
+                    src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
+                    className={StyleProducts.imgCart}
+                  />
+                  <div>
+                    <section className={StyleProducts.infoCart}>
+                      <strong style={{ fontSize: "25px" }}>
+                        {product.name}
+                      </strong>
+                      {
+                        categoriesData.find(
+                          (category) => category._id === product.category
+                        )?.name
+                      }
+                      <p style={{ fontSize: "20px" }}>${product.price}</p>
+                    </section>
+                  </div>
+                </Link>
+                <button className={StyleProducts.addToCart} onClick={()=>addToCart(product)}>
+                  {<AddShoppingCartIcon />}Add to Cart
+                </button>
               </div>
             ))}
           </div>

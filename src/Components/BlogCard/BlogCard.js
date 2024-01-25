@@ -1,25 +1,33 @@
 import { useState } from 'react';
-import Styles from './BlogCard.module.css'
-import {motion} from 'framer-motion';
-export default function BlogCard({element}) {
-    const [hovered, setHovered] = useState(false);
+import Styles from './BlogCard.module.css';
+import { motion } from 'framer-motion';
+import dateConverter from '../../Utils/DateConverter.js';
+import { Link, useResolvedPath } from 'react-router-dom';
+import image1 from './2.jpg'
+
+export default function BlogCard({ element }) {
+  const [hovered, setHovered] = useState(false);
+  const url = useResolvedPath("").pathname;
 
   return (
     <motion.div
-    animate={{scale: hovered? 1.03 : 1 }}
-    transition={{duration:0.2}}
-    className={Styles.blogCardContainer}
-    onMouseEnter={()=>setHovered(true)}
-    onMouseLeave={()=>setHovered(false)}
+      className={Styles.blogCardContainer}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
+      <Link 
+      to={`/blogs/${element.slug}`}
+      className={Styles.linkStyles}
+      >
         <motion.div
-        className={Styles.blogCardImage}
-        transition={{duration:0.2}}
-        ></motion.div>
-        <p className={Styles.spiceName}>Al-Baseeta</p>
-        <h2 className={Styles.blogCardTitle}>DIY: Check out how to make your spice at home! DIY: Check out how to make your spice at home! DIY: Check out how to make your spice at home!</h2>
-        <p className={Styles.blogCardDate}>15.1.2024</p>
+          className={Styles.blogCardImage}
+          transition={{ duration: 0.2 }}
+        >
+          <img src={image1} height={300} width={400}/>
+        </motion.div>
+        <h2 className={Styles.blogCardTitle}>{element.title_en}</h2>
+        <p className={Styles.blogCardDate}>{dateConverter(element.updatedAt)}</p>
+      </Link>
     </motion.div>
-    
-  )
+  );
 }

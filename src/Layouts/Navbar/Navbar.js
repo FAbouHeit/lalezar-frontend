@@ -1,14 +1,10 @@
 import React from "react";
 import Stack from "@mui/material/Stack";
-// import Button from "@mui/material/Button";
 import Styles from "./Navbar.module.css";
 import logo from "../../Assets/logo.svg";
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Badge from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -16,50 +12,28 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 function Navbar() {
   const [collapesed, setCollapsed] = useState(false);
 
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+
+  const handleLanguageChange = (e) => {
+    setSelectedLanguage(e.target.value);
+  };
+
   // nav with active
-  // const [isActive, setActive] = useState([true, false, false, false, false]);
   const navigate = useNavigate();
 
   // MUI
-  const [anchorEl1, setAnchorEl1] = React.useState(null);
-  const open = Boolean(anchorEl1);
+  // const [anchorEl1, setAnchorEl1] = React.useState(null);
+  // const open = Boolean(anchorEl1);
 
-  const handleClick = (event) => {
-    setAnchorEl1(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl1(null);
-  };
-
-  // const handleLinkClick = (index, path) => {
-  //   setActive([false, false, false, false, false]);
-  //   setActive((prev) => {
-  //     const newActive = [...prev];
-  //     newActive[index] = true;
-  //     return newActive;
-  //   });
-  //   navigate(path);
-  //   setCollapsed(false);
+  // const handleClick = (event) => {
+  //   setAnchorEl1(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl1(null);
   // };
 
   // Navbar
   useEffect(() => {
-    // const defaultActiveLink = "/home";
-    // const activeLink = window.location.pathname || defaultActiveLink;
-
-    // const activeIndex = [
-    //   "/home",
-    //   "/ProductsPage",
-    //   "/Blogs",
-    //   "/ContactUs",
-    //   "/AboutUs",
-    // ].indexOf(activeLink);
-
-    // setActive((prev) => {
-    //   const newActive = Array(5).fill(false);
-    //   newActive[activeIndex] = true;
-    //   return newActive;
-    // });
 
     function updateSize() {
       if (window.innerWidth > 960) {
@@ -103,7 +77,7 @@ function Navbar() {
       <header className={Styles.header}>
         <nav className={Styles.navBar}>
           <NavLink
-            to="/home"
+            to="/"
             // onClick={() => handleLinkClick(0, "/home")}
             className={Styles.logoContainer}
             aria-label="Go to homepage"
@@ -164,59 +138,19 @@ function Navbar() {
                   AboutUs
                 </NavLink>
               </li>
-              <li>
-                <Button
-                  id="demo-positioned-button"
-                  aria-controls={open ? "demo-positioned-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
-                  endIcon={<ExpandMoreIcon />}
-                  sx={{
-                    color: "black",
-                    fontSize: "16px",
-                    textTransform: "none",
-                    "&:hover": {
-                      opacity: "1",
-                      transition: "0.5s ease",
-                      color: "#C86823",
-                      bgcolor: "transparent",
-                    },
-                  }}
+              <div className={Styles.languageSwitcher}>
+                <select
+                  value={selectedLanguage}
+                  onChange={handleLanguageChange}
                 >
-                  En
-                </Button>
-                <Menu
-                  id="demo-positioned-menu"
-                  aria-labelledby="demo-positioned-button"
-                  anchorEl={anchorEl1}
-                  open={open}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "left",
-                  }}
-                  sx={{
-                    mt: "3rem",
-                  }}
-                >
-                  <MenuItem
-                    onClick={handleClose}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "transparent",
-                        color: "#C86823",
-                      },
-                    }}
-                  >
-                    AR
-                  </MenuItem>
-                </Menu>
-              </li>
+                  <option value="en">English</option>
+                  <option value="ar">العربية</option>
+                </select>
+                <p>
+                  You selected:{" "}
+                  {selectedLanguage === "en" ? "English" : "العربية"}
+                </p>
+              </div>
             </ul>
             {/* Navbar Ending */}
 
@@ -312,7 +246,7 @@ function Navbar() {
             <li>
               <NavLink
                 to="/"
-                onClick={()=> setCollapsed(false)}
+                onClick={() => setCollapsed(false)}
                 className={({ isActive, isPending }) =>
                   isPending ? "pending" : isActive ? Styles.active : ""
                 }
@@ -323,7 +257,7 @@ function Navbar() {
             <li>
               <NavLink
                 to="/ProductsPage"
-                onClick={()=> setCollapsed(false)}
+                onClick={() => setCollapsed(false)}
                 className={({ isActive, isPending }) =>
                   isPending ? "pending" : isActive ? Styles.active : ""
                 }
@@ -334,7 +268,7 @@ function Navbar() {
             <li>
               <NavLink
                 to="/Blogs"
-                onClick={()=> setCollapsed(false)}
+                onClick={() => setCollapsed(false)}
                 className={({ isActive, isPending }) =>
                   isPending ? "pending" : isActive ? Styles.active : ""
                 }
@@ -346,7 +280,7 @@ function Navbar() {
             <li>
               <NavLink
                 to="/ContactUs"
-                onClick={()=> setCollapsed(false)}
+                onClick={() => setCollapsed(false)}
                 className={({ isActive, isPending }) =>
                   isPending ? "pending" : isActive ? Styles.active : ""
                 }
@@ -358,7 +292,7 @@ function Navbar() {
             <li>
               <NavLink
                 to="/AboutUs"
-                onClick={()=> setCollapsed(false)}
+                onClick={() => setCollapsed(false)}
                 className={({ isActive, isPending }) =>
                   isPending ? "pending" : isActive ? Styles.active : ""
                 }
@@ -368,57 +302,19 @@ function Navbar() {
             </li>
 
             <li>
-              <Button
-                id="demo-positioned-button"
-                aria-controls={open ? "demo-positioned-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleClick}
-                endIcon={<ExpandMoreIcon />}
-                sx={{
-                  color: "white",
-                  fontSize: "16px",
-                  textTransform: "none",
-                  "&:hover": {
-                    opacity: "1",
-                    transition: "0.5s ease",
-                    color: "#C86823",
-                    bgcolor: "transparent",
-                  },
-                }}
-              >
-                En
-              </Button>
-              <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl1}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                sx={{
-                  mt: "3rem",
-                }}
-              >
-                <MenuItem
-                  onClick={handleClose}
-                  sx={{
-                    "&:hover": {
-                      bgcolor: "transparent",
-                      color: "#C86823",
-                    },
-                  }}
+              <div className={Styles.languageSwitcher}>
+                <select
+                  value={selectedLanguage}
+                  onChange={handleLanguageChange}
                 >
-                  AR
-                </MenuItem>
-              </Menu>
+                  <option value="en">English</option>
+                  <option value="ar">العربية</option>
+                </select>
+                <p>
+                  You selected:{" "}
+                  {selectedLanguage === "en" ? "English" : "العربية"}
+                </p>
+              </div>
             </li>
 
             <li>
