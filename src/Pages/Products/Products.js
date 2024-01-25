@@ -156,11 +156,23 @@ const Products = () => {
       return matchesCategory;
     });
 
-  const addToCart = (product) => {
-    const updatedCart = [...cartItems , {id:product._id , name:product.name}]
-    setCartItems(updatedCart);
+  // const addToCart = (product) => {
+  //   const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
+  //   currentItems.push({ id: product._id, name: product.name });
+  //   localStorage.setItem("cart", JSON.stringify(currentItems));
+  // };
 
-    localStorage.setItem('cart',JSON.stringify(updatedCart))
+  const addToCart = (product) => {
+    const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const existingItem = currentItems.find((item) => item.id === product._id);
+
+    if (!existingItem) {
+      currentItems.push({ id: product._id, name: product.name, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(currentItems));
+    }
+    else{
+      return;
+    }
   };
 
   return (
@@ -305,7 +317,10 @@ const Products = () => {
                     </section>
                   </div>
                 </Link>
-                <button className={StyleProducts.addToCart} onClick={()=>addToCart(product)}>
+                <button
+                  className={StyleProducts.addToCart}
+                  onClick={() => addToCart(product)}
+                >
                   {<AddShoppingCartIcon />}Add to Cart
                 </button>
               </div>
@@ -314,7 +329,7 @@ const Products = () => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Stack spacing={2}>
               <Pagination
-                count={Math.ceil(productsData.length)}
+                count={Math.ceil(10)}
                 page={currentPage}
                 onChange={(event, page) => setCurrentPage(page)}
                 variant="outlined"
