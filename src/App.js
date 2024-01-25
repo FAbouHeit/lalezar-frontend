@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { Helmet } from "react-helmet-async";
 import FavIcon from './Assets/lalezar.png'
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import RevealAnimation from "./RevealAnimation";
 
 const queryClient = new QueryClient();
 
@@ -18,7 +18,7 @@ function App() {
         </Helmet>
         <QueryClientProvider client={queryClient}>
           <AppRouter />
-          {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+          {/* <RevealAnimation/> */}
         </QueryClientProvider>
       </HelmetProvider>
     </div>
