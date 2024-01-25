@@ -26,7 +26,7 @@
   width: 260px;
 }
 
-.sidebar-inner {
+.sidebarInner {
   position: absolute;
   top: 0;
   left: 0;
@@ -34,14 +34,14 @@
   transition: all 0.4s ease-in;
 }
 
-.sidebar-header {
+.sidebarHeader {
   display: flex;
   align-items: center;
   height: 5.6rem;
   background: rgb(0 0 0 / 15%);
 }
 
-.sidebar-burger {
+.sidebarBurger {
   width: 60px;
   height: 72px;
   display: grid;
@@ -52,11 +52,11 @@
   height: 28px;
 }
 
-.sidebar-menu {
+.sidebarMenu {
   display: grid;
 }
 
-.sidebar-button {
+.sidebarButton {
   display: flex;
   gap: 16px;
   align-items: center;
@@ -68,42 +68,42 @@
   line-height: 1;
   padding: 0 19px;
   color: black;
-  opacity: 0.9;
+  opacity: 1;
 }
 
-.sidebar-button:hover,
-.sidebar-button:focus {
+.sidebarButton:hover,
+.sidebarButton:focus {
   background: rgb(0 0 0 / 15%);
   opacity: 2;
 }
 
-.sidebar-button:hover > span,
-.sidebar-button:focus > span {
-  opacity: 1;
+.sidebarButton:hover > span,
+.sidebarButton:focus > span {
+  opacity: 2;
 }
 
 .sidebar-logo,
-.sidebar-button p {
+.sidebarButton p {
   opacity: 0;
   transition: 0.3s;
 }
 
-.sidebar.open :is(.sidebar-button p, .sidebar-logo) {
+.sidebar.open :is(.sidebarButton p, .sidebar-logo) {
   opacity: 1;
 }
 
-.sidebar-button > img {
+.sidebarButton > img {
   width: 24px;
   height: 24px;
 }
 
-.sidebar-button > span {
+.sidebarButton > span {
   opacity: 0.5;
 }
 
 
 @media screen and (max-width : 960px) {
-    .sidebar-header {
+    .sidebarHeader {
         height: 4.55rem;
     }
 }

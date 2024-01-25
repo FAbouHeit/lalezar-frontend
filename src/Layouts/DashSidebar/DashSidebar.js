@@ -24,24 +24,23 @@ const DashSidebar = () => {
   };
 
   const listItems = [
-    { item: "Overview", link: "/dashboard", icon: <QueryStatsIcon /> },
-    { item: "saadsasd", link: "/dashboard/user", icon: <GroupIcon /> },
-    { item: "asdddddd", link: "/dashboard/product", icon: <LocalMallIcon /> },
-    { item: "B___asdas__logs", link: "/dashboard/blogs", icon: <AutoStoriesIcon /> },
-    { item: "asdasdasd", link: "/ProfilePage", icon: <PersonIcon /> },
+    { number: 1 , item: "Overview", link: "/dashboard", icon: <QueryStatsIcon /> },
+    { number: 2 , item: "Users", link: "/dashboard/user", icon: <GroupIcon /> },
+    { number: 3 , item: "Products", link: "/dashboard/product", icon: <LocalMallIcon /> },
+    { number: 4 , item: "Blogs", link: "/dashboard/blogs", icon: <AutoStoriesIcon /> },
+    { number: 5 , item: "Profile", link: "/profile", icon: <PersonIcon /> },
   ];
 
   return (
-    <nav className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
-      <div className={styles["sidebar-inner"]}>
-        <header className={styles["sidebar-header"]}>
+    <aside className={`${styles.sidebar} ${isOpen ? styles.open : ""}`}>
+      <div className={styles.sidebarInner}>
+        <div className={styles.sidebarHeader}>
           <button
             type="button"
-            className={`${styles["sidebar-burger"]} ${styles.button} `}
+            className={`${styles.sidebarBurger} ${styles.button} `}
             onClick={() => setIsOpen(!isOpen)}
           >
             <span
-              className={styles["material-symbols-outlined"]}
               style={{
                 display: "flex",
               }}
@@ -53,9 +52,9 @@ const DashSidebar = () => {
               )}
             </span>
           </button>
-        </header>
-        <nav
-          className={styles["sidebar-menu"]}
+        </div>
+        <div
+          className={styles.sidebarMenu}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -65,15 +64,15 @@ const DashSidebar = () => {
           }}
         >
           <span>
-            {listItems && listItems.map((item , index) => (
+            {listItems.map((item) => (
               <Link
                 to={item.link}
-                key={index}
+                key={item.number}
                 style={{ textDecoration: "none" }}
               >
                 <button
                   type="button"
-                  className={`${styles["sidebar-button"]} ${styles.button} ${
+                  className={`${styles.sidebarButton} ${styles.button} ${
                     selectedItem === item ? styles.selected : ""
                   }`}
                   tabIndex="0"
@@ -101,7 +100,7 @@ const DashSidebar = () => {
           </span>
           <span>
             <button
-              className={`${styles["sidebar-button"]} ${styles.button}`}
+              className={`${styles.sidebarButton} ${styles.button}`}
               tabIndex="0"
               onClick={() => ReturnHome()}
             >
@@ -124,7 +123,7 @@ const DashSidebar = () => {
               </p>
             </button>
             <button
-              className={`${styles["sidebar-button"]} ${styles.button}`}
+              className={`${styles.sidebarButton} ${styles.button}`}
               tabIndex="0"
             >
               <span>
@@ -146,9 +145,9 @@ const DashSidebar = () => {
               </p>
             </button>
           </span>
-        </nav>
+        </div>
       </div>
-    </nav>
+    </aside>
   );
 };
 
