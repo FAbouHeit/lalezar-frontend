@@ -12,13 +12,14 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { red } from "@mui/material/colors";
+import { Reveal } from "../../RevealAnimation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Products = () => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [checkboxes, setCheckboxes] = useState({});
-  const [cartItems, setCartItems] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [sidePanelWidth, setSidePanelWidth] = useState(400);
@@ -156,12 +157,6 @@ const Products = () => {
       return matchesCategory;
     });
 
-  // const addToCart = (product) => {
-  //   const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
-  //   currentItems.push({ id: product._id, name: product.name });
-  //   localStorage.setItem("cart", JSON.stringify(currentItems));
-  // };
-
   const addToCart = (product) => {
     const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
     const existingItem = currentItems.find((item) => item.id === product._id);
@@ -169,10 +164,27 @@ const Products = () => {
     if (!existingItem) {
       currentItems.push({ id: product._id, name: product.name, quantity: 1 });
       localStorage.setItem("cart", JSON.stringify(currentItems));
-    }
-    else{
+      showToast(`${product.name} added successfuly to your bag`);
+    } else {
+      showToast(`${product.name} already added to your bag 🙂`);
       return;
     }
+  };
+
+  const showToast = (message) => {
+    toast.info(message, {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      style: {
+        backgroundColor: "#c86823",
+        color: "#fff", 
+        fontSize: "16px", 
+      },
+    });
   };
 
   return (
@@ -202,62 +214,69 @@ const Products = () => {
               <Icon></Icon>
               <h1>Categories</h1>
             </section>
-            <section className={StyleProducts.searchArticle}>
-              <article>
-                <h3>Brand</h3>
+            <Reveal>
+              <section className={StyleProducts.searchArticle}>
+                <article>
+                  <h3>Brand</h3>
 
-                <Stack
-                  className={StyleProducts.stack}
-                  sx={{ padding: "10px 0px" }}
-                >
-                  <Autocomplete
-                    freeSolo
-                    id="free-solo-2-demo"
-                    disableClearable
-                    options={productsData.map((product) => ({
-                      name: product.name,
-                    }))}
-                    getOptionLabel={(option) => option.name}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Search input"
-                        InputProps={{
-                          ...params.InputProps,
-                          type: "search",
-                        }}
-                      />
-                    )}
-                    onChange={handleSearchInputChange}
-                  />
-                </Stack>
-              </article>
-            </section>
+                  <Stack
+                    className={StyleProducts.stack}
+                    sx={{ padding: "10px 0px" }}
+                  >
+                    <Autocomplete
+                      freeSolo
+                      id="free-solo-2-demo"
+                      disableClearable
+                      options={productsData.map((product) => ({
+                        name: product.name,
+                      }))}
+                      getOptionLabel={(option) => option.name}
+                      renderInput={(params) => (
+                        <TextField
+                          className={`${StyleProducts.searchInput}`}
+                          {...params}
+                          label="Search input"
+                          InputProps={{
+                            ...params.InputProps,
+                            type: "search",
+                          }}
+                        />
+                      )}
+                      onChange={handleSearchInputChange}
+                    />
+                  </Stack>
+                </article>
+              </section>
+            </Reveal>
 
-            <section className={StyleProducts.categoryArticle}>
-              <article>
-                <h3>Categories</h3>
-                <div className={StyleProducts.checkBoxContainer}>
-                  {categoriesData.map((category) => (
-                    <div
-                      key={category._id}
-                      className={StyleProducts.checkBoxLine}
-                    >
-                      <input
-                        type="checkbox"
-                        id={category.name}
-                        name={category.name}
-                        value={category.name}
-                        data-id={category.id}
-                        className={StyleProducts.customCheckbox}
-                        onChange={(e) => handleCheckboxChange(e, category._id)}
-                      />
-                      <label htmlFor={category.name}>{category.name}</label>
-                    </div>
-                  ))}
-                </div>
-              </article>
-            </section>
+            <Reveal>
+              <section className={StyleProducts.categoryArticle}>
+                <article>
+                  <h3>Categories</h3>
+                  <div className={StyleProducts.checkBoxContainer}>
+                    {categoriesData.map((category) => (
+                      <div
+                        key={category._id}
+                        className={StyleProducts.checkBoxLine}
+                      >
+                        <input
+                          type="checkbox"
+                          id={category.name}
+                          name={category.name}
+                          value={category.name}
+                          data-id={category.id}
+                          className={StyleProducts.customCheckbox}
+                          onChange={(e) =>
+                            handleCheckboxChange(e, category._id)
+                          }
+                        />
+                        <label htmlFor={category.name}>{category.name}</label>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              </section>
+            </Reveal>
           </div>
         </div>
 
@@ -281,51 +300,54 @@ const Products = () => {
         <div className={StyleProducts.content}>
           <div className={StyleProducts.cartContainer}>
             {filteredProducts.map((product) => (
-              <div className={StyleProducts.oneCart}>
-                <Link
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    transition: "background-color 0.5s, opacity 0.3s",
-                  }}
-                  to={`/ProductDetails/${product.slug}`}
-                  key={product._id}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = "#f8f8f8";
-                    e.currentTarget.style.opacity = 0.8;
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = "white";
-                    e.currentTarget.style.opacity = 0.8;
-                  }}
-                >
-                  <img
-                    src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
-                    className={StyleProducts.imgCart}
-                  />
-                  <div>
-                    <section className={StyleProducts.infoCart}>
-                      <strong style={{ fontSize: "25px" }}>
-                        {product.name}
-                      </strong>
-                      {
-                        categoriesData.find(
-                          (category) => category._id === product.category
-                        )?.name
-                      }
-                      <p style={{ fontSize: "20px" }}>${product.price}</p>
-                    </section>
-                  </div>
-                </Link>
-                <button
-                  className={StyleProducts.addToCart}
-                  onClick={() => addToCart(product)}
-                >
-                  {<AddShoppingCartIcon />}Add to Cart
-                </button>
-              </div>
+              <Reveal>
+                <div className={StyleProducts.oneCart}>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      transition: "background-color 0.5s, opacity 0.3s",
+                    }}
+                    to={`/ProductDetails/${product.slug}`}
+                    key={product._id}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = "#f8f8f8";
+                      e.currentTarget.style.opacity = 0.8;
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = "white";
+                      e.currentTarget.style.opacity = 0.8;
+                    }}
+                  >
+                    <img
+                      src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
+                      className={StyleProducts.imgCart}
+                    />
+                    <div>
+                      <section className={StyleProducts.infoCart}>
+                        <strong style={{ fontSize: "25px" }}>
+                          {product.name}
+                        </strong>
+                        {
+                          categoriesData.find(
+                            (category) => category._id === product.category
+                          )?.name
+                        }
+                        <p style={{ fontSize: "20px" }}>${product.price}</p>
+                      </section>
+                    </div>
+                  </Link>
+                  <button
+                    className={StyleProducts.addToCart}
+                    onClick={() => addToCart(product)}
+                  >
+                    {<AddShoppingCartIcon />}Add to Cart
+                  </button>
+                </div>
+              </Reveal>
             ))}
           </div>
+
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Stack spacing={2}>
               <Pagination
@@ -346,6 +368,7 @@ const Products = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

@@ -6,11 +6,10 @@
   transition: 0.5s;
 }
 
-.big{
+.big {
   display: flex;
   width: 95%;
   margin: 6rem auto;
-
 }
 
 .test {
@@ -79,7 +78,7 @@
 }
 
 .content {
-  transition: margin-left 0.5s; 
+  transition: margin-left 0.5s;
 }
 
 /* Adjust the margin when the sidebar is open */
@@ -100,7 +99,7 @@
   height: 20px;
 }
 
-.infoCart{
+.infoCart {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
@@ -108,27 +107,27 @@
   margin: 20px auto;
 }
 
-.addToCart{
-    background-color: #c86823;
-    border: 0;
-    width:300px;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    column-gap: 10px;
-    color: white;
-    font-size: 20px;
-    padding: 10px 10px; 
-    transition: background-color 0.3s;
+.addToCart {
+  background-color: #c86823;
+  border: 0;
+  width: 300px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10px;
+  color: white;
+  font-size: 20px;
+  padding: 10px 10px;
+  transition: background-color 0.3s;
 }
 
-.addToCart:hover{
-  background-color: #A0471D;
+.addToCart:hover {
+  background-color: #a0471d;
   cursor: pointer;
 }
 
-.oneCart{
+.oneCart {
   border: 1px solid #ddd;
   border-radius: 8px;
   width: fit-content;
@@ -137,22 +136,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 
   /* Optional: Add a transition for smoother effects */
   transition: background-color 0.3s, opacity 0.3s;
 }
+
+/* .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root input:focus {
+  border-color: #c86823 !important;
+  color: #c86823 !important;
+} */
 
 /* .oneCart:hover {
   background-color: #f8f8f8;
   opacity: 0.8;
 } */
 
-.imgCart{
+.imgCart {
   width: 300px;
 }
 
-.cartContainer{
+.cartContainer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -160,58 +163,56 @@
   row-gap: 20px;
 }
 
-@media screen and (max-width : 1140px) {
-  .oneCart{
+@media screen and (max-width: 1140px) {
+  .oneCart {
     width: 320px;
   }
 }
 
-@media screen and (max-width : 650px) {
-  .addToCart{
+@media screen and (max-width: 650px) {
+  .addToCart {
     width: 250px;
     font-size: 15px;
     padding: 10px;
   }
-  .big{
+  .big {
     flex-wrap: wrap;
   }
 }
 
-@media screen and (max-width : 500px) {
-  .sidepanel{
+@media screen and (max-width: 500px) {
+  .sidepanel {
     width: 100%;
   }
 }
 
-@media screen and (max-width : 430px) {
-  .imgCart{
-    width:100%;
+@media screen and (max-width: 430px) {
+  .imgCart {
+    width: 100%;
   }
 
-  .infoCart{
+  .infoCart {
     width: 90%;
   }
-  .openbtn{
+  .openbtn {
     display: none;
   }
 }
 
-@media screen and (max-width:639px) {
-  .openbtn{
+@media screen and (max-width: 639px) {
+  .openbtn {
     display: none;
   }
 }
 
-@media screen and (max-width:650px) {
-  .sidepanel{
+@media screen and (max-width: 650px) {
+  .sidepanel {
     margin: 0 auto;
   }
-  .openbtn{
+  .openbtn {
     display: none;
   }
 }
-
-
 
 @media screen and (min-width: 960px) {
   .sidepanel .closebtn {
@@ -222,7 +223,7 @@
   }
 }
 
-@media screen and (max-width : 750px) {
+@media screen and (max-width: 750px) {
   /* .openbtn{
     display: none;
   } */
@@ -236,22 +237,21 @@
   }
 }
 
-@media screen and (max-width : 750px) {
-  .big{
+@media screen and (max-width: 750px) {
+  .big {
     display: flex;
     /* flex-wrap: wrap; */
   }
 }
 
-@media screen and (max-width : 430px) {
-  .big{
+@media screen and (max-width: 430px) {
+  .big {
     flex-wrap: wrap;
   }
-  
 }
 
-@media screen and (max-width : 430px) {
-  .sidepanel{
+@media screen and (max-width: 430px) {
+  .sidepanel {
     height: 200px;
   }
 }
@@ -263,7 +263,6 @@
     margin: 5px;
   }
   .sideBarTitle {
-    
     padding: 10px;
   }
 }

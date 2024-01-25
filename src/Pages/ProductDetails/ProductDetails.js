@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import StyleSingleProduct from "./ProductDetails.module.css";
-import Image from "../../Assets/lalezar.png";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Helmet } from "react-helmet-async";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { Reveal } from "../../RevealAnimation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProductDetails() {
   const [count, setCount] = useState(1);
@@ -122,7 +124,25 @@ function ProductDetails() {
       });
     }
 
+    showToast(`${product.name} added successfuly to your bag 😍`);
+
     localStorage.setItem("cart", JSON.stringify(currentItems));
+  };
+
+  const showToast = (message) => {
+    toast.info(message, {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      style: {
+        backgroundColor: "#c86823",
+        color: "#fff",
+        fontSize: "16px",
+      },
+    });
   };
 
   return (
@@ -140,85 +160,89 @@ function ProductDetails() {
           />
         </Helmet>
 
-        <div className={StyleSingleProduct.container}>
-          <article className={StyleSingleProduct.imageArticle}>
-            <img
-              src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
-              alt="lalezar"
-              className={StyleSingleProduct.imageProduct}
-            />
-          </article>
+        <Reveal>
+          <div className={StyleSingleProduct.container}>
+            <article className={StyleSingleProduct.imageArticle}>
+              <img
+                src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
+                alt="lalezar"
+                className={StyleSingleProduct.imageProduct}
+              />
+            </article>
 
-          <article className={StyleSingleProduct.contentArticle}>
-            <div className={StyleSingleProduct.nameContainer}>
-              <h1>{product.name}</h1>
-              <p>$1.85</p>
-            </div>
-            <div className={StyleSingleProduct.categoryContainer}>
-              <span>Category :</span>
-              <p>
-                {
-                  categoriesData.find(
-                    (category) => category._id === product.category
-                  )?.name
-                }
-              </p>
-            </div>
-            <div className={StyleSingleProduct.weightContainer}>
-              <span>Weight : </span>
-              <p>{product.quantity} Gr.</p>
-            </div>
-            <div className={StyleSingleProduct.colorContainer}>
-              <span>Color : </span>
-              <div
-                style={{
-                  width: "20px",
-                  height: "20px",
-                  backgroundColor: `${
-                    colorsData.find((color) => color._id === product.color)?.hex
-                  }`,
-                  borderRadius: "100%",
-                }}
-              ></div>
-            </div>
-            <section className={StyleSingleProduct.quantityContainer}>
-              <span>Quantity : </span>
-              <section className={StyleSingleProduct.quantityControl}>
+            <article className={StyleSingleProduct.contentArticle}>
+              <div className={StyleSingleProduct.nameContainer}>
+                <h1>{product.name}</h1>
+                <p>$1.85</p>
+              </div>
+              <div className={StyleSingleProduct.categoryContainer}>
+                <span>Category :</span>
+                <p>
+                  {
+                    categoriesData.find(
+                      (category) => category._id === product.category
+                    )?.name
+                  }
+                </p>
+              </div>
+              <div className={StyleSingleProduct.weightContainer}>
+                <span>Weight : </span>
+                <p>{product.weight} Gr.</p>
+              </div>
+              <div className={StyleSingleProduct.colorContainer}>
+                <span>Color : </span>
                 <div
-                  className={`${StyleSingleProduct.decrease} ${
-                    count === 0 ? StyleSingleProduct.disabled : ""
-                  }`}
-                  onClick={count > 0 ? handleDecrease : null}
-                >
-                  -
-                </div>
-                <div className={StyleSingleProduct.currentQuantity}>
-                  {count}
-                </div>
-                <div
-                  className={StyleSingleProduct.increase}
-                  onClick={handleIncrease}
-                >
-                  +
-                </div>
+                  style={{
+                    width: "20px",
+                    height: "20px",
+                    backgroundColor: `${
+                      colorsData.find((color) => color._id === product.color)
+                        ?.hex
+                    }`,
+                    borderRadius: "100%",
+                  }}
+                ></div>
+              </div>
+              <section className={StyleSingleProduct.quantityContainer}>
+                <span>Quantity : </span>
+                <section className={StyleSingleProduct.quantityControl}>
+                  <div
+                    className={`${StyleSingleProduct.decrease} ${
+                      count === 0 ? StyleSingleProduct.disabled : ""
+                    }`}
+                    onClick={count > 0 ? handleDecrease : null}
+                  >
+                    -
+                  </div>
+                  <div className={StyleSingleProduct.currentQuantity}>
+                    {count}
+                  </div>
+                  <div
+                    className={StyleSingleProduct.increase}
+                    onClick={handleIncrease}
+                  >
+                    +
+                  </div>
+                </section>
               </section>
-            </section>
-            <div className={StyleSingleProduct.descriptionContainer}>
-              <span>Description: </span>
-              <p>{product.description}</p>
-            </div>
-            <div className={StyleSingleProduct.ingredientsContainer}>
-              <span>Ingredients:</span>
-              <p style={{ width: "70%" }}>{product.ingredients}</p>
-            </div>
-            <button
-              className={StyleSingleProduct.addToCart}
-              onClick={() => addToCart(product)}
-            >
-              {<AddShoppingCartIcon />}Add to Cart
-            </button>
-          </article>
-        </div>
+              <div className={StyleSingleProduct.descriptionContainer}>
+                <span>Description: </span>
+                <p>{product.description}</p>
+              </div>
+              <div className={StyleSingleProduct.ingredientsContainer}>
+                <span>Ingredients:</span>
+                <p style={{ width: "70%" }}>{product.ingredients}</p>
+              </div>
+              <button
+                className={StyleSingleProduct.addToCart}
+                onClick={() => addToCart(product)}
+              >
+                {<AddShoppingCartIcon />}Add to Cart
+              </button>
+            </article>
+          </div>
+        </Reveal>
+        <ToastContainer />
       </>
     )
   );
