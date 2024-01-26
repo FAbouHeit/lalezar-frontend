@@ -10,7 +10,7 @@ import BlogDetails from "../Pages/BlogDetails/BlogDetails";
 import PrivacyPolicy from "../Pages/PrivacyPolicy/PrivacyPolicy";
 import DashOverview from "../Pages/DashOverview/DashOverview";
 import DashOrder from "../Pages/DashOrders/DashOrders";
-import DashProducts from "../Pages/DashProducts/DashProducts";
+import DashProducts from "../Pages/DashProducts/DashProducts.js";
 import DashUser from "../Pages/DashUsers/DashUsers";
 import ProfilePage from "../Pages/Profile/Profile";
 import Login from "../Pages/Login/Login";
@@ -109,7 +109,7 @@ const AppRouter = () => {
           exact
           element={
             <PrivatRoute
-            element={<DashProduct />}
+            element={<DashProducts />}
             roles={['Admin']}
             />
           }
