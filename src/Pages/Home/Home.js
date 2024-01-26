@@ -5,20 +5,19 @@ import Styles from "./Home.module.css";
 import ChooseUs from "../../Components/ChooseUs/ChooseUs";
 import img from "../../Assets/category2.jpg";
 import BlogCard from "../../Components/BlogCard2/BlogCard";
+import Clients from "../../Components/Clients/Clients";
 
 const Home = () => {
   const data = [
     {
       title: "24 x 7 User Support",
       image: img,
-      description:
-        "We use latest technology ",
+      description: "We use latest technology ",
     },
     {
       title: "24 x 7 User Support",
       image: img,
-      description:
-        "We use latest technology ",
+      description: "We use latest technology ",
     },
   ];
   return (
@@ -48,6 +47,10 @@ const Home = () => {
               />
             );
           })}
+        </article>
+        <article>
+          <h2 className={Styles.h2}>Our Clients </h2>
+          <Clients />
         </article>
       </main>
     </div>
