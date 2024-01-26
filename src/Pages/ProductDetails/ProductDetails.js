@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 function ProductDetails() {
   const [count, setCount] = useState(1);
   const [product, setProduct] = useState();
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const { slug } = useParams();
 
   function handleIncrease() {
@@ -27,86 +27,18 @@ function ProductDetails() {
         `${process.env.REACT_APP_BACKEND_ENDPOINT}products/product/${slug}`
       );
       if (response) {
-        // console.log(response);
+        // console.log(response.data);
         setProduct(response.data);
-        setLoading(false);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
-      setLoading(false);
+      setIsLoading(false);
     }
   }
   useEffect(() => {
     getProduct();
   }, [slug]);
-
-  const {
-    isPending: isCategoriesPending,
-    error: categoriesError,
-    data: categoriesData,
-  } = useQuery({
-    queryKey: ["categoriesData"],
-    queryFn: async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_ENDPOINT}categories`
-        );
-        return response.data;
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        throw error;
-      }
-    },
-  });
-
-  const {
-    isPending: isColorsPending,
-    error: colorsError,
-    data: colorsData,
-  } = useQuery({
-    queryKey: ["colorsData"],
-    queryFn: async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_ENDPOINT}colors`
-        );
-        return response.data;
-      } catch (error) {
-        console.error("Error fetching colors:", error);
-        throw error;
-      }
-    },
-  });
-
-  if (isCategoriesPending || isColorsPending) {
-    return (
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <h1>Loading ...</h1>
-      </div>
-    );
-  }
-
-  if (categoriesError || colorsError) {
-    return (
-      <div
-        style={{
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <h1>An error occured while fetching Data</h1>
-      </div>
-    );
-  }
 
   const addToCart = (product) => {
     const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -145,106 +77,97 @@ function ProductDetails() {
     });
   };
 
-  return (
-    !loading && (
-      <>
-        <Helmet>
-          <title>Lalezar Spices - Premium {product.name}</title>
-          <meta
-            name="description"
-            content={`Explore the exquisite flavors of our ${product.name}. Handcrafted with care and expertise, this premium spice is sure to elevate your culinary experience.`}
-          />
-          <meta
-            name="keywords"
-            content={`Lalezar Spices, spices, spice collection, gourmet spices, cooking, culinary, seasoning, premium spices, international spices, organic spices, handmade spices, exotic spices, spice blends, herbs, chili peppers, saffron, cumin, cardamom, paprika, curry powder, culinary herbs, artisanal spices, spice shop, online spice store, ${product.name}`}
-          />
-        </Helmet>
+  return isLoading ? (
+    <h1>Loading ...</h1>
+  ) : (
+    <>
+      <Helmet>
+        <title>Lalezar Spices - Premium {product.name}</title>
+        <meta
+          name="description"
+          content={`Explore the exquisite flavors of our ${product.name}. Handcrafted with care and expertise, this premium spice is sure to elevate your culinary experience.`}
+        />
+        <meta
+          name="keywords"
+          content={`Lalezar Spices, spices, spice collection, gourmet spices, cooking, culinary, seasoning, premium spices, international spices, organic spices, handmade spices, exotic spices, spice blends, herbs, chili peppers, saffron, cumin, cardamom, paprika, curry powder, culinary herbs, artisanal spices, spice shop, online spice store, ${product.name}`}
+        />
+      </Helmet>
 
-        <Reveal>
-          <div className={StyleSingleProduct.container}>
-            <article className={StyleSingleProduct.imageArticle}>
-              <img
-                src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
-                alt="lalezar"
-                className={StyleSingleProduct.imageProduct}
-              />
-            </article>
+      <Reveal>
+        <div className={StyleSingleProduct.container}>
+          <article className={StyleSingleProduct.imageArticle}>
+            <img
+              src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
+              alt="lalezar"
+              className={StyleSingleProduct.imageProduct}
+            />
+          </article>
 
-            <article className={StyleSingleProduct.contentArticle}>
-              <div className={StyleSingleProduct.nameContainer}>
-                <h1>{product.name}</h1>
-                <p>$1.85</p>
-              </div>
-              <div className={StyleSingleProduct.categoryContainer}>
-                <span>Category :</span>
-                <p>
-                  {
-                    categoriesData.find(
-                      (category) => category._id === product.category
-                    )?.name
-                  }
-                </p>
-              </div>
-              <div className={StyleSingleProduct.weightContainer}>
-                <span>Weight : </span>
-                <p>{product.weight} Gr.</p>
-              </div>
-              <div className={StyleSingleProduct.colorContainer}>
-                <span>Color : </span>
+          <article className={StyleSingleProduct.contentArticle}>
+            <div className={StyleSingleProduct.nameContainer}>
+              <h1>{product.name}</h1>
+              <p>$1.85</p>
+            </div>
+            <div className={StyleSingleProduct.categoryContainer}>
+              <span>Category :</span>
+              <p>{product.category.name}</p>
+            </div>
+            <div className={StyleSingleProduct.weightContainer}>
+              <span>Weight : </span>
+              <p>{product.weight} Gr.</p>
+            </div>
+            <div className={StyleSingleProduct.colorContainer}>
+              <span>Color : </span>
+              <div
+                style={{
+                  width: "20px",
+                  height: "20px",
+                  backgroundColor: `${product.color.hex}`,
+                  borderRadius: "100%",
+                }}
+              ></div>
+            </div>
+            <section className={StyleSingleProduct.quantityContainer}>
+              <span>Quantity : </span>
+              <section className={StyleSingleProduct.quantityControl}>
                 <div
-                  style={{
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: `${
-                      colorsData.find((color) => color._id === product.color)
-                        ?.hex
-                    }`,
-                    borderRadius: "100%",
-                  }}
-                ></div>
-              </div>
-              <section className={StyleSingleProduct.quantityContainer}>
-                <span>Quantity : </span>
-                <section className={StyleSingleProduct.quantityControl}>
-                  <div
-                    className={`${StyleSingleProduct.decrease} ${
-                      count === 0 ? StyleSingleProduct.disabled : ""
-                    }`}
-                    onClick={count > 0 ? handleDecrease : null}
-                  >
-                    -
-                  </div>
-                  <div className={StyleSingleProduct.currentQuantity}>
-                    {count}
-                  </div>
-                  <div
-                    className={StyleSingleProduct.increase}
-                    onClick={handleIncrease}
-                  >
-                    +
-                  </div>
-                </section>
+                  className={`${StyleSingleProduct.decrease} ${
+                    count === 0 ? StyleSingleProduct.disabled : ""
+                  }`}
+                  onClick={count > 0 ? handleDecrease : null}
+                >
+                  -
+                </div>
+                <div className={StyleSingleProduct.currentQuantity}>
+                  {count}
+                </div>
+                <div
+                  className={StyleSingleProduct.increase}
+                  onClick={handleIncrease}
+                >
+                  +
+                </div>
               </section>
-              <div className={StyleSingleProduct.descriptionContainer}>
-                <span>Description: </span>
-                <p>{product.description}</p>
-              </div>
-              <div className={StyleSingleProduct.ingredientsContainer}>
-                <span>Ingredients:</span>
-                <p style={{ width: "70%" }}>{product.ingredients}</p>
-              </div>
-              <button
-                className={StyleSingleProduct.addToCart}
-                onClick={() => addToCart(product)}
-              >
-                {<AddShoppingCartIcon />}Add to Cart
-              </button>
-            </article>
-          </div>
-        </Reveal>
-        <ToastContainer />
-      </>
-    )
+            </section>
+            <div className={StyleSingleProduct.descriptionContainer}>
+              <span>Description: </span>
+              <p>{product.description}</p>
+            </div>
+            <div className={StyleSingleProduct.ingredientsContainer}>
+              <span>Ingredients:</span>
+              <p style={{ width: "70%" }}>{product.ingredients}</p>
+            </div>
+            <button
+              className={StyleSingleProduct.addToCart}
+              onClick={() => addToCart(product)}
+            >
+              {<AddShoppingCartIcon />}Add to Cart
+            </button>
+          </article>
+        </div>
+      </Reveal>
+      <ToastContainer />
+    </>
   );
 }
 
