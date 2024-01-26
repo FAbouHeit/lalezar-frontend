@@ -15,12 +15,13 @@ import { Link } from "react-router-dom";
 import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import _debounce from "lodash/debounce";
+import PaginationItem from '@mui/material/PaginationItem';
 
 const Products = () => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [checkboxes, setCheckboxes] = useState({});
+  const productsPerPage = 12;
 
   const [currentPage, setCurrentPage] = useState(1);
   const [sidePanelWidth, setSidePanelWidth] = useState(400);
@@ -52,11 +53,9 @@ const Products = () => {
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `${
-            process.env.REACT_APP_BACKEND_ENDPOINT
-          }products/paginate?pageNumber=${currentPage}&pageSize=${12}`
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}products`
         );
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -159,6 +158,15 @@ const Products = () => {
       return matchesCategory;
     });
 
+  // Calculate the start and end index of products to display on the current page
+  const startIndex = (currentPage - 1) * productsPerPage;
+  const endIndex = startIndex + productsPerPage;
+
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+
+  // Add To Cart Section
   const addToCart = (product) => {
     const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
     const existingItem = currentItems.find((item) => item.id === product._id);
@@ -173,6 +181,7 @@ const Products = () => {
     }
   };
 
+  // Toastify Section
   const showToast = (message) => {
     toast.info(message, {
       position: "bottom-right",
@@ -301,7 +310,7 @@ const Products = () => {
 
         <div className={StyleProducts.content}>
           <div className={StyleProducts.cartContainer}>
-            {filteredProducts.map((product) => (
+            {paginatedProducts.map((product) => (
               <Reveal>
                 <div className={StyleProducts.oneCart}>
                   <Link
@@ -351,7 +360,8 @@ const Products = () => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Stack spacing={2}>
               <Pagination
-                count={Math.ceil(10)}
+                // count={Math.ceil(10)}
+                count={totalPages}
                 page={currentPage}
                 onChange={(event, page) => setCurrentPage(page)}
                 variant="outlined"
@@ -363,6 +373,14 @@ const Products = () => {
                     bgcolor: "#c86823",
                   },
                 }}
+                renderItem={(item) => (
+                  <PaginationItem
+                    {...item}
+                    disabled={
+                      !paginatedProducts.length && item.page === currentPage
+                    }
+                  />
+                )}
               />
             </Stack>
           </div>
