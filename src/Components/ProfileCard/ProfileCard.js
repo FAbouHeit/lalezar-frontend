@@ -34,7 +34,7 @@ const ProfileCard = ({
         display: "flex",
         flexDirection: "column",
         zIndex: 0,
-        boxShadow: "1px 1px 5px 5px #BABABA",
+        boxShadow: "0 0 10px #BABABA",
       }}
     >
       <span
@@ -65,7 +65,6 @@ const ProfileCard = ({
             fontWeight: "650",
           }}
           className={styles.Name}
-          fontFamily="Helvetica Neue"
         >
           {userData && userData.firstName + " " + userData.lastName}
         </Typography>
@@ -87,7 +86,6 @@ const ProfileCard = ({
             <Typography
               variant="body1"
               component="p"
-              fontFamily="Helvetica Neue"
             >
               {userData && userData.role}
             </Typography>
@@ -98,16 +96,12 @@ const ProfileCard = ({
         <span
           className={`${styles.Span} ${overview ? styles.ActiveSpan : ""}`}
           onClick={handleOverview}
-          style={{
-            fontFamily: "Helvetica Neue",
-          }}
         >
           Overview
         </span>
         <span
           className={`${styles.Span} ${edit ? styles.ActiveSpan : ""}`}
           onClick={handleEdit}
-          sx={{ fontFamily: "Helvetica Neue" }}
         >
           Edit
         </span>

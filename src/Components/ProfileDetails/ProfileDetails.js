@@ -1,13 +1,12 @@
 import { Box, Stack, Typography } from "@mui/material";
 import dayjs from "dayjs";
 
-const ProfileDetails = ({userData}) => {
-
+const ProfileDetails = ({ userData }) => {
   const formatDate = (date) => {
-    const formattedDate = dayjs(date).format('DD-MM-YYYY');
+    const formattedDate = dayjs(date).format("DD-MM-YYYY");
     return formattedDate;
   };
-  
+
   return (
     <Box
       sx={{
@@ -19,93 +18,94 @@ const ProfileDetails = ({userData}) => {
         display: "flex",
         flexDirection: "column",
         zIndex: 0,
-        fontFamily: "Helvetica Neue",
       }}
     >
-        <Typography
-        component='h3'
+      <Typography
+        component="h3"
         variant="h3"
-        fontSize='1.1rem'
-        pl='0.7rem'
-        lineHeight='2.7rem'
-        borderBottom = '1px solid rgba(0, 0, 0, 0.12)'
-        fontFamily= "Helvetica Neue"
-        >
-            User Details
-        </Typography>
+        fontSize="1.1rem"
+        lineHeight="2.7rem"
+        borderBottom="1px solid rgba(0, 0, 0, 0.12)"
+      >
+        <span style={{
+          paddingLeft: '1rem',
+          paddingRight: '1rem',
+          color: '#C86823',
+          borderBottom: '2px solid #C86823',
+          display:'flex',
+          height: '100%',
+          width: 'fit-content'
+        }}>User Details</span>
+      </Typography>
       <Stack>
         <Typography
-            variant="p"
-            component="p"
-            fontSize="1rem"
-            fontFamily="Helvetica Neue"
-            mb="1.2rem"
-            mt='1rem'
-            pl='1.5rem'
+          variant="p"
+          component="p"
+          fontSize="1rem"
+          mb="1.2rem"
+          mt="1rem"
+          pl="1rem"
+        >
+          <span
+            style={{
+              fontWeight: "600",
+            }}
           >
-            <span
-              style={{
-                fontWeight: "600",
-              }}
-            >
-              First Name :{" "}
-            </span>{" "}
-            {userData && userData.firstName}
-          </Typography>
-          <Typography
-            variant="p"
-            component="p"
-            fontSize="1rem"
-            fontFamily="Helvetica Neue"
-            mb="1.2rem"
-            mt='1rem'
-            pl='1.5rem'
+            First Name :{" "}
+          </span>{" "}
+          {userData && userData.firstName}
+        </Typography>
+        <Typography
+          variant="p"
+          component="p"
+          fontSize="1rem"
+          mb="1.2rem"
+          mt="1rem"
+          pl="1rem"
+        >
+          <span
+            style={{
+              fontWeight: "600",
+            }}
           >
-            <span
-              style={{
-                fontWeight: "600",
-              }}
-            >
-              Last Name :{" "}
-            </span>{" "}
-            {userData && userData.lastName}
-          </Typography>
-          <Typography
-            variant="p"
-            component="p"
-            fontSize="1rem"
-            fontFamily="Helvetica Neue"
-            mb="1.2rem"
-            mt='1rem'
-            pl='1.5rem'
+            Last Name :{" "}
+          </span>{" "}
+          {userData && userData.lastName}
+        </Typography>
+        <Typography
+          variant="p"
+          component="p"
+          fontSize="1rem"
+          mb="1.2rem"
+          mt="1rem"
+          pl="1rem"
+        >
+          <span
+            style={{
+              fontWeight: "600",
+            }}
           >
-            <span
-              style={{
-                fontWeight: "600",
-              }}
-            >
-              Email :{" "}
-            </span>{" "}
-            {userData && userData.email}
-          </Typography>
-          <Typography
-            variant="p"
-            component="p"
-            fontSize="1rem"
-            fontFamily="Helvetica Neue"
-            mb="1.2rem"
-            mt='1rem'
-            pl='1.5rem'
+            Email :{" "}
+          </span>{" "}
+          {userData && userData.email}
+        </Typography>
+        <Typography
+          variant="p"
+          component="p"
+          fontSize="1rem"
+          mb="1.2rem"
+          mt="1rem"
+          pl="1rem"
+        >
+          <span
+            style={{
+              fontWeight: "600",
+            }}
           >
-            <span
-              style={{
-                fontWeight: "600",
-              }}
-            >
-              Joined Since:{" "}
-            </span>{" "}
-            {userData && formatDate(userData.createdAt)}
-          </Typography>
+            Joined Since:{" "}
+          </span>{" "}
+          {userData && formatDate(userData.createdAt)}
+        </Typography>
       </Stack>
     </Box>
   );

@@ -124,8 +124,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
         padding: screenWidth < 380 ? "10px" : "2rem",
         mb: "5rem",
         borderRadius: "10px",
-        boxShadow: "1px 1px 5px 5px #BABABA",
-        fontFamily: "Helvetica Neue",
+        boxShadow: "0 0 10px #BABABA",
         "& .MuiFormControl-root": {
           mt: 2,
           mb: 2,
@@ -133,31 +132,31 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
           mr: 0,
           width:
             screenWidth < 380 ? "10rem" : screenWidth < 550 ? "15rem" : "20rem",
-          fontFamily: "Helvetica Neue",
+
         },
         "& .MuiButton-containedPrimary": {
-          bgcolor: "#088395 !important",
+          bgcolor: "#C86823 !important",
           padding: 0,
           mt: 2,
           mb: 2,
           height: "3.5rem",
           width: screenWidth < 550 ? "15rem" : "20rem",
-          fontFamily: "Helvetica Neue",
+
         },
         "& .MuiButton-containedPrimary:hover": {
           bgcolor: "#035e6b !important",
-          fontFamily: "Helvetica Neue",
+
         },
         "& .MuiStack-root": {
           padding: 0,
           margin: 0,
-          fontFamily: "Helvetica Neue",
+
         },
         "& .MuiButtonBase-root": {
           borderRadius: 0,
-          bgcolor: "#088395",
+          bgcolor: "#C86823",
           padding: "15px",
-          fontFamily: "Helvetica Neue",
+
         },
         "& .MuiButtonBase-root:hover": {
           bgcolor: "#17456E",
@@ -165,12 +164,12 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
         "& .MuiOutlinedInput-notchedOutline ": {
           border: "1.5px solid  gray !important",
           borderRadius: "4px",
-          fontFamily: "Helvetica Neue",
+
         },
         "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
-          border: "2px solid #088395 !important",
+          border: "2px solid #C86823 !important",
           borderRadius: "4px",
-          fontFamily: "Helvetica Neue",
+
         },
         "& .MuiStack-root ": {
           width:
@@ -178,7 +177,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
           margin:
             screenWidth < 900 ? 0 : screenWidth < 1100 ? "0 3rem" : "0 5rem",
           alignItems: screenWidth < 550 ? "center" : "",
-          fontFamily: "Helvetica Neue",
+
         },
         "& .MuiFormControl-root , & .MuiTextField-root , & .MuiInputBase-root":
           {
@@ -189,14 +188,14 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
                 ? "15rem"
                 : "20rem",
             minWidth: "0 !important",
-            fontFamily: "Helvetica Neue",
+  
           },
         "& .Mui-focused.MuiFormLabel-root ": {
-          color: "#088395 !important",
-          fontFamily: "Helvetica Neue",
+          color: "#C86823 !important",
+
         },
         ".MuiFormLabel-root": {
-          fontFamily: "Helvetica Neue",
+
           fontSize: "1.1rem",
         },
       }}

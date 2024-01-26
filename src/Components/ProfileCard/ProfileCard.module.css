@@ -6,12 +6,12 @@
     padding:1rem ;
     font-weight: 600;
     font-size: 1.3rem;
-    color: var(--color-font-gray );
+    color: #555555;
     z-index: 1;
 }
 
 .ActiveSpan {
-    border-bottom: 2px solid var(--main-blue);
+    border-bottom: 2px solid var(--color1);
   }
 
 .Span:hover{
@@ -19,7 +19,7 @@
 }
 
 .Span:active , .Span:focus{
-    border-bottom: 2px solid var(--main-blue);
+    border-bottom: 2px solid var(--color1);
 }
 
 @media screen and (max-width : 380px) {

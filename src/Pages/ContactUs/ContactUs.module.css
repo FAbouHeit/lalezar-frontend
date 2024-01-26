@@ -3,7 +3,7 @@
     margin:auto;
     display: flex;
     flex-direction: column;
-    height: 60vh;
+    height: 65vh;
     margin-top: 7rem;
     row-gap: 3rem;
 }

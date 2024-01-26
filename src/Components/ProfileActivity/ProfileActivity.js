@@ -24,7 +24,6 @@ const ProfileActivity = ({ userData }) => {
         width: "100%",
         borderRadius: "10px",
         typography: "body1",
-        fontFamily: "Helvetica Neue",
         "& .MuiBox-root ": {
           width: "100%",
           height: "fit-content",
@@ -44,14 +43,13 @@ const ProfileActivity = ({ userData }) => {
         },
         "& .MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.Mui-selected":
           {
-            color: "#088395",
+            color: "#C86823",
           },
           ".MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary": {
-          fontFamily:"Helvetica Neue",
           fontSize: "0.95rem !important",
         },
         "& .MuiTabs-indicator ": {
-          bgcolor: "#088395",
+          bgcolor: "#C86823",
         },
         ".MuiPagination-ul": {
           marginTop: "1.5rem",
@@ -65,34 +63,21 @@ const ProfileActivity = ({ userData }) => {
             borderBottom: 1,
             borderColor: "divider",
             marginTop: 0,
-            fontFamily: "Helvetica Neue",
+  
           }}
         >
-          {userData &&
-          (userData.role === "Admin" || userData.role === "Manager") ? (
+          {!userData ? (
             <TabList
               onChange={(e, newValue) => setValue(newValue)}
               aria-label="lab API tabs example"
             >
-              <Tab label="Hotels" value="0" />
-              <Tab label="Rooms" value="1" />
+              <Tab label="Products" value="0" />
             </TabList>
-          ) : (
-            <TabList
-              onChange={(e, newValue) => setValue(newValue)}
-              aria-label="lab API tabs example"
-            >
-              <Tab label="Reservations" value="0" />
-              <Tab label="Ratings" value="1" />
-            </TabList>
-          )}
+          ) : ""}
         </Box>
-        {userData &&
-        (userData.role === "Admin" || userData.role === "Manager") ? (
+        {!userData? (
           <Box>
             <TabPanel key={value} value={value}>
-              {value === "0" ? (
-                <>
                   {userData &&
                     userData.Hotels.slice(
                       (page - 1) * itemsPerPage,
@@ -109,81 +94,9 @@ const ProfileActivity = ({ userData }) => {
                     page={page}
                     onChange={(e, newPage) => setPage(newPage)}
                   />
-                </>
-              ) : value === "1" ? (
-                <>
-                  {userData &&
-                    userData.Rooms.slice(
-                      (page - 1) * itemsPerPage,
-                      page * itemsPerPage
-                    ).map((room, index) => (
-                      <ActivityCard key={room.id} room={room}/>
-
-                    ))}
-                  <Pagination
-                    count={Math.ceil(
-                      userData && userData.Rooms.length / itemsPerPage
-                    )}
-                    variant="outlined"
-                    color="primary"
-                    page={page}
-                    onChange={(e, newPage) => setPage(newPage)}
-                  />
-                </>
-              ) : (
-                ""
-              )}
             </TabPanel>
           </Box>
-        ) : (
-          <Box>
-            <TabPanel key={value} value={value}>
-              {value === "0" ? (
-                <>
-                  {userData &&
-                    userData.Reservations.slice(
-                      (page - 1) * itemsPerPage,
-                      page * itemsPerPage
-                    ).map((reservation, index) => (
-                      <ActivityCard key={reservation.id} reservation={reservation}/>
-
-                    ))}
-                  <Pagination
-                    count={Math.ceil(
-                      userData && userData.Reservations.length / itemsPerPage
-                    )}
-                    variant="outlined"
-                    color="primary"
-                    page={page}
-                    onChange={(e, newPage) => setPage(newPage)}
-                  />
-                </>
-              ) : value === "1" ? (
-                <>
-                  {userData &&
-                    userData.Ratings.slice(
-                      (page - 1) * itemsPerPage,
-                      page * itemsPerPage
-                    ).map((rating, index) => (
-                      <ActivityCard key={rating.id} rating={rating}/>
-
-                    ))}
-                  <Pagination
-                    count={Math.ceil(
-                      userData && userData.Ratings.length / itemsPerPage
-                    )}
-                    variant="outlined"
-                    color="primary"
-                    page={page}
-                    onChange={(e, newPage) => setPage(newPage)}
-                  />
-                </>
-              ) : (
-                ""
-              )}
-            </TabPanel>
-          </Box>
-        )}
+        ) : "" }
       </TabContext>
     </Box>
   );

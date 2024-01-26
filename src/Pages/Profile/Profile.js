@@ -7,12 +7,13 @@ import ProfileCard from "../../Components/ProfileCard/ProfileCard";
 import ProfileActivity from '../../Components/ProfileActivity/ProfileActivity'
 import ProfileDetails from '../../Components/ProfileDetails/ProfileDetails'
 import EditProfile from '../../Components/EditProfile/EditProfile'
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "../../Utils/AxiosInstance";
 
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
   const [overview, setOverview] = useState(true);
   const [edit, setEdit] = useState(false);
-  const [userData, setUserData] = useState();
   const [networkError, setNetworkError] = useState(false);
   const [successEdit, setSuccessEdit] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -47,6 +48,59 @@ const ProfilePage = () => {
     setEdit(true);
     setOverview(false);
   };
+
+
+  const {
+    isPending : isUserPending ,
+    error : userError ,  
+    data : userData ,
+  } = useQuery({
+    queryKey : ['UserData'] ,
+    queryFn : async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${
+            process.env.REACT_APP_BACKEND_ENDPOINT
+          }user/byId` ,
+          {id : user._id}
+        )
+        return response
+      } catch (error) {
+        console.log('Error fetching user' , error)
+        throw error;
+      }
+    }
+  })
+
+  if (isUserPending) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h1>Loading ...</h1>
+      </div>
+    );
+  }
+
+  if (userError) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h1>An error occured while fetching Data</h1>
+      </div>
+    );
+  }
 
   const flex = screenWidth < 600 ? "column" : "row";
   const leftSpanWidth = screenWidth < 600 ? "100%" : "55%";
@@ -108,7 +162,7 @@ const ProfilePage = () => {
             <span
               style={{
                 display: "flex",
-                boxShadow: "1px 1px 5px 5px #BABABA",
+                boxShadow: "0 0 10px #BABABA",
                 width: leftSpanWidth,
                 borderRadius: "10px",
                 marginBottom: "2rem",
@@ -119,7 +173,7 @@ const ProfilePage = () => {
             <span
               style={{
                 display: "flex",
-                boxShadow: "1px 1px 5px 5px #BABABA",
+                boxShadow: "0 0 10px #BABABA",
                 width: rightSpanWidth,
                 borderRadius: "10px",
                 height: "19rem",
