@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "../Context/AuthContext";
 import Home from "../Pages/Home/Home";
@@ -23,39 +23,41 @@ import AboutUs from "../Pages/AboutUs/AboutUs.js";
 import DashBlogs from "../Pages/DashBlogs/DashBlogs.js";
 import DashOutlet from "./DashOutlet.js";
 
-const PrivatRoute = ({ element, roles }) => {
+const PrivatRoute = ({ isAllowed, children, redirectPath = "/unauthorized" }) => {
   const { user, checkUser } = useContext(AuthContext);
 
-  // if (checkUser) {
-  //   return (
-  //     <div
-  //       style={{
-  //         width: "100vw",
-  //         height: "100vh",
-  //         display: "flex",
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //         fontSize: "3rem",
-  //       }}
-  //     >
-  //       Loading...
-  //     </div>
-  //   );
-  // }
+  if (checkUser || !user) {
+    return (
+      <div
+        style={{
+          width: "100vw",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "3rem",
+        }}
+      >
+        Loading...
+      </div>
+    );
+  }
 
-  // if (!user && !checkUser) {
-  //   return <Navigate to="/unauthorized" />;
-  // }
+  if (!checkUser && !user) {
+    return <Navigate to="/Unauthorized" />;
+  }
 
-  // if (user && roles && roles.includes(user.role)) {
-  //   return element;
-  // } else {
-  //   return <Navigate to="/unauthorized" />;
-  // }
-  return element
+  if (!isAllowed) {
+    return <Navigate to='/Unauthorized' />;
+  }
+
+  return children ? children : <DashOutlet />;
+
+  // return element
 };
 
 const AppRouter = () => {
+  const { user, checkUser } = useContext(AuthContext);
   return (
     <Routes>
       <Route path="/" element={<Outlet />}>
@@ -79,18 +81,18 @@ const AppRouter = () => {
           path="/dashboard/blogs"
           exact
           element={
-            <PrivatRoute 
-              element={<DashBlogs />} 
-              roles={["Admin"]} 
-          />}
+            <PrivatRoute
+              element={<DashBlogs />}
+              roles={["Admin"]}
+            />}
         />
         <Route
           path="/dashboard"
           exact
           element={
             <PrivatRoute
-            element={<DashOverview />}
-            roles={['Admin']}
+              element={<DashOverview />}
+              isAllowed={user && user.role === "Admin" ? true : false}
             />
           }
         />
@@ -99,8 +101,8 @@ const AppRouter = () => {
           exact
           element={
             <PrivatRoute
-            element={<DashOrder />}
-            roles={['Admin']}
+              element={<DashOrder />}
+              roles={['Admin']}
             />
           }
         />
@@ -109,8 +111,8 @@ const AppRouter = () => {
           exact
           element={
             <PrivatRoute
-            element={<DashProduct />}
-            roles={['Admin']}
+              element={<DashProduct />}
+              roles={['Admin']}
             />
           }
         />
@@ -118,9 +120,9 @@ const AppRouter = () => {
           path="/dashboard/user"
           exact
           element={
-            <PrivatRoute 
-              element={<DashUser />} 
-              roles={["Admin"]} 
+            <PrivatRoute
+              element={<DashUser />}
+              roles={["Admin"]}
             />}
         />
       </Route>

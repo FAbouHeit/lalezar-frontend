@@ -98,6 +98,7 @@ const submitHandler = async (e) => {
       })
    
       await fetchUserData()
+      console.log('loggedin')
       setLoading(false);
       setSuccess(true)
       navigate('/home')
