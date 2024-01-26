@@ -266,3 +266,12 @@
     padding: 10px;
   }
 }
+
+@media screen and (max-width: 380px) {
+  .oneCart {
+    width: 100%;
+  }
+  .addToCart{
+    width: 100%;
+  }
+}

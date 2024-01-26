@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import _debounce from "lodash/debounce";
 
 const Products = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -53,8 +54,9 @@ const Products = () => {
         const response = await axios.get(
           `${
             process.env.REACT_APP_BACKEND_ENDPOINT
-          }products?pageNumber=${currentPage}&pageSize=${12}`
+          }products/paginate?pageNumber=${currentPage}&pageSize=${12}`
         );
+        console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -151,7 +153,7 @@ const Products = () => {
       const matchesCategory =
         selectedCategories.length === 0 ||
         selectedCategories.some(
-          (categoryId) => categoryId === product.category
+          (categoryId) => categoryId === product.category._id
         );
 
       return matchesCategory;
@@ -181,8 +183,8 @@ const Products = () => {
       draggable: true,
       style: {
         backgroundColor: "#c86823",
-        color: "#fff", 
-        fontSize: "16px", 
+        color: "#fff",
+        fontSize: "16px",
       },
     });
   };
@@ -307,6 +309,8 @@ const Products = () => {
                       textDecoration: "none",
                       color: "inherit",
                       transition: "background-color 0.5s, opacity 0.3s",
+                      display: "flex",
+                      flexDirection: "column",
                     }}
                     to={`/ProductDetails/${product.slug}`}
                     key={product._id}
@@ -328,11 +332,7 @@ const Products = () => {
                         <strong style={{ fontSize: "25px" }}>
                           {product.name}
                         </strong>
-                        {
-                          categoriesData.find(
-                            (category) => category._id === product.category
-                          )?.name
-                        }
+                        {product.category.name}
                         <p style={{ fontSize: "20px" }}>${product.price}</p>
                       </section>
                     </div>

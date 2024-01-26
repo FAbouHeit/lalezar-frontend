@@ -47,11 +47,22 @@ const Table = ({
       if (ForWhat === "users") {
         visibleFields = [
           "firstName",
-          'lastName' ,
-          'role',
+          "lastName",
+          "role",
           "email",
           "phoneNumber",
-          "image"
+          "image",
+        ];
+      } else if (ForWhat === "products") {
+        visibleFields = [
+          "name",
+          "image",
+          "description",
+          "price",
+          "ingredients",
+          "stock",
+          "category",
+          "color",
         ];
       } else {
         visibleFields = Object.keys(data[0]);
@@ -62,15 +73,50 @@ const Table = ({
         headerName: field,
         flex: screenWidth < 800 ? 0 : 1,
         renderCell: (params) => {
-          if (field === "image" && params.row.image ) {
+          if (field === "image" && params.row.image) {
             return (
               <img
-                src={`${process.env.REACT_APP_SQL_API}/${params.row.image ? params.row.image : ""}`} // Assuming the "icon" field contains the image URL
+                src={`${process.env.REACT_APP_IMAGE_PATH}/${
+                  params.row.image ? params.row.image : ""
+                }`} // Assuming the "icon" field contains the image URL
                 alt="Icon"
                 style={{ width: "70px", height: "50px" }}
               />
             );
-          } 
+          }
+          if (field === "color" && params.row.color) {
+            const color = params.row.color.hex;
+            return (
+              <div
+                style={{
+                  backgroundColor: color,
+                  width: "3rem",
+                  height: "3rem",
+                  borderRadius: '50%'
+                }}
+              ></div>
+            );
+          }
+          if (field === 'stock' && params.row.stock){
+            const stock = params.row.stock === true ? 'There is Stock' : 'Stock Empty'
+            return ( 
+              <p style={{
+                color: 'black'
+              }}>
+                {stock}
+              </p>
+            )
+          }
+
+          if (field === 'category' && params.row.category){
+            return(
+              <p style={{
+                color: "black"
+              }}>
+                {params.row.category.name}
+              </p>
+            )
+          }
           return params.value;
         },
       }));
@@ -118,12 +164,19 @@ const Table = ({
 
   return (
     <>
-      <Box sx={{ height: 707, mt: "3rem", mb: "3rem" , fontFamily:"Helvetica Neue" }}>
+      <Box
+        sx={{
+          height: 707,
+          mt: "3rem",
+          mb: "3rem",
+          fontFamily: "Helvetica Neue",
+        }}
+      >
         <DataGrid
           isCellEditable={(GridCellParams) => false}
           columns={columns}
           rows={data}
-          getRowId={(row) => row.id}
+          getRowId={(row) => row._id}
           pageSizeOptions={[5, 10, 20, 100]}
           initialState={{
             pagination: {
@@ -139,7 +192,7 @@ const Table = ({
             },
           }}
           sx={{
-            fontFamily:"Helvetica Neue",
+            fontFamily: "Helvetica Neue",
             marginBottom: "4rem",
             width: "98%",
             border: "solid 1px #BABABA",
@@ -153,8 +206,11 @@ const Table = ({
               },
             "& .MuiDataGrid-root , .MuiDataGrid-colCell, .MuiDataGrid-root , .MuiDataGrid-cell":
               {
-                maxHeight: "100px !important",
+                maxHeight: "150px !important",
               },
+            "& .MuiDataGrid-root > *": {
+              height: "100%",
+            },
             "& .MuiInputBase-root , & .MuiInputBase-input": {
               color: "#000",
             },
@@ -165,8 +221,8 @@ const Table = ({
               bgcolor: "#C86823 !important",
             },
             "& .MuiDataGrid-row": {
-              height: "90px !important",
-              maxHeight: "90px !important",
+              height: "150px !important",
+              maxHeight: "150px !important",
             },
             "& .Mui-hovered": {
               bgcolor: " #08829557 !important",
@@ -176,8 +232,8 @@ const Table = ({
             },
             "& .MuiDataGrid-columnHeaders , & .MuiDataGrid-toolbarContainer , & .MuiDataGrid-footerContainer":
               {
-                height: "90px !important",
-                maxHeight: "90px !important",
+                height: "100px !important",
+                maxHeight: "100px !important",
                 fontSize: "1.2rem",
                 mb: screenWidth < 500 ? "1rem" : "0",
               },
@@ -186,6 +242,8 @@ const Table = ({
             },
             ".MuiDataGrid-cell": {
               width: "8rem",
+              maxHeight: "150px",
+              height: "150px",
             },
             "& .MuiSelect-select , & .MuiTablePagination-select , & .MuiSelect-standard MuiInputBase-input css-194a1fa-MuiSelect-select-MuiInputBase-input":
               {
