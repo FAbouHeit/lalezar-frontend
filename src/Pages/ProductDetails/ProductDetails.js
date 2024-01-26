@@ -149,14 +149,14 @@ function ProductDetails() {
     !loading && (
       <>
         <Helmet>
-          <title>Lalezar Spices - Premium [Product Name]</title>
+          <title>Lalezar Spices - Premium {product.name}</title>
           <meta
             name="description"
-            content="Explore the exquisite flavors of our [Product Name]. Handcrafted with care and expertise, this premium spice is sure to elevate your culinary experience."
+            content={`Explore the exquisite flavors of our ${product.name}. Handcrafted with care and expertise, this premium spice is sure to elevate your culinary experience.`}
           />
           <meta
             name="keywords"
-            content="Lalezar Spices, spices, spice collection, gourmet spices, cooking, culinary, seasoning, premium spices, international spices, organic spices, handmade spices, exotic spices, spice blends, herbs, chili peppers, saffron, cumin, cardamom, paprika, curry powder, culinary herbs, artisanal spices, spice shop, online spice store, [Product Name], [Product Keywords]"
+            content={`Lalezar Spices, spices, spice collection, gourmet spices, cooking, culinary, seasoning, premium spices, international spices, organic spices, handmade spices, exotic spices, spice blends, herbs, chili peppers, saffron, cumin, cardamom, paprika, curry powder, culinary herbs, artisanal spices, spice shop, online spice store, ${product.name}`}
           />
         </Helmet>
 

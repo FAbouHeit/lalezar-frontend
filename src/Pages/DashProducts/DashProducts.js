@@ -1,5 +1,12 @@
-const DashProduct = () => {
+import React from 'react'
 
+function DashProducts() {
+  return (
+    <div>
+      <h1>hhwfw</h1>
+    </div>
+  )
 }
 
-export default DashProduct
+export default DashProducts
+
