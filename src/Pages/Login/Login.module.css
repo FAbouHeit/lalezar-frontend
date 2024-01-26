@@ -61,13 +61,13 @@
 .inputContainer {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .buttonContainer {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     justify-items: left;
     /* gap: 0.1rem; */
 }
