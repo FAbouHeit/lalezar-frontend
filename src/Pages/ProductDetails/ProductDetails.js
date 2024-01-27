@@ -4,7 +4,6 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -52,6 +51,7 @@ function ProductDetails() {
       currentItems.push({
         id: product._id,
         name: product.name,
+        price : product.price,
         quantity: count,
       });
     }
@@ -78,7 +78,16 @@ function ProductDetails() {
   };
 
   return isLoading ? (
-    <h1>Loading ...</h1>
+    <h1
+      style={{
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      Loading ...
+    </h1>
   ) : (
     <>
       <Helmet>
@@ -157,6 +166,14 @@ function ProductDetails() {
               <span>Ingredients:</span>
               <p style={{ width: "70%" }}>{product.ingredients}</p>
             </div>
+            {product.stock === true ? (
+              <div className={StyleSingleProduct.ingredientsContainer}>
+                <span>Stock : </span>
+                <p>Available</p>
+              </div>
+            ) : (
+              ""
+            )}
             <button
               className={StyleSingleProduct.addToCart}
               onClick={() => addToCart(product)}

@@ -59,6 +59,8 @@ const Table = ({
           "image",
           "description",
           "price",
+          "weight",
+          "slug",
           "ingredients",
           "stock",
           "category",
@@ -80,7 +82,7 @@ const Table = ({
                   params.row.image ? params.row.image : ""
                 }`} // Assuming the "icon" field contains the image URL
                 alt="Icon"
-                style={{ width: "70px", height: "50px" }}
+                style={{ width: "100px", height: "100px" }}
               />
             );
           }
@@ -95,6 +97,22 @@ const Table = ({
                   borderRadius: '50%'
                 }}
               ></div>
+            );
+          }
+          if (field === "weight" && params.row.weight) {
+            const weight = params.row.weight;
+            return (
+              <div>
+                {weight} Gr
+              </div>
+            );
+          }
+          if (field === "price" && params.row.price) {
+            const price = params.row.price;
+            return (
+              <div>
+                ${price}
+              </div>
             );
           }
           if (field === 'stock' && params.row.stock){
@@ -119,6 +137,7 @@ const Table = ({
           }
           return params.value;
         },
+        
       }));
 
       if (buton === true) {
