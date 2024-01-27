@@ -1,87 +1,447 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../../Components/Table/Table";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import StyleDashProducts from "./DashProducts.module.css";
+import {
+  FormControl,
+  TextField,
+  Button,
+  Switch,
+  InputLabel,
+  Select,
+  MenuItem,
+  Input,
+} from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function DashProducts() {
-  const Products = [
-    {
-      _id: "65ab99e7e9277eaa5434570d",
-      name: "kabseh",
-      name_AR: "الكبسة",
-      description: "description ....",
-      description_AR: "مواصفات ....",
-      price: 1.85,
-      image: "image-1705744871927-24236543.jpeg",
-      ingredients:
-        "2renfol , erfe , heil , lumi , kari , kamoun , felfol aswed , kezbra , joz tib , kerkom , flayfle khechen wasat",
-      ingredients_AR:
-        "قرنفل , قرفة , هيل , لومي , كاري , كمون , فلفل أسود , كزبرة , جوزة الطيب , كركم , فليفلة خشن أسود",
-      stock: true,
-      note: "note......",
-      note_AR: "ملاحظة",
-      display: true,
-      slug: "kabseh",
-      category: {
-        _id: "659ecc88bb243d881dcbc90b",
-        name: "Eastern & Western",
-      },
-      color: {
-        _id: "659ed5e968df6e614bc00e51",
-        hex: "#740004",
-        createdAt: "2024-01-10T17:37:45.761Z",
-        updatedAt: "2024-01-26T08:29:49.101Z",
-        __v: 0,
-        name: "Burgundy Red",
-      },
-      createdAt: "2024-01-20T10:01:11.936Z",
-      updatedAt: "2024-01-25T16:54:46.394Z",
-      __v: 0,
-      quantity: 50,
-      weight: 50,
+  const [isAddPopUp, setIsAddPopUp] = useState(false);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    name_AR: "",
+    image: "",
+    description: "",
+    description_AR: "",
+    price: 0,
+    weight: 0,
+    slug: "",
+    ingredients: "",
+    ingredients_AR: "",
+    stock: false,
+    display: false,
+    category: "",
+    color: "",
+  });
+
+  const handleOpenPopUp = () => {
+    setIsAddPopUp(true);
+  };
+
+  const {
+    isPending: isProductsPending,
+    error: productsError,
+    data: productsData,
+    refetch: refetchProducts,
+  } = useQuery({
+    queryKey: ["productsData"],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}products`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        throw error;
+      }
     },
-    {
-      _id: "65ab9ef1199052513072d165",
-      name: "Beryani",
-      name_AR: "برياني",
-      description: "description ....",
-      description_AR: "مواصفات ....",
-      price: 1.85,
-      quantity: 50,
-      image: "image-1705746161677-869432798.jpeg",
-      ingredients:
-        "2renfol , erfe , heil , bhar helou , lumi , kamoun , zanjabil , felfol aswed , kezbra , joz tib , kerkom , 3esfor , flayfle khechen wasat",
-      ingredients_AR:
-        "قرنفل , قرفة , هيل , بهار حلو , لومي , كمون , زنجبيل , فلفل أسود , كزبرة , جوزة الطيب , كركم , عصفر , فليفلة خشن أسود",
-      stock: true,
-      note: "note......",
-      note_AR: "ملاحظة",
-      display: true,
-      slug: "beryani",
-      category: {
-        _id: "659ecc88bb243d881dcbc90b",
-        name: "Eastern & Western",
-      },
-      color: {
-        _id: "659ed5e968df6e614bc00e51",
-        hex: "#740004",
-        createdAt: "2024-01-10T17:37:45.761Z",
-        updatedAt: "2024-01-26T08:29:49.101Z",
-        __v: 0,
-        name: "Burgundy Red",
-      },
-      createdAt: "2024-01-20T10:22:41.687Z",
-      updatedAt: "2024-01-25T16:56:31.561Z",
-      __v: 0,
-      weight: 50,
+  });
+
+  const {
+    isPending: isCategoriesPending,
+    error: categoriesError,
+    data: categoriesData,
+  } = useQuery({
+    queryKey: ["categoriesData"],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}categories`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        throw error;
+      }
     },
-  ];
+  });
+
+  const {
+    isPending: isColorsPending,
+    error: colorsError,
+    data: colorsData,
+  } = useQuery({
+    queryKey: ["colorsData"],
+    queryFn: async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}colors`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching colors:", error);
+        throw error;
+      }
+    },
+  });
+
+  if (isColorsPending || isCategoriesPending || isProductsPending) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h1>Loading ...</h1>
+      </div>
+    );
+  }
+
+  if (colorsError || categoriesError || productsError) {
+    return (
+      <div
+        style={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h1>An error occured while fetching Data</h1>
+      </div>
+    );
+  }
+
+  const handleChange = (e) => {
+    const { name, value, type, checked, files } = e.target;
+    // Check if the input type is file for handling images
+    if (type === "file") {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: files[0], // Assuming you only want to handle a single file
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: type === "checkbox" ? checked : value,
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // console.log("Form submitted:", formData);
+
+    try {
+      const formDataToSend = new FormData();
+      Object.entries(formData).forEach(([key, value]) => {
+        formDataToSend.append(key, value);
+      });
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_ENDPOINT}products/create`,
+        formDataToSend
+      );
+      showToast(`the Product added successfuly 😍`);
+      // console.log(response.data);
+      setIsAddPopUp(false);
+      // productsData((prevData) => [...prevData, response.data]);
+      await refetchProducts()
+      setFormData({
+        name: "",
+        name_AR: "",
+        image: "",
+        description: "",
+        description_AR: "",
+        price: 0,
+        weight: 0,
+        slug: "",
+        ingredients: "",
+        ingredients_AR: "",
+        stock: false,
+        display: false,
+        category: "",
+        color: "",
+      });
+      
+    } catch (error) {
+      console.log(error);
+      // toast.error("Error adding user");
+      showToast(`Error adding Product 😢`);
+    }
+  };
+
+  const showToast = (message) => {
+    toast.info(message, {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      style: {
+        backgroundColor: "#c86823",
+        color: "#fff",
+        fontSize: "16px",
+      },
+    });
+    toast.error(message, {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      style: {
+        backgroundColor: '#c86823',
+        color: '#fff',
+        fontSize: '16px',
+      },
+    });
+  };
 
   return (
-    <div
-      style={{
-        marginLeft: "5rem",
-      }}
-    >
-      <Table data={Products} ForWhat={"products"} v isEdit={true} />
-    </div>
+    <>
+      {isAddPopUp && (
+        <>
+          <div className={StyleDashProducts.addPopUp}>
+            <h1>Add A Product</h1>
+            <form
+              onSubmit={handleSubmit}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                rowGap: "5px",
+              }}
+            >
+              <FormControl fullWidth>
+                <TextField
+                  label="Name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl fullWidth>
+                <TextField
+                  label="Name_AR"
+                  name="name_AR"
+                  value={formData.name_AR}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl fullWidth>
+                <TextField
+                  label="Slug"
+                  name="slug"
+                  value={formData.slug}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl fullWidth>
+                <TextField
+                  label="Description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+              <FormControl fullWidth>
+                <TextField
+                  label="Description_AR"
+                  name="description_AR"
+                  value={formData.description_AR}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+              <FormControl fullWidth>
+                <TextField
+                  label="Price"
+                  name="price"
+                  type="number"
+                  inputProps={{ min: 0 }}
+                  value={formData.price}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl fullWidth>
+                <TextField
+                  label="Weight"
+                  name="weight"
+                  type="number"
+                  inputProps={{ min: 0 }}
+                  value={formData.weight}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+
+              <FormControl fullWidth>
+                {/* <InputLabel htmlFor="image">Image</InputLabel> */}
+                <Input
+                  type="file"
+                  name="image"
+                  onChange={handleChange}
+                  accept="image/*"
+                />
+              </FormControl>
+
+              <FormControl fullWidth>
+                <TextField
+                  label="Ingredients"
+                  name="ingredients"
+                  value={formData.ingredients}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+              <FormControl fullWidth>
+                <TextField
+                  label="Ingredients_AR"
+                  name="ingredients_AR"
+                  value={formData.ingredients_AR}
+                  onChange={handleChange}
+                  required
+                />
+              </FormControl>
+
+              {/* Add other form fields similarly */}
+
+              <FormControl fullWidth>
+                <InputLabel htmlFor="category">Category</InputLabel>
+                <Select
+                  label="Category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                >
+                  {isCategoriesPending ? (
+                    <MenuItem disabled>Loading categories...</MenuItem>
+                  ) : categoriesError ? (
+                    <MenuItem disabled>Error loading categories</MenuItem>
+                  ) : (
+                    categoriesData.map((category) => (
+                      <MenuItem key={category._id} value={category._id}>
+                        {category.name}
+                      </MenuItem>
+                    ))
+                  )}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth>
+                <InputLabel htmlFor="color">Color</InputLabel>
+                <Select
+                  label="Color"
+                  name="color"
+                  value={formData.color}
+                  onChange={handleChange}
+                >
+                  {isColorsPending ? (
+                    <MenuItem disabled>Loading colors...</MenuItem>
+                  ) : colorsError ? (
+                    <MenuItem disabled>Error loading colors</MenuItem>
+                  ) : (
+                    colorsData.map((color) => (
+                      <MenuItem
+                        key={color._id}
+                        value={color._id}
+                        style={{ display: "flex", gap: "20px" }}
+                      >
+                        {color.name}
+                        <div
+                          style={{
+                            border: "1px solid black",
+                            width: "20px",
+                            height: "20px",
+                            backgroundColor: `${color.hex}`,
+                          }}
+                        ></div>
+                      </MenuItem>
+                    ))
+                  )}
+                </Select>
+              </FormControl>
+
+              <FormControl fullWidth>
+                <InputLabel htmlFor="stock">Stock</InputLabel>
+                <Switch
+                  name="stock"
+                  checked={formData.stock}
+                  onChange={handleChange}
+                />
+              </FormControl>
+
+              <FormControl fullWidth>
+                <InputLabel htmlFor="display">Display</InputLabel>
+                <Switch
+                  name="display"
+                  checked={formData.display}
+                  onChange={handleChange}
+                />
+              </FormControl>
+
+              <Button type="submit" variant="contained" color="primary">
+                Submit
+              </Button>
+            </form>
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              zIndex: 1002,
+            }}
+            onClick={() => setIsAddPopUp(false)}
+          ></div>
+        </>
+      )}
+      <div
+        style={{
+          marginLeft: "5rem",
+        }}
+      >
+        <button
+          className={StyleDashProducts.addToCart}
+          onClick={handleOpenPopUp}
+        >
+          Add A Product
+        </button>
+        <Table data={productsData} ForWhat={"products"} v isEdit={true} />
+      </div>
+      <ToastContainer />
+    </>
   );
 }
 
