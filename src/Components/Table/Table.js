@@ -31,7 +31,7 @@ const Table = ({
 
   const handleEdit = (e, row) => {
     e.preventDefault();
-    handleEditOpen();
+    handleEditOpen(row);
     setSelectedRowData(row);
   };
 
