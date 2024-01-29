@@ -24,7 +24,11 @@ import DashBlogs from "../Pages/DashBlogs/DashBlogs.js";
 import DashOutlet from "./DashOutlet.js";
 import DashCategories from "../Pages/DashCategories/DashCategories.js";
 
-const PrivatRoute = ({ isAllowed, children, redirectPath = "/unauthorized" }) => {
+const PrivatRoute = ({
+  isAllowed,
+  element,
+  redirectPath = "/unauthorized",
+}) => {
   const { user, checkUser } = useContext(AuthContext);
 
   if (checkUser || !user) {
@@ -49,10 +53,10 @@ const PrivatRoute = ({ isAllowed, children, redirectPath = "/unauthorized" }) =>
   }
 
   if (!isAllowed) {
-    return <Navigate to='/Unauthorized' />;
+    return <Navigate to="/Unauthorized" />;
   }
 
-  return children ? children : <DashOutlet />;
+  return element;
 
   // return element
 };
@@ -78,14 +82,15 @@ const AppRouter = () => {
 
       <Route path="/Unauthorized" exact element={<Unauthorized />} />
       <Route path="/" element={<DashOutlet />}>
-      <Route
+        <Route
           path="/dashboard/blogs"
           exact
           element={
             <PrivatRoute
               element={<DashBlogs />}
               isAllowed={user && user.role === "Admin" ? true : false}
-            />}
+            />
+          }
         />
         <Route
           path="/dashboard"
@@ -120,14 +125,20 @@ const AppRouter = () => {
         <Route
           path="/dashboard/category"
           exact
-          element={<PrivatRoute element={<DashCategories />} roles={["Admin"]} />}
+          element={
+            <PrivatRoute
+              element={<DashCategories />}
+              isAllowed={user && user.role === "Admin" ? true : false}
+            />
+          }
         />
         <Route
           path="/dashboard/user"
           exact
-          element={<PrivatRoute
-            element={<DashUser />}
-            isAllowed={user && user.role === "Admin" ? true : false}
+          element={
+            <PrivatRoute
+              element={<DashUser />}
+              isAllowed={user && user.role === "Admin" ? true : false}
             />
           }
         />
