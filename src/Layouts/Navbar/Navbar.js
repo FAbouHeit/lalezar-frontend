@@ -114,7 +114,7 @@ function Navbar() {
                     isPending ? "pending" : isActive ? Styles.active : ""
                   }
                 >
-                  ContactUs
+                  Contact Us
                 </NavLink>
               </li>
               <li>
@@ -124,7 +124,7 @@ function Navbar() {
                     isPending ? "pending" : isActive ? Styles.active : ""
                   }
                 >
-                  AboutUs
+                  About Us
                 </NavLink>
               </li>
               <div className={Styles.languageSwitcher}>
@@ -161,7 +161,7 @@ function Navbar() {
                         },
                       }}
                     >
-                      LogIn
+                      Log In
                     </Button>
 
                     <Button
@@ -178,7 +178,7 @@ function Navbar() {
                         },
                       }}
                     >
-                      SignUp
+                      Sign Up
                     </Button>
                   </Stack>
                 </li>

@@ -23,6 +23,7 @@ import AboutUs from "../Pages/AboutUs/AboutUs.js";
 import DashBlogs from "../Pages/DashBlogs/DashBlogs.js";
 import DashOutlet from "./DashOutlet.js";
 import DashCategories from "../Pages/DashCategories/DashCategories.js";
+import DashColors from "../Pages/DashColors/DashColors.js";
 
 const PrivatRoute = ({
   isAllowed,
@@ -130,6 +131,13 @@ const AppRouter = () => {
               element={<DashCategories />}
               isAllowed={user && user.role === "Admin" ? true : false}
             />
+          }
+        />
+        <Route
+          path="/dashboard/color"
+          exact
+          element={
+            <PrivatRoute element={<DashColors />} roles={["Admin"]} />
           }
         />
         <Route

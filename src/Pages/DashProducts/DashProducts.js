@@ -26,7 +26,6 @@ function DashProducts() {
   const [isEditPopUp, setIsEditPopUp] = useState(false);
   const [isDeletePopUp, setIsDeletePopUp] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
-  const [successDelete, setSuccessDelete] = useState(false);
 
   const style = {
     position: "absolute",
@@ -277,22 +276,23 @@ function DashProducts() {
     }
   };
 
-  const handleDelete= async (selectedRowData)=>{
+  const handleDelete = async (selectedRowData) => {
     // console.log("hi")
     // console.log(selectedRowData._id)
-    try{
-      const response = await axios.delete(`${process.env.REACT_APP_BACKEND_ENDPOINT}products/delete/${selectedRowData._id}`);
+    try {
+      const response = await axios.delete(
+        `${process.env.REACT_APP_BACKEND_ENDPOINT}products/delete/${selectedRowData._id}`
+      );
 
       // console.log(response.data)
-      toast.success(`the Product deleted successfuly 😍`);
+      toast.success(`the Product deleted successfuly`);
       setIsDeletePopUp(false);
       await refetchProducts();
+    } catch (error) {
+      console.log(error);
+      toast.error(`Error deleting Product`);
     }
-    catch(error){
-      console.log(error)
-      toast.error(`Error deleting Product 😢`);
-    }
-  }
+  };
 
   const handleOpen = (selectedRowData) => {
     // console.log("hi")
@@ -514,7 +514,7 @@ function DashProducts() {
       {isEditPopUp && (
         <>
           <div className={StyleDashProducts.addPopUp}>
-            <h1>Editttt</h1>
+            <h1 style={{marginBottom:"20px"}}>Edit a product</h1>
             <form
               // onSubmit={handleUpdate}
               style={{
@@ -523,202 +523,209 @@ function DashProducts() {
                 rowGap: "5px",
               }}
             >
-              <FormControl fullWidth>
-                <TextField
-                  label="Name"
-                  name="name"
-                  // value={formData.name}
-                  defaultValue={formData.name}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
+              <div style={{ display: "flex", columnGap: "20px" }}>
+                <div>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Name"
+                      name="name"
+                      // value={formData.name}
+                      defaultValue={formData.name}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
 
-              <FormControl fullWidth>
-                <TextField
-                  label="Name_AR"
-                  name="name_AR"
-                  // value={formData.name_AR}
-                  defaultValue={formData.name_AR}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Name_AR"
+                      name="name_AR"
+                      // value={formData.name_AR}
+                      defaultValue={formData.name_AR}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
 
-              <FormControl fullWidth>
-                <TextField
-                  label="Slug"
-                  name="slug"
-                  // value={formData.slug}
-                  defaultValue={formData.slug}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Slug"
+                      name="slug"
+                      // value={formData.slug}
+                      defaultValue={formData.slug}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
 
-              <FormControl fullWidth>
-                <TextField
-                  label="Description"
-                  name="description"
-                  // value={formData.description}
-                  defaultValue={formData.description}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  label="Description_AR"
-                  name="description_AR"
-                  // value={formData.description_AR}
-                  defaultValue={formData.description_AR}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  label="Price"
-                  name="price"
-                  type="number"
-                  inputProps={{ min: 0 }}
-                  // value={formData.price}
-                  defaultValue={formData.price}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Description"
+                      name="description"
+                      // value={formData.description}
+                      defaultValue={formData.description}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Description_AR"
+                      name="description_AR"
+                      // value={formData.description_AR}
+                      defaultValue={formData.description_AR}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
 
-              <FormControl fullWidth>
-                <TextField
-                  label="Weight"
-                  name="weight"
-                  type="number"
-                  inputProps={{ min: 0 }}
-                  // value={formData.weight}
-                  defaultValue={formData.weight}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Ingredients"
+                      name="ingredients"
+                      // value={formData.ingredients}
+                      defaultValue={formData.ingredients}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Ingredients_AR"
+                      name="ingredients_AR"
+                      // value={formData.ingredients_AR}
+                      defaultValue={formData.ingredients_AR}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
+                </div>
 
-              <FormControl
-                fullWidth
-                style={{ display: "flex", flexDirection: "column" }}
-              >
-                <input
-                  type="file"
-                  name="image"
-                  onChange={handleChange}
-                  accept="image/*"
-                />
-                {selectedRowData.image && (
-                  <img
-                    src={`${process.env.REACT_APP_IMAGE_PATH}/${selectedRowData.image}`}
-                    alt="Product"
-                    style={{ maxWidth: "100%", maxHeight: "150px" }}
-                  />
-                )}
-              </FormControl>
+                <div>
+                  <FormControl
+                    fullWidth
+                    style={{ display: "flex", flexDirection: "column" }}
+                  >
+                    <input
+                      type="file"
+                      name="image"
+                      onChange={handleChange}
+                      accept="image/*"
+                    />
+                    {selectedRowData.image && (
+                      <img
+                        src={`${process.env.REACT_APP_IMAGE_PATH}/${selectedRowData.image}`}
+                        alt="Product"
+                        style={{ maxWidth: "100%", maxHeight: "150px" }}
+                      />
+                    )}
+                  </FormControl>
 
-              <FormControl fullWidth>
-                <TextField
-                  label="Ingredients"
-                  name="ingredients"
-                  // value={formData.ingredients}
-                  defaultValue={formData.ingredients}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
-              <FormControl fullWidth>
-                <TextField
-                  label="Ingredients_AR"
-                  name="ingredients_AR"
-                  // value={formData.ingredients_AR}
-                  defaultValue={formData.ingredients_AR}
-                  onChange={handleChange}
-                  required
-                />
-              </FormControl>
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Price"
+                      name="price"
+                      type="number"
+                      inputProps={{ min: 0 }}
+                      // value={formData.price}
+                      defaultValue={formData.price}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
 
-              {/* Add other form fields similarly */}
+                  <FormControl fullWidth>
+                    <TextField
+                      label="Weight"
+                      name="weight"
+                      type="number"
+                      inputProps={{ min: 0 }}
+                      // value={formData.weight}
+                      defaultValue={formData.weight}
+                      onChange={handleChange}
+                      required
+                    />
+                  </FormControl>
 
-              <FormControl fullWidth>
-                <InputLabel htmlFor="category">Category</InputLabel>
-                <Select
-                  label="Category"
-                  name="category"
-                  // value={formData.category}
-                  defaultValue={formData.category}
-                  onChange={handleChange}
-                >
-                  {isCategoriesPending ? (
-                    <MenuItem disabled>Loading categories...</MenuItem>
-                  ) : categoriesError ? (
-                    <MenuItem disabled>Error loading categories</MenuItem>
-                  ) : (
-                    categoriesData.map((category) => (
-                      <MenuItem key={category._id} value={category._id}>
-                        {category.name}
-                      </MenuItem>
-                    ))
-                  )}
-                </Select>
-              </FormControl>
+                  {/* Add other form fields similarly */}
 
-              <FormControl fullWidth>
-                <InputLabel htmlFor="color">Color</InputLabel>
-                <Select
-                  label="Color"
-                  name="color"
-                  // value={formData.color}
-                  defaultValue={formData.color}
-                  onChange={handleChange}
-                >
-                  {isColorsPending ? (
-                    <MenuItem disabled>Loading colors...</MenuItem>
-                  ) : colorsError ? (
-                    <MenuItem disabled>Error loading colors</MenuItem>
-                  ) : (
-                    colorsData.map((color) => (
-                      <MenuItem
-                        key={color._id}
-                        value={color._id}
-                        style={{ display: "flex", gap: "20px" }}
-                      >
-                        {color.name}
-                        <div
-                          style={{
-                            border: "1px solid black",
-                            width: "20px",
-                            height: "20px",
-                            backgroundColor: `${color.hex}`,
-                          }}
-                        ></div>
-                      </MenuItem>
-                    ))
-                  )}
-                </Select>
-              </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor="category">Category</InputLabel>
+                    <Select
+                      label="Category"
+                      name="category"
+                      // value={formData.category}
+                      defaultValue={formData.category}
+                      onChange={handleChange}
+                    >
+                      {isCategoriesPending ? (
+                        <MenuItem disabled>Loading categories...</MenuItem>
+                      ) : categoriesError ? (
+                        <MenuItem disabled>Error loading categories</MenuItem>
+                      ) : (
+                        categoriesData.map((category) => (
+                          <MenuItem key={category._id} value={category._id}>
+                            {category.name}
+                          </MenuItem>
+                        ))
+                      )}
+                    </Select>
+                  </FormControl>
 
-              <FormControl fullWidth>
-                <InputLabel htmlFor="stock">Stock</InputLabel>
-                <Switch
-                  name="stock"
-                  checked={formData.stock}
-                  onChange={handleChange}
-                />
-              </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor="color">Color</InputLabel>
+                    <Select
+                      label="Color"
+                      name="color"
+                      // value={formData.color}
+                      defaultValue={formData.color}
+                      onChange={handleChange}
+                    >
+                      {isColorsPending ? (
+                        <MenuItem disabled>Loading colors...</MenuItem>
+                      ) : colorsError ? (
+                        <MenuItem disabled>Error loading colors</MenuItem>
+                      ) : (
+                        colorsData.map((color) => (
+                          <MenuItem
+                            key={color._id}
+                            value={color._id}
+                            style={{ display: "flex", gap: "20px" }}
+                          >
+                            {color.name}
+                            <div
+                              style={{
+                                border: "1px solid black",
+                                width: "20px",
+                                height: "20px",
+                                backgroundColor: `${color.hex}`,
+                              }}
+                            ></div>
+                          </MenuItem>
+                        ))
+                      )}
+                    </Select>
+                  </FormControl>
 
-              <FormControl fullWidth>
-                <InputLabel htmlFor="display">Display</InputLabel>
-                <Switch
-                  name="display"
-                  checked={formData.display}
-                  onChange={handleChange}
-                />
-              </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor="stock">Stock</InputLabel>
+                    <Switch
+                      name="stock"
+                      checked={formData.stock}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+
+                  <FormControl fullWidth>
+                    <InputLabel htmlFor="display">Display</InputLabel>
+                    <Switch
+                      name="display"
+                      checked={formData.display}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                </div>
+              </div>
 
               <Button
                 onClick={() => handleUpdate(selectedRowData)}
@@ -727,6 +734,7 @@ function DashProducts() {
               >
                 Update
               </Button>
+              <Button onClick={handleEditClose}>Cancel</Button>
             </form>
           </div>
           <div
@@ -747,17 +755,17 @@ function DashProducts() {
         <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
-          open={handleOpen}
+          open={isDeletePopUp}
           onClose={handleClose}
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
-          slotProps={{
-            backdrop: {
-              timeout: 500,
-            },
-          }}
+          // slotProps={{
+          //   backdrop: {
+          //     timeout: 500,
+          //   },
+          // }}
         >
-          <Fade in={handleOpen}>
+          <Fade in={isDeletePopUp}>
             <Box sx={style}>
               <Typography
                 id="transition-modal-title"
@@ -769,9 +777,25 @@ function DashProducts() {
               {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
                 Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
               </Typography> */}
-              <div style={{ display: "flex", columnGap: "20px" , marginTop:"10px"}}>
-                <button onClick={()=> handleDelete(selectedRowData)} className={StyleDashProducts.cancel}>Confirm</button>
-                <button onClick={handleClose} className={StyleDashProducts.confirm}>Cancel</button>
+              <div
+                style={{
+                  display: "flex",
+                  columnGap: "20px",
+                  marginTop: "10px",
+                }}
+              >
+                <button
+                  onClick={() => handleDelete(selectedRowData)}
+                  className={StyleDashProducts.cancel}
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={handleClose}
+                  className={StyleDashProducts.confirm}
+                >
+                  Cancel
+                </button>
               </div>
             </Box>
           </Fade>
