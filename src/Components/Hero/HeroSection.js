@@ -24,7 +24,6 @@ const HeroSection = () => {
   const el = useRef();
 
   return (
-    <div>
       <header className={Styles.HeroSection}>
         <div className={Styles.left}>
           <p className={Styles.P}>Our Best Of World Class Spices</p>
@@ -48,7 +47,6 @@ const HeroSection = () => {
           <img className={Styles.img} src={img} alt="Lalezar Logo"/>
         </div>
       </header>
-    </div>
   );
 };
 

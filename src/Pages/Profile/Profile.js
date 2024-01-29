@@ -4,9 +4,9 @@ import { Helmet } from "react-helmet";
 import DashSidebar from "../../Layouts/DashSidebar/DashSidebar";
 import Navbar from "../../Layouts/Navbar/Navbar";
 import ProfileCard from "../../Components/ProfileCard/ProfileCard";
-import ProfileActivity from '../../Components/ProfileActivity/ProfileActivity'
-import ProfileDetails from '../../Components/ProfileDetails/ProfileDetails'
-import EditProfile from '../../Components/EditProfile/EditProfile'
+import ProfileActivity from "../../Components/ProfileActivity/ProfileActivity";
+import ProfileDetails from "../../Components/ProfileDetails/ProfileDetails";
+import EditProfile from "../../Components/EditProfile/EditProfile";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../Utils/AxiosInstance";
 
@@ -49,28 +49,33 @@ const ProfilePage = () => {
     setOverview(false);
   };
 
-
   const {
-    isPending : isUserPending ,
-    error : userError ,  
-    data : userData ,
+    isPending: isUserPending,
+    error: userError,
+    data: userData,
   } = useQuery({
-    queryKey : ['UserData'] ,
-    queryFn : async () => {
+    queryKey: ["UserData"],
+    queryFn: async () => {
       try {
-        const response = await axiosInstance.get(
-          `${
-            process.env.REACT_APP_BACKEND_ENDPOINT
-          }user/byId` ,
-          {id : user._id}
-        )
-        return response
+        if (user !== null) {
+          const response = await axiosInstance.post(
+            `${process.env.REACT_APP_BACKEND_ENDPOINT}user/byId`,
+            { id: user.id }
+          );
+          return response.data;
+        } else {
+          // If user is not available, you might want to handle this case.
+          // You can return a default value or handle it as needed.
+          console.log("User not available");
+          return null;
+        }
       } catch (error) {
-        console.log('Error fetching user' , error)
+        console.log("Error fetching user", error);
         throw error;
       }
-    }
-  })
+    },
+  });
+  
 
   if (isUserPending) {
     return (

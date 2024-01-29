@@ -1,11 +1,13 @@
 import { useState, useEffect, createContext } from "react";
 import axiosInstance from "../Utils/AxiosInstance";
-export const AuthContext = createContext();
+import { useNavigate } from "react-router-dom";
 
+export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [checkUser, setCheckUser] = useState(false);
-  const [userUpdated , setUserserUpdated] = useState(false)
+  const [userUpdated , setUserUpdated] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!user && user === null) {
@@ -28,6 +30,7 @@ export const AuthProvider = ({ children }) => {
   const logOut = async () => {
     await axiosInstance.post("user/logout");
     setUser(null);
+    navigate('/')
   };
   return (
     <AuthContext.Provider
@@ -37,7 +40,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         logOut,
         fetchUserData,
-        setUserserUpdated
+        setUserUpdated
       }}
     >
       {children}

@@ -42,9 +42,9 @@ const ChooseUs = () => {
   ];
   return (
     <article className={Styles.container}>
-      {data.map((item) => {
+      {data.map((item , index) => {
         return (
-          <section className={Styles.card}>
+          <section key={index} className={Styles.card}>
             <div className={Styles.rotate}>
             <div className={Styles.front}>
               <span className={Styles.icon}>{item.icon}</span>

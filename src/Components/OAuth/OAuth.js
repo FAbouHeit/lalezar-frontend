@@ -21,7 +21,7 @@ const  OAuth = ()  => {
       console.log(result);
 
       const response = await apiCall({
-        url : `${process.env.REACT_APP_SQL_API}/user/google`,
+        url : `${process.env.REACT_APP_BACKEND_ENDPOINT}user/google`,
         method : 'post',
         data :         {
           name: result.user.displayName,

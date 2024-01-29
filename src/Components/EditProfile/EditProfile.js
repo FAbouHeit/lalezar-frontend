@@ -18,15 +18,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { AuthContext } from "../../Context/AuthContext";
+import Styles from './EditProfile.module.css'
 
 const EditProfile = ({ setSuccessEdit, userData }) => {
-  const { setUserserUpdated } = useContext(AuthContext);
+  const { setUserUpdated } = useContext(AuthContext);
   const [firstName, setFirstName] = useState(userData && userData.firstName);
   const [lastName, setLastName] = useState(userData && userData.lastName);
   const [image, setImage] = useState(userData && userData.image);
   const [password, setPassword] = useState(null);
   const [role, setRole] = useState(userData && userData.role);
   const [email, setEmail] = useState(userData && userData.email);
+  const [phoneNumber, setPhoneNumber] = useState(userData && userData.phoneNumber);
   const [oldPassword, setOldPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -52,6 +54,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
     setImage(userData && userData.image);
     setRole(userData && userData.role);
     setEmail(userData && userData.email);
+    setPhoneNumber(userData && userData.phoneNumber)
   }, [userData]);
 
   const handleChange = (e) => {
@@ -70,6 +73,8 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
       setOldPassword(value);
     } else if (name === "password") {
       setPassword(value);
+    } else if (name === 'phoneNumber') {
+      setPhoneNumber(value)
     }
   };
 
@@ -84,15 +89,16 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
     try {
       setLoading(true);
       const response = await axios.patch(
-        `${process.env.REACT_APP_SQL_API}/user/update`,
+        `${process.env.REACT_APP_SQL_API}/user`,
         {
           firstName: firstName,
           lastName: lastName,
-          icon: image,
+          image: image,
           password: conditionPassword,
           email: email,
           id: userData && userData.id,
-          oldPassword: oldPassword,
+          checkPassword: oldPassword,
+          phoneNumber  : phoneNumber,
         },
         {
           headers: {
@@ -102,7 +108,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
       );
       if (response.status === 200) {
         setSuccessEdit(true);
-        setUserserUpdated(true);
+        setUserUpdated(true);
       }
     } catch (error) {
       console.log(error);
@@ -111,7 +117,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
       setLoading(false);
       setTimeout(() => {
         setSuccessEdit(false);
-        setUserserUpdated(true);
+        setUserUpdated(true);
       }, 30000);
     }
   };
@@ -132,7 +138,6 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
           mr: 0,
           width:
             screenWidth < 380 ? "10rem" : screenWidth < 550 ? "15rem" : "20rem",
-
         },
         "& .MuiButton-containedPrimary": {
           bgcolor: "#C86823 !important",
@@ -141,22 +146,18 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
           mb: 2,
           height: "3.5rem",
           width: screenWidth < 550 ? "15rem" : "20rem",
-
         },
         "& .MuiButton-containedPrimary:hover": {
           bgcolor: "#035e6b !important",
-
         },
         "& .MuiStack-root": {
           padding: 0,
           margin: 0,
-
         },
         "& .MuiButtonBase-root": {
           borderRadius: 0,
           bgcolor: "#C86823",
           padding: "15px",
-
         },
         "& .MuiButtonBase-root:hover": {
           bgcolor: "#17456E",
@@ -164,12 +165,10 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
         "& .MuiOutlinedInput-notchedOutline ": {
           border: "1.5px solid  gray !important",
           borderRadius: "4px",
-
         },
         "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
           border: "2px solid #C86823 !important",
           borderRadius: "4px",
-
         },
         "& .MuiStack-root ": {
           width:
@@ -177,7 +176,6 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
           margin:
             screenWidth < 900 ? 0 : screenWidth < 1100 ? "0 3rem" : "0 5rem",
           alignItems: screenWidth < 550 ? "center" : "",
-
         },
         "& .MuiFormControl-root , & .MuiTextField-root , & .MuiInputBase-root":
           {
@@ -188,14 +186,11 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
                 ? "15rem"
                 : "20rem",
             minWidth: "0 !important",
-  
           },
         "& .Mui-focused.MuiFormLabel-root ": {
           color: "#C86823 !important",
-
         },
         ".MuiFormLabel-root": {
-
           fontSize: "1.1rem",
         },
       }}
@@ -258,6 +253,15 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
                 onChange={handleChange}
                 value={email}
                 autoComplete="on"
+              />
+              <TextField
+                required
+                id="outlined-required3"
+                label="Phone"
+                placeholder="Phone Number"
+                name="phoneNumber"
+                onChange={handleChange}
+                value={phoneNumber}
               />
               {screenWidth > 900 ? (
                 <>
@@ -375,10 +379,11 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
               </FormControl>
               <FormControl>
                 <input
+                className={Styles.input}
                   type="file"
                   name="image"
                   id="image"
-                  onChange={(e)=> setImage(e.target.files[0])}
+                  onChange={(e) => setImage(e.target.files[0])}
                   style={{
                     width:
                       screenWidth < 380
