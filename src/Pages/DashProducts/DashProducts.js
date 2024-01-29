@@ -15,11 +15,30 @@ import {
 } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Backdrop from "@mui/material/Backdrop";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Typography from "@mui/material/Typography";
 
 function DashProducts() {
   const [isAddPopUp, setIsAddPopUp] = useState(false);
   const [isEditPopUp, setIsEditPopUp] = useState(false);
+  const [isDeletePopUp, setIsDeletePopUp] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
+  const [successDelete, setSuccessDelete] = useState(false);
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -134,7 +153,7 @@ function DashProducts() {
     const { name, value, type, checked, files } = e.target;
     // Check if the input type is file for handling images
     if (type === "file") {
-      const file = e.target.files[0].name;
+      const file = e.target.files[0];
       if (file) {
         setFormData({
           ...formData,
@@ -231,21 +250,24 @@ function DashProducts() {
   };
 
   const handleUpdate = async (selectedRowData) => {
-    // console.log(selectedRowData)
     try {
-      // const updatedFormData = new FormData();
-      // Object.entries(formData).forEach(([key, value]) => {
-      //   updatedFormData.append(key, value);
-      // });
-      // updatedFormData.append("image", formData.image);
-      // console.log(updatedFormData);
+      const updatedFormData = new FormData();
+
+      Object.keys(formData).forEach((key) => {
+        if (key !== "image") {
+          updatedFormData.append(key, formData[key]);
+        }
+      });
+      if (formData.image) {
+        updatedFormData.append("image", formData.image);
+      }
 
       const response = await axios.patch(
         `${process.env.REACT_APP_BACKEND_ENDPOINT}products/update/${selectedRowData._id}`,
-        formData
+        updatedFormData
       );
 
-      console.log(response.data);
+      // console.log(response.data);
       toast.success(`the Product updated successfuly 😍`);
       setIsEditPopUp(false);
       await refetchProducts();
@@ -254,6 +276,30 @@ function DashProducts() {
       toast.error(`Error updating Product 😢`);
     }
   };
+
+  const handleDelete= async (selectedRowData)=>{
+    // console.log("hi")
+    // console.log(selectedRowData._id)
+    try{
+      const response = await axios.delete(`${process.env.REACT_APP_BACKEND_ENDPOINT}products/delete/${selectedRowData._id}`);
+
+      // console.log(response.data)
+      toast.success(`the Product deleted successfuly 😍`);
+      setIsDeletePopUp(false);
+      await refetchProducts();
+    }
+    catch(error){
+      console.log(error)
+      toast.error(`Error deleting Product 😢`);
+    }
+  }
+
+  const handleOpen = (selectedRowData) => {
+    // console.log("hi")
+    // console.log(selectedRowData._id)
+    setIsDeletePopUp(true);
+  };
+  const handleClose = () => setIsDeletePopUp(false);
 
   return (
     <>
@@ -556,14 +602,10 @@ function DashProducts() {
                 />
               </FormControl>
 
-              <FormControl fullWidth style={{display:"flex" , flexDirection:"column"}}>
-                {/* <InputLabel htmlFor="image">Image</InputLabel> */}
-                {/* <Input
-                  type="file"
-                  name="image"
-                  onChange={handleChange}
-                  // accept="image/*"
-                /> */}
+              <FormControl
+                fullWidth
+                style={{ display: "flex", flexDirection: "column" }}
+              >
                 <input
                   type="file"
                   name="image"
@@ -701,6 +743,40 @@ function DashProducts() {
           ></div>
         </>
       )}
+      {isDeletePopUp && (
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={handleOpen}
+          onClose={handleClose}
+          closeAfterTransition
+          slots={{ backdrop: Backdrop }}
+          slotProps={{
+            backdrop: {
+              timeout: 500,
+            },
+          }}
+        >
+          <Fade in={handleOpen}>
+            <Box sx={style}>
+              <Typography
+                id="transition-modal-title"
+                variant="h6"
+                component="h2"
+              >
+                Are you sure to Delete this Product?
+              </Typography>
+              {/* <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+              </Typography> */}
+              <div style={{ display: "flex", columnGap: "20px" , marginTop:"10px"}}>
+                <button onClick={()=> handleDelete(selectedRowData)} className={StyleDashProducts.cancel}>Confirm</button>
+                <button onClick={handleClose} className={StyleDashProducts.confirm}>Cancel</button>
+              </div>
+            </Box>
+          </Fade>
+        </Modal>
+      )}
       <div
         style={{
           marginLeft: "5rem",
@@ -718,6 +794,7 @@ function DashProducts() {
           isEdit={true}
           handleEditOpen={handleEditOpen}
           setSelectedRowData={setSelectedRowData}
+          handleOpenDelete={handleOpen}
         />
       </div>
       <ToastContainer />

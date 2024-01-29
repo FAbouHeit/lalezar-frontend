@@ -136,6 +136,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* background-color: red; */
+
 
   /* Optional: Add a transition for smoother effects */
   transition: background-color 0.3s, opacity 0.3s;

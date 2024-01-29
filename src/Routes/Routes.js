@@ -22,6 +22,7 @@ import ContactUs from "../Pages/ContactUs/ContactUs.js";
 import AboutUs from "../Pages/AboutUs/AboutUs.js";
 import DashBlogs from "../Pages/DashBlogs/DashBlogs.js";
 import DashOutlet from "./DashOutlet.js";
+import DashCategories from "../Pages/DashCategories/DashCategories.js";
 
 const PrivatRoute = ({ element, roles }) => {
   const { user, checkUser } = useContext(AuthContext);
@@ -52,7 +53,7 @@ const PrivatRoute = ({ element, roles }) => {
   // } else {
   //   return <Navigate to="/unauthorized" />;
   // }
-  return element
+  return element;
 };
 
 const AppRouter = () => {
@@ -78,50 +79,32 @@ const AppRouter = () => {
         <Route
           path="/dashboard/blogs"
           exact
-          element={
-            <PrivatRoute 
-              element={<DashBlogs />} 
-              roles={["Admin"]} 
-          />}
+          element={<PrivatRoute element={<DashBlogs />} roles={["Admin"]} />}
         />
         <Route
           path="/dashboard"
           exact
-          element={
-            <PrivatRoute
-            element={<DashOverview />}
-            roles={['Admin']}
-            />
-          }
+          element={<PrivatRoute element={<DashOverview />} roles={["Admin"]} />}
         />
         <Route
           path="/dashboard/order"
           exact
-          element={
-            <PrivatRoute
-            element={<DashOrder />}
-            roles={['Admin']}
-            />
-          }
+          element={<PrivatRoute element={<DashOrder />} roles={["Admin"]} />}
         />
         <Route
           path="/dashboard/product"
           exact
-          element={
-            <PrivatRoute
-            element={<DashProducts />}
-            roles={['Admin']}
-            />
-          }
+          element={<PrivatRoute element={<DashProducts />} roles={["Admin"]} />}
+        />
+        <Route
+          path="/dashboard/category"
+          exact
+          element={<PrivatRoute element={<DashCategories />} roles={["Admin"]} />}
         />
         <Route
           path="/dashboard/user"
           exact
-          element={
-            <PrivatRoute 
-              element={<DashUser />} 
-              roles={["Admin"]} 
-            />}
+          element={<PrivatRoute element={<DashUser />} roles={["Admin"]} />}
         />
       </Route>
       <Route
