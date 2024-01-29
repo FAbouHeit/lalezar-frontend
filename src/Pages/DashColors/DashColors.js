@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Table from "../../Components/Table/Table";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import StyleDashCategories from "./DashCategories.module.css";
+import StyleDashColors from "./DashColors.module.css";
 import { FormControl, TextField, Button } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function DashCategories() {
+function DashColors() {
   const [isAddPopUp, setIsAddPopUp] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [isDeletePopUp, setIsDeletePopUp] = useState(false);
@@ -32,30 +32,30 @@ function DashCategories() {
 
   const [formData, setFormData] = useState({
     name: "",
-    name_AR: "",
+    hex: "",
   });
 
   const {
-    isPending: isCategoriesPending,
-    error: categoriesError,
-    data: categoriesData,
-    refetch: refetchCategories,
+    isPending: isColorsPending,
+    error: colorsError,
+    data: colorsData,
+    refetch: refetchColors,
   } = useQuery({
-    queryKey: ["categoriesData"],
+    queryKey: ["colorsData"],
     queryFn: async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_ENDPOINT}categories`
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}colors`
         );
         return response.data;
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching colors", error);
         throw error;
       }
     },
   });
 
-  if (categoriesError) {
+  if (colorsError) {
     return (
       <div
         style={{
@@ -70,7 +70,7 @@ function DashCategories() {
     );
   }
 
-  if (isCategoriesPending) {
+  if (isColorsPending) {
     return (
       <div
         style={{
@@ -86,22 +86,12 @@ function DashCategories() {
   }
 
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
-    // Check if the input type is file for handling images
-    if (type === "file") {
-      const file = e.target.files[0];
-      if (file) {
-        setFormData({
-          ...formData,
-          image: file,
-        });
-      }
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: type === "checkbox" ? checked : e.target.value,
-      }));
-    }
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : e.target.value,
+    }));
   };
 
   const handleOpenPopUp = () => {
@@ -112,20 +102,20 @@ function DashCategories() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_ENDPOINT}categories/create`,
+        `${process.env.REACT_APP_BACKEND_ENDPOINT}colors/create`,
         formData
       );
       toast.success(`the Category added successfuly 😍`);
       // console.log(response.data);
       setIsAddPopUp(false);
-      await refetchCategories();
+      await refetchColors();
       setFormData({
         name: "",
-        name_AR: "",
+        hex: "",
       });
     } catch (error) {
       console.log(error);
-      toast.error(`Error adding Category 😢`);
+      toast.error(`Error adding Color 😢`);
     }
   };
 
@@ -140,16 +130,16 @@ function DashCategories() {
   const handleDelete = async (selectedRowData) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_BACKEND_ENDPOINT}categories/delete/${selectedRowData._id}`
+        `${process.env.REACT_APP_BACKEND_ENDPOINT}colors/delete/${selectedRowData._id}`
       );
 
       // console.log(response.data)
-      toast.success(`The Category deleted successfuly`);
+      toast.success(`The Color deleted successfuly`);
       setIsDeletePopUp(false);
-      await refetchCategories();
+      await refetchColors();
     } catch (error) {
       console.log(error);
-      toast.error(`Error deleting Category 😢`);
+      toast.error(`Error deleting Color`);
     }
   };
 
@@ -157,7 +147,7 @@ function DashCategories() {
     setIsEditPopUp(true);
     setFormData({
       name: selectedRowData.name,
-      name_AR: selectedRowData.name_AR,
+      hex: selectedRowData.hex,
     });
     // console.log("hi" , selectedRowData.image)
   };
@@ -165,31 +155,30 @@ function DashCategories() {
     setIsEditPopUp(false);
     setFormData({
       name: "",
-      name_AR: "",
+      hex: "",
     });
   };
 
   const handleUpdate = async (selectedRowData) => {
     try {
       const updatedFormData = new FormData();
-
       Object.keys(formData).forEach((key) => {
         if (key !== "image") {
           updatedFormData.append(key, formData[key]);
         }
       });
-
+      
       const response = await axios.patch(
-        `${process.env.REACT_APP_BACKEND_ENDPOINT}categories/update/${selectedRowData._id}`,
+        `${process.env.REACT_APP_BACKEND_ENDPOINT}colors/update/${selectedRowData._id}`,
         formData
       );
       // console.log(response.data);
-      toast.success(`the Category updated successfuly`);
+      toast.success(`the Color updated successfuly`);
       setIsEditPopUp(false);
-      await refetchCategories();
+      await refetchColors();
     } catch (error) {
       console.error(error);
-      toast.error(`Error updating Category`);
+      toast.error(`Error updating Color 😢`);
     }
   };
 
@@ -197,8 +186,8 @@ function DashCategories() {
     <>
       {isAddPopUp && (
         <>
-          <div className={StyleDashCategories.addPopUp}>
-            <h1 style={{ marginBottom: "15px" }}>Add A Category</h1>
+          <div className={StyleDashColors.addPopUp}>
+            <h1 style={{ marginBottom: "15px" }}>Add A Color</h1>
             <form
               onSubmit={handleSubmit}
               style={{
@@ -219,9 +208,9 @@ function DashCategories() {
 
               <FormControl fullWidth>
                 <TextField
-                  label="Name_AR"
-                  name="name_AR"
-                  value={formData.name_AR}
+                  label="HEX"
+                  name="hex"
+                  value={formData.hex}
                   onChange={handleChange}
                   required
                 />
@@ -247,8 +236,8 @@ function DashCategories() {
       )}
       {isEditPopUp && (
         <>
-          <div className={StyleDashCategories.addPopUp}>
-            <h1 style={{ marginBottom: "20px" }}>Edit a category</h1>
+          <div className={StyleDashColors.addPopUp}>
+            <h1 style={{ marginBottom: "20px" }}>Edit a color</h1>
             <form
               style={{
                 display: "flex",
@@ -269,10 +258,10 @@ function DashCategories() {
 
               <FormControl fullWidth>
                 <TextField
-                  label="Name_AR"
-                  name="name_AR"
+                  label="HEX"
+                  name="hex"
                   // value={formData.name_AR}
-                  defaultValue={formData.name_AR}
+                  defaultValue={formData.hex}
                   onChange={handleChange}
                   required
                 />
@@ -302,7 +291,7 @@ function DashCategories() {
         </>
       )}
       {isDeletePopUp && (
-        <Modal 
+        <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           open={isDeletePopUp}
@@ -322,10 +311,9 @@ function DashCategories() {
                 variant="h6"
                 component="h2"
               >
-                Are you sure to Delete this Category?
+                Are you sure to Delete this Color?
                 <span style={{ color: "red" }}>
-                  because of this action , You will have products without
-                  Category.
+                  May this affects the design
                 </span>
               </Typography>
               <div
@@ -337,13 +325,13 @@ function DashCategories() {
               >
                 <button
                   onClick={() => handleDelete(selectedRowData)}
-                  className={StyleDashCategories.cancel}
+                  className={StyleDashColors.cancel}
                 >
                   Confirm
                 </button>
                 <button
                   onClick={handleClose}
-                  className={StyleDashCategories.confirm}
+                  className={StyleDashColors.confirm}
                 >
                   Cancel
                 </button>
@@ -357,15 +345,12 @@ function DashCategories() {
           marginLeft: "5rem",
         }}
       >
-        <button
-          className={StyleDashCategories.addToCart}
-          onClick={handleOpenPopUp}
-        >
-          Add A Category
+        <button className={StyleDashColors.addToCart} onClick={handleOpenPopUp}>
+          Add A Color
         </button>
         <Table
-          data={categoriesData}
-          ForWhat={"categories"}
+          data={colorsData}
+          ForWhat={"colors"}
           isEdit={true}
           handleEditOpen={handleEditOpen}
           setSelectedRowData={setSelectedRowData}
@@ -377,4 +362,4 @@ function DashCategories() {
   );
 }
 
-export default DashCategories;
+export default DashColors;

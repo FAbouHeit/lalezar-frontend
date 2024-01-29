@@ -23,6 +23,7 @@ import AboutUs from "../Pages/AboutUs/AboutUs.js";
 import DashBlogs from "../Pages/DashBlogs/DashBlogs.js";
 import DashOutlet from "./DashOutlet.js";
 import DashCategories from "../Pages/DashCategories/DashCategories.js";
+import DashColors from "../Pages/DashColors/DashColors.js";
 
 const PrivatRoute = ({ element, roles }) => {
   const { user, checkUser } = useContext(AuthContext);
@@ -99,7 +100,16 @@ const AppRouter = () => {
         <Route
           path="/dashboard/category"
           exact
-          element={<PrivatRoute element={<DashCategories />} roles={["Admin"]} />}
+          element={
+            <PrivatRoute element={<DashCategories />} roles={["Admin"]} />
+          }
+        />
+        <Route
+          path="/dashboard/color"
+          exact
+          element={
+            <PrivatRoute element={<DashColors />} roles={["Admin"]} />
+          }
         />
         <Route
           path="/dashboard/user"

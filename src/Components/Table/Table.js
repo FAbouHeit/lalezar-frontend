@@ -67,10 +67,9 @@ const Table = ({
           "color",
         ];
       } else if (ForWhat === "categories") {
-        visibleFields = [
-          "name",
-          "name_AR",
-        ];
+        visibleFields = ["name", "name_AR"];
+      } else if (ForWhat === "colors") {
+        visibleFields = ["name", "hex"];
       } else {
         visibleFields = Object.keys(data[0]);
       }

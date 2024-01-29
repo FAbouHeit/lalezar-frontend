@@ -1,0 +1,62 @@
+.addPopUp {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  height: fit-content;
+  border: none;
+  background-color: rgba(180, 206, 246, 0.8);
+  color: white;
+  z-index: 1003;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.addToCart {
+  background-color: #c86823;
+  border: 0;
+  width: fit-content;
+  border-radius: 10px;
+  color: white;
+  font-size: 20px;
+  padding: 10px 10px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.addToCart:hover {
+  background-color: #a0471d;
+  cursor: pointer;
+}
+
+.confirm {
+  color: #c86823;
+  border-color: #c86823;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-transform: none;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+}
+.confirm:hover {
+  background-color: #c86823;
+  border-color: #c86823;
+  color: white;
+}
+
+.cancel {
+  background-color: #c86823;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-transform: none;
+  padding: 20px;
+  border: none;
+  border-radius: 10px;
+}
+.cancel:hover {
+  background-color: #a0471d;
+  color: white;
+}
