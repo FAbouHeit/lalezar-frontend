@@ -22,6 +22,7 @@ import ContactUs from "../Pages/ContactUs/ContactUs.js";
 import AboutUs from "../Pages/AboutUs/AboutUs.js";
 import DashBlogs from "../Pages/DashBlogs/DashBlogs.js";
 import DashOutlet from "./DashOutlet.js";
+import DashCategories from "../Pages/DashCategories/DashCategories.js";
 
 const PrivatRoute = ({ isAllowed, children, redirectPath = "/unauthorized" }) => {
   const { user, checkUser } = useContext(AuthContext);
@@ -115,6 +116,11 @@ const AppRouter = () => {
               isAllowed={user && user.role === "Admin" ? true : false}
             />
           }
+        />
+        <Route
+          path="/dashboard/category"
+          exact
+          element={<PrivatRoute element={<DashCategories />} roles={["Admin"]} />}
         />
         <Route
           path="/dashboard/user"

@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PaginationItem from '@mui/material/PaginationItem';
+import PaginationItem from "@mui/material/PaginationItem";
 
 const Products = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -172,7 +172,12 @@ const Products = () => {
     const existingItem = currentItems.find((item) => item.id === product._id);
 
     if (!existingItem) {
-      currentItems.push({ id: product._id, name: product.name, price:product.price , quantity: 1 });
+      currentItems.push({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+      });
       localStorage.setItem("cart", JSON.stringify(currentItems));
       showToast(`${product.name} added successfuly to your bag`);
     } else {
@@ -338,7 +343,10 @@ const Products = () => {
                     />
                     <div>
                       <section className={StyleProducts.infoCart}>
-                        <strong style={{ fontSize: "25px" }}>
+                        {/* <strong style={{ fontSize: "25px" , width:"50px" }}> */}
+                        <strong
+                          style={{ fontSize:"20px" , overflow: "hidden", whiteSpace: "nowrap" }}
+                        >
                           {product.name}
                         </strong>
                         {product.category.name}

@@ -37,7 +37,7 @@ const Table = ({
 
   const handleDelete = (e, row) => {
     e.preventDefault();
-    handleOpenDelete();
+    handleOpenDelete(row);
     setSelectedRowData(row);
   };
 
@@ -65,6 +65,11 @@ const Table = ({
           "stock",
           "category",
           "color",
+        ];
+      } else if (ForWhat === "categories") {
+        visibleFields = [
+          "name",
+          "name_AR",
         ];
       } else {
         visibleFields = Object.keys(data[0]);
@@ -94,50 +99,46 @@ const Table = ({
                   backgroundColor: color,
                   width: "3rem",
                   height: "3rem",
-                  borderRadius: '50%'
+                  borderRadius: "50%",
                 }}
               ></div>
             );
           }
           if (field === "weight" && params.row.weight) {
             const weight = params.row.weight;
-            return (
-              <div>
-                {weight} Gr
-              </div>
-            );
+            return <div>{weight} Gr</div>;
           }
           if (field === "price" && params.row.price) {
             const price = params.row.price;
-            return (
-              <div>
-                ${price}
-              </div>
-            );
+            return <div>${price}</div>;
           }
-          if (field === 'stock' && params.row.stock){
-            const stock = params.row.stock === true ? 'There is Stock' : 'Stock Empty'
-            return ( 
-              <p style={{
-                color: 'black'
-              }}>
+          if (field === "stock" && params.row.stock) {
+            const stock =
+              params.row.stock === true ? "There is Stock" : "Stock Empty";
+            return (
+              <p
+                style={{
+                  color: "black",
+                }}
+              >
                 {stock}
               </p>
-            )
+            );
           }
 
-          if (field === 'category' && params.row.category){
-            return(
-              <p style={{
-                color: "black"
-              }}>
+          if (field === "category" && params.row.category) {
+            return (
+              <p
+                style={{
+                  color: "black",
+                }}
+              >
                 {params.row.category.name}
               </p>
-            )
+            );
           }
           return params.value;
         },
-        
       }));
 
       if (buton === true) {

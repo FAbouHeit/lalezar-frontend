@@ -32,3 +32,41 @@
     justify-content: center;
     align-items: center;
   }
+
+  .confirm{
+    color: #c86823;
+    border-color: #c86823;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-transform: none;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+  }
+  .confirm:hover{
+    background-color: #c86823;
+    border-color: #c86823;
+    color: white;
+  }
+
+  .cancel{
+    background-color: #c86823;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-transform: none;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+  }
+  .cancel:hover{
+    background-color: #a0471d;
+    color: white;
+  }
+
+  /* sx={{
+    bgcolor: "#C86823",
+    transition: "background-color 0.3s ease, color 0.3s ease",
+    textTransform: "none",
+    "&:hover": {
+      bgcolor: "#A0471D",
+      color: "white",
+    },
+  }} */
