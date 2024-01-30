@@ -2,58 +2,68 @@ import React from 'react'
 import CardItem from "../../Components/CardItem/CardItem.js"
 import CardCheckout from "../../Components/CardCheckout/CardCheckout.js"
 import Style from "./Cart.module.css"
-import productImage from "../../Assets/product.png"
+import { useState,useEffect } from 'react'
 
 export default function Cart() {
 
-  const cardItemsData = [
-    {
-      id: 1,
-      title: "kerkom",
-      color: "yellow",
-      image: productImage,
-      mainPrice: 19.99,
-    },
-    {
-      id: 1,
-      title: "babrekaaaaaaaaaaa",
-      color: "green",
-      image: productImage,
-      mainPrice: 19.99,
-    },
-    {
-      id: 1,
-      title: "olive  mdkjwqbdhbfjewfewig oil",
-      color: "Blue",
-      image: productImage,
-      mainPrice: 19.99,
-    },
-    {
-      id: 1,
-      title: "kezbara",
-      color: "red",
-      image: productImage,
-      mainPrice: 19.99,
-    },
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  ];
 
+
+  const calculateTotalPrice = (items) => {
+    let totalPriceAll = 0;
+    items.forEach(item => {
+      const totalPriceProduct = parseFloat(item.totalPrice);
+      if (!isNaN(totalPriceProduct)){
+        totalPriceAll += totalPriceProduct; 
+      }
+    });
+    return totalPriceAll;
+  };
+
+  useEffect(() => {
+    const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartItems(currentItems);
+
+    const totalPriceAll2 = calculateTotalPrice(currentItems);
+    setTotalPrice(totalPriceAll2);
+  }, []);
+
+
+
+
+  const handleDeleteItem = (id) => {
+    const updatedItems = cartItems.filter(item => item.id !== id);
+    setCartItems(updatedItems);
+    localStorage.setItem("cart", JSON.stringify(updatedItems));
+
+    const totalPriceAll2 = calculateTotalPrice(updatedItems);
+    setTotalPrice(totalPriceAll2);
+  }
   return (
     <div className={Style.main}>
       <div className={Style.pageWrapper}>
         <div className={Style.cardContainer}>
-          {cardItemsData.map((item) => (
+          {cartItems.map((item) => (
             <CardItem
               key={item.id}
-              title={item.title}
-              color={item.color}
+              id={item.id}
+              name={item.name}
+              quantity={item.quantity}
+              // color={item.color}
               image={item.image}
-              mainPrice={item.mainPrice}
+              price={item.price}
+              onDelete={() => handleDeleteItem(item.id)}
+              totalPrice={totalPrice}
+              cartItems = {cartItems}
+              setTotalPrice={setTotalPrice}
+              calculateTotalPrice={calculateTotalPrice}
             />
           ))}
         </div>
         <div className={Style.checkoutContainer}>
-          <CardCheckout />
+          <CardCheckout totalPrice={totalPrice} />
         </div>
       </div>
     </div>

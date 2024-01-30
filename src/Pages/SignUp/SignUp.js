@@ -1,18 +1,64 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, {useEffect,useContext, useState } from 'react'
 import Styles from './Signup.module.css'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { NavLink } from "react-router-dom";
-import OAuth from "../../Components/OAuth/OAuth.js"
+import OAuth from "../../Components/OAuth/OAuth.js";
+import useApi from "../../Hooks/UseApi";
+import { AuthContext } from "../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 function SignUp() {
-  // const [backgroundHeight, setBackgroundHeight] = useState(0);
-  // const mainRef = useRef();
+  const [firstName, setFirstName] = useState();
+   const [lastName, setLastName] = useState();
+   const [phoneNumber,setPhoneNumber] = useState();
+   const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [loading, setLoading] = useState(false);
+  const [success , setSuccess] = useState(false)
+  const { fetchUserData } = useContext(AuthContext);
+  const { apiCall } = useApi();
+  const navigate = useNavigate();
 
-  // useEffect(()=>{
-  //   console.log("height: ", mainRef)
-  //   setBackgroundHeight(mainRef.current.offsetHeight);
-  // },[])
 
+  useEffect(()=>{
+    if (success){
+        // toast.success('Logged in Successfuly')
+        console.log("sign up  Successfuly")
+    }
+  }, [success])
+
+const submitHandler = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  if (!firstName || !lastName || !email || !password || !phoneNumber) {
+      console.log("all fiels are required ")
+      setLoading(false);
+      return;
+  }
+
+  try {
+         const response = await apiCall({
+          url: 'user/signup',
+          method: 'post',
+          data: {firstName,lastName, email, password , phoneNumber }
+      });
+
+   if(response){
+      await fetchUserData()
+      console.log('sign up')
+      setLoading(false);
+      setSuccess(true)
+      navigate('/home')
+  }
+}
+  catch (error) {
+      console.log(error)
+      setLoading(false);
+        // showToast('Error logging in');
+  }
+};
+
+  
   return (
     <>
       <main className={Styles.mainContainer}>
@@ -31,7 +77,10 @@ function SignUp() {
           <div>
             <form className={Styles.formContainer} >
               <div className={Styles.inputContainer}>
-                <TextField fullWidth id="outlined-basic" label="First Name" variant="outlined" sx={{
+                <TextField fullWidth id="outlined-basic" label="First Name" variant="outlined"
+                value={firstName} 
+                onChange={(e)=>setFirstName(e.target.value)}
+                sx={{
                   "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                     border: "2px solid #C86823 !important",
                     borderRadius: "4px",
@@ -44,7 +93,10 @@ function SignUp() {
                     color: "#C86823 ",
                   },
                 }} />
-                <TextField fullWidth id="outlined-basic" label=" Last Name" variant="outlined" sx={{
+                <TextField fullWidth id="outlined-basic" label=" Last Name" variant="outlined"
+                value={lastName} 
+                onChange={(e)=>setLastName(e.target.value)}
+                sx={{
                   "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                     border: "2px solid #C86823 !important",
                     borderRadius: "4px",
@@ -57,7 +109,10 @@ function SignUp() {
                     color: "#C86823 ",
                   },
                 }} />
-                <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" sx={{
+                <TextField fullWidth id="outlined-basic" label="Email" variant="outlined"
+                 value={email} 
+                 onChange={(e)=>setEmail(e.target.value)}
+                sx={{
                   "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                     border: "2px solid #C86823 !important",
                     borderRadius: "4px",
@@ -70,7 +125,10 @@ function SignUp() {
                     color: "#C86823 ",
                   },
                 }} />
-                <TextField fullWidth id="outlined-basic" label="Password" variant="outlined" sx={{
+                <TextField fullWidth id="outlined-basic" label="Password" variant="outlined"
+                 value={password} 
+                 onChange={(e)=>setPassword(e.target.value)}
+                sx={{
                   "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                     border: "2px solid #C86823 !important",
                     borderRadius: "4px",
@@ -83,7 +141,10 @@ function SignUp() {
                     color: "#C86823 ",
                   },
                 }} />
-                <TextField fullWidth id="outlined-basic" label="Phone Number" variant="outlined" sx={{
+                <TextField fullWidth id="outlined-basic" label="Phone Number" variant="outlined" 
+                 value={phoneNumber} 
+                 onChange={(e)=>setPhoneNumber(e.target.value)}
+                sx={{
                   "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                     border: "2px solid #C86823 !important",
                     borderRadius: "4px",
@@ -101,6 +162,7 @@ function SignUp() {
                 <Button
                   fullWidth
                   variant="contained"
+                  onClick={submitHandler}
                   sx={{
                     bgcolor: "#C86823",
                     transition: "background-color 0.3s ease, color 0.3s ease",
@@ -110,7 +172,7 @@ function SignUp() {
                     },
                   }}
                 >
-                  Sign Up
+                  {loading ? 'Signing up...' : 'Sign Up'}
                 </Button>
                 <p className={Styles.orPhrase}>Or</p>
                <OAuth/>
@@ -123,4 +185,4 @@ function SignUp() {
   )
 }
 
-export default SignUp
+export default SignUp;
