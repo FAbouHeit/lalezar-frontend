@@ -16,6 +16,8 @@ import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PaginationItem from "@mui/material/PaginationItem";
+import Loading from '../../Assets/loadinggg-ezgif.com-video-to-webp-converter.webp'
+import louaiLoading from '../../Assets/louaiiloading.webp'
 
 const Products = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -100,7 +102,9 @@ const Products = () => {
           justifyContent: "center",
         }}
       >
-        <h1>Loading ...</h1>
+        <img src={Loading}/>
+        <img src={louaiLoading}/>
+
       </div>
     );
   }

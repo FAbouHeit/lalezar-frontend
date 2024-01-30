@@ -86,7 +86,7 @@ function DashCategories() {
   }
 
   const handleChange = (e) => {
-    const { name, value, type, checked, files } = e.target;
+    const { name, type, checked } = e.target;
     // Check if the input type is file for handling images
     if (type === "file") {
       const file = e.target.files[0];
