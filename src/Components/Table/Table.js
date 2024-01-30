@@ -66,6 +66,15 @@ const Table = ({
           "category",
           "color",
         ];
+      } else if (ForWhat === "blogs") {
+        visibleFields = [
+          "title_en",
+          "title_ar",
+          "description_en",
+          "description_ar",
+          "video",
+          "images",
+        ];
       } else {
         visibleFields = Object.keys(data[0]);
       }

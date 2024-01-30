@@ -23,7 +23,7 @@ import AboutUs from "../Pages/AboutUs/AboutUs.js";
 import DashBlogs from "../Pages/DashBlogs/DashBlogs.js";
 import DashOutlet from "./DashOutlet.js";
 
-const PrivatRoute = ({ isAllowed, children, redirectPath = "/unauthorized" }) => {
+const PrivatRoute = ({ isAllowed, element, redirectPath = "/unauthorized" }) => {
   const { user, checkUser } = useContext(AuthContext);
 
   if (checkUser || !user) {
@@ -51,7 +51,7 @@ const PrivatRoute = ({ isAllowed, children, redirectPath = "/unauthorized" }) =>
     return <Navigate to='/Unauthorized' />;
   }
 
-  return children ? children : <DashOutlet />;
+  return element;
 
   // return element
 };
