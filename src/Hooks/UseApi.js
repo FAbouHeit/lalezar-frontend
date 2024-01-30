@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const useApi = () => {
 
     const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(false)
+    const [error, setError] = useState()
     // const [data, setData] = useState(null)
     const { setUser } = useContext(AuthContext)
     const navigate = useNavigate()
@@ -18,7 +18,7 @@ const useApi = () => {
             setLoading(false)
             return response.data
         } catch (error) {
-            setError(true)
+            setError(error)
             setLoading(false)
             if (error.response) {
                 if (error.response.status === 401) {

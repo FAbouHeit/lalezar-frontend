@@ -7,14 +7,21 @@ import GroupIcon from "@mui/icons-material/Group";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
-import HomeIcon from '@mui/icons-material/Home';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import { useState } from "react";
+import HomeIcon from "@mui/icons-material/Home";
+import AutoStoriesIcon from "@mui/icons-material/AutoStories";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import PaletteIcon from "@mui/icons-material/Palette";
+import CategoryIcon from "@mui/icons-material/Category";
+import { useContext, useState } from "react";
+import clientImg from "../../Assets/courier (1).png";
+import { AuthContext } from "../../Context/AuthContext";
 
 const DashSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const navigate = useNavigate();
+  const {logOut} = useContext(AuthContext)
   const ReturnHome = () => {
     navigate("/");
   };
@@ -24,11 +31,55 @@ const DashSidebar = () => {
   };
 
   const listItems = [
-    { number: 1 , item: "Overview", link: "/dashboard", icon: <QueryStatsIcon /> },
-    { number: 2 , item: "Users", link: "/dashboard/user", icon: <GroupIcon /> },
-    { number: 3 , item: "Products", link: "/dashboard/product", icon: <LocalMallIcon /> },
-    { number: 4 , item: "Blogs", link: "/dashboard/blogs", icon: <AutoStoriesIcon /> },
-    { number: 5 , item: "Profile", link: "/profile", icon: <PersonIcon /> },
+    {
+      number: 1,
+      item: "Overview",
+      link: "/dashboard",
+      icon: <QueryStatsIcon />,
+    },
+    { number: 2, item: "Users", link: "/dashboard/user", icon: <GroupIcon /> },
+    {
+      number: 3,
+      item: "Products",
+      link: "/dashboard/product",
+      icon: <LocalMallIcon />,
+    },
+    {
+      number: 4,
+      item: "Orders",
+      link: "/dashboard/order",
+      icon: <ShoppingCartIcon />,
+    },
+    {
+      number: 5,
+      item: "Blogs",
+      link: "/dashboard/blogs",
+      icon: <AutoStoriesIcon />,
+    },
+    {
+      number: 6,
+      item: "Clients",
+      link: "/dashboard/clients",
+      icon: <img src={clientImg} width={"23px"} alt="client" />,
+    },
+    {
+      number: 7,
+      item: "Delivery",
+      link: "/dashboard/delivery",
+      icon: <LocalShippingIcon />,
+    },
+    {
+      number: 8,
+      item: "Colors",
+      link: "/dashboard/color",
+      icon: <PaletteIcon />,
+    },
+    {
+      number : 9 ,
+      item : 'Category',
+      link : '/dashboard/category',
+      icon : <CategoryIcon/>
+    }
   ];
 
   return (
@@ -102,6 +153,29 @@ const DashSidebar = () => {
             <button
               className={`${styles.sidebarButton} ${styles.button}`}
               tabIndex="0"
+              onClick={() => navigate("/profile")}
+            >
+              <span>
+                <PersonIcon
+                  sx={{
+                    color: "white",
+                  }}
+                />
+              </span>
+              <p
+                style={{
+                  fontFamily: "outfit",
+                  fontSize: "1.2rem",
+                  fontWeight: 600,
+                  color: "white",
+                }}
+              >
+                Profile
+              </p>
+            </button>
+            <button
+              className={`${styles.sidebarButton} ${styles.button}`}
+              tabIndex="0"
               onClick={() => ReturnHome()}
             >
               <span>
@@ -125,6 +199,9 @@ const DashSidebar = () => {
             <button
               className={`${styles.sidebarButton} ${styles.button}`}
               tabIndex="0"
+              onClick={() => {
+                logOut()
+              }}
             >
               <span>
                 <LogoutIcon

@@ -89,7 +89,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
     try {
       setLoading(true);
       const response = await axios.patch(
-        `${process.env.REACT_APP_SQL_API}/user`,
+        `${process.env.REACT_APP_BACKEND_ENDPOINT}user`,
         {
           firstName: firstName,
           lastName: lastName,
@@ -196,6 +196,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
       }}
       autoComplete="on"
     >
+      
       {loading ? (
         <div
           style={{

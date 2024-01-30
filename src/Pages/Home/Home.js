@@ -38,10 +38,66 @@ const Home = () => {
         const response = await axiosInstance.get(
           `${process.env.REACT_APP_BACKEND_ENDPOINT}products/last4`
         );
-        console.log(response.data);
         return response.data;
       } catch (error) {
         console.error("Error fetching products:", error);
+        throw error;
+      }
+    },
+  });
+
+  const {
+    isPending: isBlogPending,
+    isError: isBlogError,
+    data: blogData,
+  } = useQuery({
+    queryKey: ["blogData"],
+    queryFn: async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}blog`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        throw error;
+      }
+    },
+  });
+
+  const {
+    isPending: isCategoryPending,
+    isError: isCategoryError,
+    data: categoryData,
+  } = useQuery({
+    queryKey: ["categoryData"],
+    queryFn: async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}categories`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        throw error;
+      }
+    },
+  });
+
+  const {
+    isPending: isClientPending,
+    isError: isClientError,
+    data: clientData,
+  } = useQuery({
+    queryKey: ["clientData"],
+    queryFn: async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}client`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching clients:", error);
         throw error;
       }
     },
@@ -67,7 +123,12 @@ const Home = () => {
     const existingItem = currentItems.find((item) => item.id === product._id);
 
     if (!existingItem) {
-      currentItems.push({ id: product._id, name: product.name, price:product.price , quantity: 1 });
+      currentItems.push({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+      });
       localStorage.setItem("cart", JSON.stringify(currentItems));
       showToast(`${product.name} added successfuly to your bag`);
     } else {
@@ -83,7 +144,7 @@ const Home = () => {
         margin: "5rem auto",
       }}
     >
-      <ToastContainer/>
+      <ToastContainer />
       {isProductsPending && <div className={Styles.Loading}>Loading ...</div>}
       {isProductsError && (
         <div className={Styles.Loading}>
@@ -95,75 +156,76 @@ const Home = () => {
           <HeroSection />
           <main className={Styles.main}>
             <h2 className={Styles.h2}>Main Categories</h2>
-            <MainCategories />
+            <MainCategories categoryData={categoryData} />
 
             <h2 className={Styles.h2}>Latest Products</h2>
             <article className={Styles.products}>
-            {productsData.map((product) => (
-              <Reveal>
-                <div className={Styles.oneCart}>
-                  <Link
-                    style={{
-                      textDecoration: "none",
-                      color: "inherit",
-                      transition: "background-color 0.5s, opacity 0.3s",
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                    to={`/ProductDetails/${product.slug}`}
-                    key={product._id}
-                    onMouseOver={(e) => {
-                      e.currentTarget.style.backgroundColor = "#f8f8f8";
-                      e.currentTarget.style.opacity = 0.8;
-                    }}
-                    onMouseOut={(e) => {
-                      e.currentTarget.style.backgroundColor = "white";
-                      e.currentTarget.style.opacity = 0.8;
-                    }}
-                  >
-                    <img
-                      src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
-                      className={Styles.imgCart}
-                    />
-                    <div>
-                      <section className={Styles.infoCart}>
-                        <strong style={{ fontSize: "25px" }}>
-                          {product.name}
-                        </strong>
-                        {product.category.name}
-                        <p style={{ fontSize: "20px" }}>${product.price}</p>
-                      </section>
-                    </div>
-                  </Link>
-                  <button
-                    className={Styles.addToCart}
-                    onClick={() => addToCart(product)}
-                  >
-                    {<AddShoppingCartIcon />}Add to Cart
-                  </button>
-                </div>
-              </Reveal>
-            ))}
+              {productsData.map((product) => (
+                <Reveal>
+                  <div className={Styles.oneCart}>
+                    <Link
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                        transition: "background-color 0.5s, opacity 0.3s",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
+                      to={`/ProductDetails/${product.slug}`}
+                      key={product._id}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.backgroundColor = "#f8f8f8";
+                        e.currentTarget.style.opacity = 0.8;
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.backgroundColor = "white";
+                        e.currentTarget.style.opacity = 0.8;
+                      }}
+                    >
+                      <img
+                        src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
+                        className={Styles.imgCart}
+                      />
+                      <div>
+                        <section className={Styles.infoCart}>
+                          <strong style={{ fontSize: "25px" }}>
+                            {product.name}
+                          </strong>
+                          {product.category.name}
+                          <p style={{ fontSize: "20px" }}>${product.price}</p>
+                        </section>
+                      </div>
+                    </Link>
+                    <button
+                      className={Styles.addToCart}
+                      onClick={() => addToCart(product)}
+                    >
+                      {<AddShoppingCartIcon />}Add to Cart
+                    </button>
+                  </div>
+                </Reveal>
+              ))}
             </article>
             <h2 className={Styles.h2}>Our Services</h2>
             <ChooseUs />
 
             <h2 className={Styles.h2}>Latest Blogs</h2>
             <article className={Styles.Blogs}>
-              {data.map((item, index) => {
+              {blogData.map((item, index) => {
                 return (
                   <BlogCard
                     key={index}
-                    title={item.title}
-                    image={item.image}
-                    description={item.description}
+                    title={item.title_en}
+                    image={item.images[0]}
+                    description={item.description_en}
+                    slug={item.slug}
                   />
                 );
               })}
             </article>
             <article>
               <h2 className={Styles.h2}>Our Clients </h2>
-              <Clients />
+              <Clients data={ clientData} />
             </article>
           </main>
         </>

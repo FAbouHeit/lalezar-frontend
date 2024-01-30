@@ -11,7 +11,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,8 +20,11 @@ import Loading from '../../Assets/loadinggg-ezgif.com-video-to-webp-converter.we
 import louaiLoading from '../../Assets/louaiiloading.webp'
 
 const Products = () => {
+  const { categoryId } = useParams();
   const [searchInput, setSearchInput] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState(
+    categoryId ? [`${categoryId}`] : []
+  );
   const [checkboxes, setCheckboxes] = useState({});
   const productsPerPage = 12;
 
@@ -350,7 +353,11 @@ const Products = () => {
                       <section className={StyleProducts.infoCart}>
                         {/* <strong style={{ fontSize: "25px" , width:"50px" }}> */}
                         <strong
-                          style={{ fontSize:"20px" , overflow: "hidden", whiteSpace: "nowrap" }}
+                          style={{
+                            fontSize: "20px",
+                            overflow: "hidden",
+                            whiteSpace: "nowrap",
+                          }}
                         >
                           {product.name}
                         </strong>

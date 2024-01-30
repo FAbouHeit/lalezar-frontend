@@ -1,29 +1,31 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import Table from "../../Components/Table/Table";
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../Utils/AxiosInstance";
-import DeleteOrderModal from "../../Components/OrderModal/DeleteOrder";
-import OrderModal from "../../Components/OrderModal/OrderModal";
+import AddIcon from "@mui/icons-material/Add";
 import { ToastContainer } from "react-toastify";
+import ClientModal from "../../Components/ClientModal/ClientModal";
+import DeleteClientModal from "../../Components/ClientModal/DeleteClient";
 
-const DashOrder = () => {
+const DashClient = () => {
   const [selectedRowData, setSelectedRowData] = useState({});
+  const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
 
   const {
-    isPending: isOrderPending,
-    isError: isOrderError,
-    data: orderData,
-    refetch: refetchOrders,
+    isPending: isClientPending,
+    isError: isClientError,
+    data: clientData,
+    refetch: refetchClients,
   } = useQuery({
-    queryKey: ["OrderData"],
+    queryKey: ["clientData"],
     queryFn: async () => {
       try {
         const response = await axiosInstance.get(
-          `${process.env.REACT_APP_BACKEND_ENDPOINT}order`
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}client`
         );
         return response.data;
       } catch (error) {
@@ -59,13 +61,14 @@ const DashOrder = () => {
         variant="h3"
         sx={{
           textAlign: "left",
+          mb: 5,
           mt: "2rem",
           fontWeight: "bold",
         }}
       >
-        Manage Orders
+        Manage Clients
       </Typography>
-      {isOrderPending ? (
+      {isClientPending ? (
         <div
           style={{
             display: "flex",
@@ -77,7 +80,7 @@ const DashOrder = () => {
             Loading...
           </Typography>
         </div>
-      ) : isOrderError ? (
+      ) : isClientError ? (
         <div
           style={{
             display: "flex",
@@ -91,25 +94,49 @@ const DashOrder = () => {
         </div>
       ) : (
         <>
+          <Button
+            onClick={() => setOpenAdd(true)}
+            endIcon={<AddIcon />}
+            variant="contained"
+            sx={{
+              width: "8rem",
+              bgcolor: "#C86823",
+              transition: "background-color 0.3s ease, color 0.3s ease",
+              textTransform: "none",
+              "&:hover": {
+                bgcolor: "#A0471D",
+                color: "white",
+              },
+            }}
+          >
+            Add Client
+          </Button>
           <Table
-            data={orderData && orderData}
+            data={clientData && clientData}
             isEdit={true}
             setSelectedRowData={setSelectedRowData}
             handleOpenDelete={() => setOpenDelete(true)}
             handleEditOpen={() => setOpenEdit(true)}
-            ForWhat={"orders"}
+            ForWhat={"clients"}
           />
-          <DeleteOrderModal
+          <DeleteClientModal
             open={openDelete}
             handleClose={() => setOpenDelete(false)}
             selectedRowData={selectedRowData && selectedRowData}
-            refetch={() => refetchOrders()}
+            refetch={() => refetchClients()}
           />
-          <OrderModal
+          <ClientModal
             open={openEdit}
             handleClose={() => setOpenEdit(false)}
             selectedRowData={selectedRowData}
-            refetch={() => refetchOrders()}
+            refetch={() => refetchClients()}
+            action={"edit"}
+          />
+          <ClientModal
+            open={openAdd}
+            handleClose={() => setOpenAdd(false)}
+            refetch={() => refetchClients()}
+            action={"add"}
           />
         </>
       )}
@@ -117,4 +144,4 @@ const DashOrder = () => {
   );
 };
 
-export default DashOrder;
+export default DashClient;

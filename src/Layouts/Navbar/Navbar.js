@@ -145,7 +145,6 @@ function Navbar() {
                 <li>
                   <Stack spacing={2} direction="row">
                     <Button
-                      endIcon={<KeyboardArrowDownIcon />}
                       onClick={goToLoginPage}
                       variant="outlined"
                       sx={{
@@ -429,6 +428,7 @@ function Navbar() {
             {user && (
               <li className={Styles.profileWrapper2}>
                 <Button
+                  endIcon={<KeyboardArrowDownIcon />}
                   onClick={() => setProfileOpen(!profOpen)}
                   variant="contained"
                   sx={{

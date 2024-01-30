@@ -5,24 +5,24 @@ import image2 from "../../Assets/category2.jpg";
 import { Button } from "@mui/material";
 import Spices from "../../Assets/Spices.png";
 import Organic from "../../Assets/Organic.png";
+import { useNavigate } from "react-router-dom";
 
-const MainCategories = () => {
-  const data = [
-    { title: "Most tastier spices ever", img: Spices, alt: "Spices" },
-    { title: "100% Organic Products", img: Organic, alt: "Organic Product" },
-  ];
+const MainCategories = ({ categoryData }) => {
+  const navigate = useNavigate();
   return (
     <article className={Styles.container}>
-      {data.map((item, index) => {
+      {categoryData.map((item, index) => {
         return (
           <section
+            to={`/ProductsPage`}
             className={`${Styles.section} ${Styles.spin} ${Styles.circle}`}
             key={index}
           >
-            <img src={item.img} alt={item.alt} className={Styles.img} />
-            <p className={Styles.p}>{item.title}</p>
+            <img src={Spices} alt={item.name} className={Styles.img} />
+            <p className={Styles.p}>{item.name}</p>
             <span className={Styles.btn}>
               <Button
+                onClick={() => navigate(`/ProductsPage/${item._id}`)}
                 variant="contained"
                 sx={{
                   zIndex: 1,
