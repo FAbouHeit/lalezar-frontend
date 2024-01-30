@@ -58,7 +58,7 @@ const DashClient = () => {
         />
       </Helmet>
       <Typography
-        variant="h3"
+        variant="h4"
         sx={{
           textAlign: "left",
           mb: 5,

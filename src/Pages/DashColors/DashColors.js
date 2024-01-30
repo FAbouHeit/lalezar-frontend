@@ -10,6 +10,7 @@ import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
 import { toast, ToastContainer } from "react-toastify";
+import AddIcon from "@mui/icons-material/Add";
 import "react-toastify/dist/ReactToastify.css";
 
 function DashColors() {
@@ -167,7 +168,7 @@ function DashColors() {
           updatedFormData.append(key, formData[key]);
         }
       });
-      
+
       const response = await axios.patch(
         `${process.env.REACT_APP_BACKEND_ENDPOINT}colors/update/${selectedRowData._id}`,
         formData
@@ -345,9 +346,33 @@ function DashColors() {
           marginLeft: "5rem",
         }}
       >
-        <button className={StyleDashColors.addToCart} onClick={handleOpenPopUp}>
-          Add A Color
-        </button>
+        <Typography
+          variant="h4"
+          sx={{
+            textAlign: "left",
+            mb: 5,
+            mt: "2rem",
+            fontWeight: "bold",
+          }}
+        >
+          Manage Clients
+        </Typography>
+        <Button
+          onClick={handleOpenPopUp}
+          endIcon={<AddIcon />}
+          variant="contained"
+          sx={{
+            bgcolor: "#C86823",
+            transition: "background-color 0.3s ease, color 0.3s ease",
+            textTransform: "none",
+            "&:hover": {
+              bgcolor: "#A0471D",
+              color: "white",
+            },
+          }}
+        >
+          Add Color
+        </Button>
         <Table
           data={colorsData}
           ForWhat={"colors"}

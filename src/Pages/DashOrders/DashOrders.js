@@ -56,7 +56,7 @@ const DashOrder = () => {
         />
       </Helmet>
       <Typography
-        variant="h3"
+        variant="h4"
         sx={{
           textAlign: "left",
           mt: "2rem",

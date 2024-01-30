@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Typography from "@mui/material/Typography";
+import AddIcon from "@mui/icons-material/Add";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -302,7 +303,7 @@ function DashCategories() {
         </>
       )}
       {isDeletePopUp && (
-        <Modal 
+        <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           open={isDeletePopUp}
@@ -357,12 +358,33 @@ function DashCategories() {
           marginLeft: "5rem",
         }}
       >
-        <button
-          className={StyleDashCategories.addToCart}
-          onClick={handleOpenPopUp}
+        <Typography
+          variant="h4"
+          sx={{
+            textAlign: "left",
+            mb: 5,
+            mt: "2rem",
+            fontWeight: "bold",
+          }}
         >
-          Add A Category
-        </button>
+          Manage Categories
+        </Typography>
+        <Button
+            onClick={handleOpenPopUp}
+            endIcon={<AddIcon />}
+            variant="contained"
+            sx={{
+              bgcolor: "#C86823",
+              transition: "background-color 0.3s ease, color 0.3s ease",
+              textTransform: "none",
+              "&:hover": {
+                bgcolor: "#A0471D",
+                color: "white",
+              },
+            }}
+          >
+            Add Category
+          </Button>
         <Table
           data={categoriesData}
           ForWhat={"categories"}
