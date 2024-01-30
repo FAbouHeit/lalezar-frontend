@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Password } from "@mui/icons-material";
 import { useState, useContext , useEffect } from "react";
 import useApi from "../../Hooks/UseApi";
+import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -76,7 +77,7 @@ function Login() {
 // };
 useEffect(()=>{
   if (success){
-      // toast.success('Logged in Successfuly')
+      toast.success('Logged in Successfuly')
       console.log("Logged in Successfuly")
   }
 }, [success])
@@ -89,25 +90,51 @@ const submitHandler = async (e) => {
       setLoading(false);
       return;
   }
-
   try {
-        await apiCall({
-          url: 'user/login',
-          method: 'post',
-          data: { email, password }
-      })
-   
-      await fetchUserData()
-      console.log('loggedin')
+    // Call the login API
+    const response = await apiCall({
+      url: 'user/login',
+      method: 'post',
+      data: { email, password },
+    });
+
+    // Check if login was successful
+    if (response) {
+      // Fetch user data and redirect to home page
+      await fetchUserData();
+      console.log('Logged in successfully');
+      setLoading(true);
+      setSuccess(true);
+      showToast('Logged in successfully');
+      navigate('/home'); // Only navigate to home on successful login
+    } else {
+      // Handle unsuccessful login (e.g., email doesn't exist)
+      console.log('Email does not exist or login failed');
+      showToast('Email does not exist or login failed');
       setLoading(false);
-      setSuccess(true)
-      navigate('/home')
-  }
-  catch (error) {
-      console.log(error)
-      setLoading(false);
+    }
+  } catch (error) {
+    console.log(error);
+    setLoading(false);
+    showToast('Error logging in');
   }
 };
+
+  const showToast = (message) => {
+    toast.info(message, {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      style: {
+        backgroundColor: "#c86823",
+        color: "#fff",
+        fontSize: "16px",
+      },
+    });
+  };
 
   return (
     <>
@@ -188,6 +215,7 @@ const submitHandler = async (e) => {
           </div>
         </section>
       </main>
+      <ToastContainer />
     </>
   );
 }

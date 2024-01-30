@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function ProductDetails() {
   const [count, setCount] = useState(1);
+  // const [totalPrice, setTotalPrice] = useState();
   const [product, setProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { slug } = useParams();
@@ -47,12 +48,15 @@ function ProductDetails() {
 
     if (existingItemIndex !== -1) {
       currentItems[existingItemIndex].quantity += count;
+      currentItems[existingItemIndex].totalPrice = currentItems[existingItemIndex].quantity * currentItems[existingItemIndex].price;
     } else {
       currentItems.push({
         id: product._id,
         name: product.name,
         price : product.price,
         quantity: count,
+        image: `${process.env.REACT_APP_IMAGE_PATH}${product.image}`,
+        totalPrice: count*product.price
       });
     }
 

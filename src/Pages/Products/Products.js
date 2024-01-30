@@ -172,7 +172,13 @@ const Products = () => {
     const existingItem = currentItems.find((item) => item.id === product._id);
 
     if (!existingItem) {
-      currentItems.push({ id: product._id, name: product.name, price:product.price , quantity: 1 });
+      currentItems.push({ id: product._id,
+         name: product.name,
+          price:product.price ,
+          quantity: 1,
+          image: `${process.env.REACT_APP_IMAGE_PATH}${product.image}`,
+          totalPrice:product.price 
+        });
       localStorage.setItem("cart", JSON.stringify(currentItems));
       showToast(`${product.name} added successfuly to your bag`);
     } else {

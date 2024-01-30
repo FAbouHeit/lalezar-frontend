@@ -1,15 +1,17 @@
 import React from 'react'
 import styles from './CardCheckout.module.css';
 import Button from '@mui/material/Button';
+import { useState,useEffect } from 'react';
 
-export default function CardCheckout() {
+export default function CardCheckout({totalPrice}) {
+
   return (
     <div className={styles.cardPage}>
       <div className={styles.cardWrapper}>
         <p className={styles.titleCard}>Order Summary</p>
         <div className={styles.price}>
           <p>Price</p>
-          <span>$99.8</span>
+          <span>${totalPrice.toFixed(2)}</span>
         </div>
         <div className={styles.delevryPart}>
           <p>Delevery fees</p>
@@ -17,7 +19,7 @@ export default function CardCheckout() {
         </div>
         <div className={styles.totalPrice}>
           <p>Total Price</p>
-          <div>$110.13</div>
+          <div>${(totalPrice +3).toFixed(2)}</div>
         </div>
         <div className={styles.buttonConainer}>
           <Button
