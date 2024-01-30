@@ -23,6 +23,8 @@ import AboutUs from "../Pages/AboutUs/AboutUs.js";
 import DashBlogs from "../Pages/DashBlogs/DashBlogs.js";
 import DashOutlet from "./DashOutlet.js";
 import DashCategories from "../Pages/DashCategories/DashCategories.js";
+import DashClient from "../Pages/DashClient/DashClient.js";
+import DashDelivery from "../Pages/DashDelivery/DashDelivery.js";
 
 const PrivatRoute = ({
   isAllowed,
@@ -69,6 +71,7 @@ const AppRouter = () => {
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/ProductsPage" element={<Products />} />
+        <Route path="/ProductsPage/:categoryId" element={<Products />} />
         <Route path="/ProductDetails/:slug" element={<ProductDetails />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Blogs" element={<BlogsPage />} />
@@ -138,6 +141,26 @@ const AppRouter = () => {
           element={
             <PrivatRoute
               element={<DashUser />}
+              isAllowed={user && user.role === "Admin" ? true : false}
+            />
+          }
+        />
+        <Route
+          path="/dashboard/clients"
+          exact
+          element={
+            <PrivatRoute
+              element={<DashClient />}
+              isAllowed={user && user.role === "Admin" ? true : false}
+            />
+          }
+        />
+        <Route
+          path="/dashboard/delivery"
+          exact
+          element={
+            <PrivatRoute
+              element={<DashDelivery />}
               isAllowed={user && user.role === "Admin" ? true : false}
             />
           }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, IconButton } from "@mui/material";
+import { Avatar, Box, IconButton } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Grid from "@mui/material/Unstable_Grid2";
 import EditIcon from "@mui/icons-material/Edit";
@@ -67,10 +67,20 @@ const Table = ({
           "color",
         ];
       } else if (ForWhat === "categories") {
+        visibleFields = ["name", "name_AR"];
+      } else if (ForWhat === "orders") {
         visibleFields = [
-          "name",
-          "name_AR",
+          "number",
+          "userId",
+          "products",
+          "totalPrice",
+          "address",
+          "city",
+          "country",
+          "status",
         ];
+      } else if (ForWhat === "clients") {
+        visibleFields = ["name", "image", "location"];
       } else {
         visibleFields = Object.keys(data[0]);
       }
@@ -87,9 +97,12 @@ const Table = ({
                   params.row.image ? params.row.image : ""
                 }`} // Assuming the "icon" field contains the image URL
                 alt="Icon"
-                style={{ width: "100px", height: "100px" }}
+                style={{ width: "140px", height: "100px" }}
               />
             );
+          }
+          if (field === "image" && !params.row.image) {
+            return <Avatar alt={params.row.firstName} />;
           }
           if (field === "color" && params.row.color) {
             const color = params.row.color.hex;
@@ -97,11 +110,29 @@ const Table = ({
               <div
                 style={{
                   backgroundColor: color,
-                  width: "3rem",
-                  height: "3rem",
+                  width: "1.5rem",
+                  height: "1.5rem",
                   borderRadius: "50%",
                 }}
               ></div>
+            );
+          }
+          if (field === "ingredients" && params.row.ingredients) {
+            const ingredientsList = params.row.ingredients
+              .split(",")
+              .map((ingredient) => ingredient.trim());
+            return (
+              <>
+                <ul style={{
+                  listStyle: 'none',
+                  overflowX: 'scroll',
+                  maxHeight: '7rem'
+                }}>
+                  {ingredientsList.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
+                  ))}
+                </ul>
+              </>
             );
           }
           if (field === "weight" && params.row.weight) {
@@ -124,6 +155,27 @@ const Table = ({
                 {stock}
               </p>
             );
+          }
+
+          if (field === "totalPrice" && params.row.totalPrice) {
+            const price = params.row.totalPrice;
+            return <div>${" " + price}</div>;
+          }
+
+          if (field === "userId") {
+            return (
+              <p
+                style={{
+                  color: "black",
+                }}
+              >
+                {params.row.userId.firstName + " " + params.row.userId.lastName}
+              </p>
+            );
+          }
+
+          if (field === "products" && params.row.orderDetails) {
+            return <div>{" " + params.row.orderDetails.length} products</div>;
           }
 
           if (field === "category" && params.row.category) {

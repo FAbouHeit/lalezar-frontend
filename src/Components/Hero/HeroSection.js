@@ -3,17 +3,19 @@ import img from "../../Assets/hero.jpg";
 import { Button } from "@mui/material";
 import { useEffect, useRef } from "react";
 import Typed from "typed.js";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   let mystrings;
+  const nav = useNavigate()
   useEffect(() => {
     mystrings = [""];
     mystrings.push("Exceptional flavors, perfected seasoning");
 
     const typed = new Typed(el.current, {
       strings: mystrings,
-      typeSpeed: 100,
-      backSpeed: 100,
+      typeSpeed: 50,
+      backSpeed: 50,
       loop: true,
     });
 
@@ -38,6 +40,9 @@ const HeroSection = () => {
               ":hover": {
                 bgcolor: "#A0471D",
               },
+            }}
+            onClick={()=> {
+              nav('/ProductsPage')
             }}
           >
             Discover products
