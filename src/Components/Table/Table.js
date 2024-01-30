@@ -81,6 +81,15 @@ const Table = ({
         ];
       } else if (ForWhat === "clients") {
         visibleFields = ["name", "image", "location"];
+      } else if (ForWhat === "blogs") {
+        visibleFields = [
+          "title_en",
+          "title_ar",
+          "description_en",
+          "description_ar",
+          "video",
+          "images",
+        ];
       } else {
         visibleFields = Object.keys(data[0]);
       }
