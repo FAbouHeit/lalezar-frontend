@@ -145,91 +145,168 @@ const Home = () => {
       }}
     >
       <ToastContainer />
-      {isProductsPending && <div className={Styles.Loading}>Loading ...</div>}
-      {isProductsError && (
-        <div className={Styles.Loading}>
-          An Error occured while getting data
-        </div>
-      )}
-      {!isProductsError && !isProductsPending && (
-        <>
-          <HeroSection />
-          <main className={Styles.main}>
-            <h2 className={Styles.h2}>Main Categories</h2>
-            <MainCategories categoryData={categoryData} />
+      <HeroSection />
+      <main className={Styles.main}>
+        <h2 className={Styles.h2}>Main Categories</h2>
+        <MainCategories
+          categoryData={categoryData}
+          isPending={isCategoryPending}
+          isError={isCategoryError}
+        />
+        <h2 className={Styles.h2}>Latest Products</h2>
+        <article className={Styles.products}>
+          {isProductsPending ? (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "20vh",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <p
+                style={{
+                  color: "black",
+                  fontWeight: "700",
+                }}
+              >
+                Loading ...
+              </p>
+            </div>
+          ) : isProductsError ? (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "20vh",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <p
+                style={{
+                  color: "red",
+                  fontWeight: "700",
+                }}
+              >
+                An Error Occured
+              </p>
+            </div>
+          ) : (
+            productsData.map((product, index) => (
+              <Reveal key={index}>
+                <div className={Styles.oneCart}>
+                  <Link
+                    style={{
+                      textDecoration: "none",
+                      color: "inherit",
+                      transition: "background-color 0.5s, opacity 0.3s",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                    to={`/ProductDetails/${product.slug}`}
+                    key={product._id}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = "#f8f8f8";
+                      e.currentTarget.style.opacity = 0.8;
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = "white";
+                      e.currentTarget.style.opacity = 0.8;
+                    }}
+                  >
+                    <img
+                      src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
+                      className={Styles.imgCart}
+                    />
+                    <div>
+                      <section className={Styles.infoCart}>
+                        <strong style={{ fontSize: "25px" }}>
+                          {product.name}
+                        </strong>
+                        {product.category.name}
+                        <p style={{ fontSize: "20px" }}>${product.price}</p>
+                      </section>
+                    </div>
+                  </Link>
+                  <button
+                    className={Styles.addToCart}
+                    onClick={() => addToCart(product)}
+                  >
+                    {<AddShoppingCartIcon />}Add to Cart
+                  </button>
+                </div>
+              </Reveal>
+            ))
+          )}
+        </article>
+        <h2 className={Styles.h2}>Our Services</h2>
+        <ChooseUs />
 
-            <h2 className={Styles.h2}>Latest Products</h2>
-            <article className={Styles.products}>
-              {productsData.map((product) => (
-                <Reveal>
-                  <div className={Styles.oneCart}>
-                    <Link
-                      style={{
-                        textDecoration: "none",
-                        color: "inherit",
-                        transition: "background-color 0.5s, opacity 0.3s",
-                        display: "flex",
-                        flexDirection: "column",
-                      }}
-                      to={`/ProductDetails/${product.slug}`}
-                      key={product._id}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.backgroundColor = "#f8f8f8";
-                        e.currentTarget.style.opacity = 0.8;
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.backgroundColor = "white";
-                        e.currentTarget.style.opacity = 0.8;
-                      }}
-                    >
-                      <img
-                        src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
-                        className={Styles.imgCart}
-                      />
-                      <div>
-                        <section className={Styles.infoCart}>
-                          <strong style={{ fontSize: "25px" }}>
-                            {product.name}
-                          </strong>
-                          {product.category.name}
-                          <p style={{ fontSize: "20px" }}>${product.price}</p>
-                        </section>
-                      </div>
-                    </Link>
-                    <button
-                      className={Styles.addToCart}
-                      onClick={() => addToCart(product)}
-                    >
-                      {<AddShoppingCartIcon />}Add to Cart
-                    </button>
-                  </div>
-                </Reveal>
-              ))}
-            </article>
-            <h2 className={Styles.h2}>Our Services</h2>
-            <ChooseUs />
-
-            <h2 className={Styles.h2}>Latest Blogs</h2>
-            <article className={Styles.Blogs}>
-              {blogData.map((item, index) => {
-                return (
-                  <BlogCard
-                    key={index}
-                    title={item.title_en}
-                    image={item.images[0]}
-                    description={item.description_en}
-                    slug={item.slug}
-                  />
-                );
-              })}
-            </article>
-            <article>
-              <h2 className={Styles.h2}>Our Clients </h2>
-              <Clients data={ clientData} />
-            </article>
-          </main>
-        </>
-      )}
+        <h2 className={Styles.h2}>Latest Blogs</h2>
+        <article className={Styles.Blogs}>
+          {isBlogPending ? (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "20vh",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <p
+                style={{
+                  color: "black",
+                  fontWeight: "700",
+                }}
+              >
+                Loading
+              </p>
+            </div>
+          ) : isBlogError ? (
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "20vh",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <p
+                style={{
+                  color: "red",
+                  fontWeight: "700",
+                }}
+              >
+                An Error Occured
+              </p>
+            </div>
+          ) : (
+            blogData.map((item, index) => {
+              return (
+                <BlogCard
+                  key={index}
+                  title={item.title_en}
+                  image={item.images[0]}
+                  description={item.description_en}
+                  slug={item.slug}
+                />
+              );
+            })
+          )}
+        </article>
+        <article>
+          <h2 className={Styles.h2}>Our Clients </h2>
+          <Clients
+            data={clientData}
+            isPending={isClientPending}
+            isError={isClientError}
+          />
+        </article>
+      </main>
     </div>
   );
 };

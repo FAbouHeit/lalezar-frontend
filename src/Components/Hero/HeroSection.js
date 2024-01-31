@@ -49,7 +49,7 @@ const HeroSection = () => {
           </Button>
         </div>
         <div className={Styles.right}>
-          <img className={Styles.img} src={img} alt="Lalezar Logo"/>
+          <img className={Styles.img} src={img} alt="Lalezar Logo" loading="lazy"/>
         </div>
       </header>
   );

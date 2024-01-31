@@ -114,6 +114,12 @@
       width: 100%;
     }
   }
+
+  @media screen and (max-width : 460px) {
+    .products{
+      justify-content: center;
+    }
+  }
   
   @media screen and (max-width: 430px) {
     .imgCart {
