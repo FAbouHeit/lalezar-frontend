@@ -4,135 +4,76 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import OAuth from "../../Components/OAuth/OAuth.js";
 import { NavLink } from "react-router-dom";
-import axios from 'axios';
-import { useQuery } from '@tanstack/react-query';
-import { Password } from "@mui/icons-material";
-import { useState, useContext , useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import useApi from "../../Hooks/UseApi";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-
-
-
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
-  const [success , setSuccess] = useState(false)
+  const [success, setSuccess] = useState(false);
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
   const { fetchUserData } = useContext(AuthContext);
   const { apiCall } = useApi();
   const navigate = useNavigate();
 
-//   const queryClient = useQueryClient();
+  useEffect(() => {
+    if (success) {
+      toast.success("Logged in Successfuly");
+    }
+  }, [success]);
 
-// const loginMutation = useMutation(
-//   async({email,password}) =>{
-//     const response = await axios.post(
-//       `${process.env.React_APP_BACKEND_ENDPOINT}login`,
-//       {email,password}
-//     );
-//     return response.data;
-//   },
-//   {
-//     onSuccess: () => {
-//       queryClient.invalidateQueries('userLoginData');
-//     },
-//   }
-// );
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-// const {
-//   isFetching: isLoginFetching,
-//   error: loginError,
-//   refetch: refetchLogin,
-// } = useQuery({
-//   queryKey: ['loginData', email, password], // Include parameters in the query key
-//   queryFn: async () => {
-//     try {
-//       const response = await axios.post(
-//         `${process.env.REACT_APP_BACKEND_ENDPOINT}login`,
-//         { email, password }
-//       );
-
-//       // Assuming your backend returns user data upon successful login
-//       const user = response.data;
-
-//       // Handle successful login, you may want to store user data in state or context
-//       console.log('User logged in:', user);
-
-//       // Return some data to indicate success if needed
-//       return { success: true };
-//     } catch (error) {
-//       console.error('Error logging in:', error);
-//       throw error;
-//     }
-//   },
-//   enabled: false, // Do not automatically fetch data on mount
-// });
-
-// const handleLogin = () => {
-//   // Trigger the login query
-//   refetchLogin();
-// };
-useEffect(()=>{
-  if (success){
-      toast.success('Logged in Successfuly')
-      console.log("Logged in Successfuly")
-  }
-}, [success])
-
-const submitHandler = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  if (!email || !password) {
-      console.log("ENTER EMAIL OR PASSWORD")
+    if (!email || !password) {
+      showToast("Please enter both email and password");
       setLoading(false);
       return;
-  }
-  try {
-    // Call the login API
-    const response = await apiCall({
-      url: 'user/login',
-      method: 'post',
-      data: { email, password },
-    });
+    }
 
-    // Check if login was successful
-    if (response) {
-      // Fetch user data and redirect to home page
-      await fetchUserData();
-      console.log('Logged in successfully');
-      setLoading(true);
-      setSuccess(true);
-      showToast('Logged in successfully');
-      navigate('/home'); // Only navigate to home on successful login
-    } else {
-      // Handle unsuccessful login (e.g., email doesn't exist)
-      console.log('Email does not exist or login failed');
-      showToast('Email does not exist or login failed');
+    try {
+      const response = await apiCall({
+        url: "user/login",
+        method: "post",
+        data: { email, password },
+      });
+
+      if (response) {
+        await fetchUserData();
+        setLoading(false);
+        setSuccess(true);
+        showToast("Logged in successfully");
+        navigate("/home", { state: { success: true } });
+      } else {
+        showToast("Email does not exist or Wrong Password");
+        setLoading(false);
+      }
+    } catch (error) {
+      // Handle specific errors based on status code, if needed
+      if (error.response && error.response.status === 401) {
+        showToast("Incorrect email or password");
+      } else {
+        showToast("Error logging in");
+      }
+
       setLoading(false);
     }
-  } catch (error) {
-    console.log(error);
-    setLoading(false);
-    showToast('Error logging in');
-  }
-};
+  };
 
   const showToast = (message) => {
-    toast.info(message, {
-      position: "bottom-right",
+    toast.error(message, {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      style: {
-        backgroundColor: "#c86823",
-        color: "#fff",
-        fontSize: "16px",
-      },
     });
   };
 
@@ -158,7 +99,19 @@ const submitHandler = async (e) => {
                   label="Email"
                   variant="outlined"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setEmailError(null); // Clear previous error when typing
+                  }}
+                  onBlur={() => {
+                    // Validate email on blur
+                    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                      email
+                    );
+                    if (!isValidEmail) {
+                      setEmailError("Invalid email address");
+                    }
+                  }}
                   sx={{
                     "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                       border: "2px solid #C86823 !important",
@@ -178,7 +131,9 @@ const submitHandler = async (e) => {
                   label="Password"
                   variant="outlined"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                   sx={{
                     "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                       border: "2px solid #C86823 !important",
@@ -203,10 +158,11 @@ const submitHandler = async (e) => {
                     "&:hover": {
                       bgcolor: "#A0471D",
                       color: "white",
+                      textTransform: 'none'
                     },
                   }}
                 >
-                  {loading === true ? 'Logging in...' : 'Login'}
+                  {loading === true ? "Logging in..." : "Login"}
                 </Button>
                 <p className={Styles.orPhrase}>Or</p>
                 <OAuth />

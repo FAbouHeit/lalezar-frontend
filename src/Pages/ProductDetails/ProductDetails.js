@@ -7,6 +7,7 @@ import axios from "axios";
 import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@mui/material";
 
 function ProductDetails() {
   const [count, setCount] = useState(1);
@@ -48,15 +49,18 @@ function ProductDetails() {
 
     if (existingItemIndex !== -1) {
       currentItems[existingItemIndex].quantity += count;
-      currentItems[existingItemIndex].totalPrice = currentItems[existingItemIndex].quantity * currentItems[existingItemIndex].price;
+      currentItems[existingItemIndex].totalPrice =
+        currentItems[existingItemIndex].quantity *
+        currentItems[existingItemIndex].price;
     } else {
       currentItems.push({
         id: product._id,
         name: product.name,
-        price : product.price,
+        price: product.price,
         quantity: count,
+        slug: slug,
         image: `${process.env.REACT_APP_IMAGE_PATH}${product.image}`,
-        totalPrice: count*product.price
+        totalPrice: count * product.price,
       });
     }
 
@@ -66,18 +70,13 @@ function ProductDetails() {
   };
 
   const showToast = (message) => {
-    toast.info(message, {
-      position: "bottom-right",
+    toast.success(message, {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      style: {
-        backgroundColor: "#c86823",
-        color: "#fff",
-        fontSize: "16px",
-      },
     });
   };
 
@@ -178,12 +177,24 @@ function ProductDetails() {
             ) : (
               ""
             )}
-            <button
-              className={StyleSingleProduct.addToCart}
-              onClick={() => addToCart(product)}
-            >
-              {<AddShoppingCartIcon />}Add to Cart
-            </button>
+            <span style={{marginTop: '2rem'}}>
+              <Button
+                size="large"
+                variant="contained"
+                sx={{
+                  bgcolor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  "&:hover": {
+                    bgcolor: "#A0471D",
+                    color: "white",
+                  },
+                }}
+                startIcon={<AddShoppingCartIcon />}
+                onClick={() => addToCart(product)}
+              >
+                Add to Cart
+              </Button>
+            </span>
           </article>
         </div>
       </Reveal>

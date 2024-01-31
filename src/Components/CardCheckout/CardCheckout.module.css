@@ -1,15 +1,12 @@
 .cardPage{
-    border: 1px solid #C86823 ;
     width: 90%;
-    height: 300px;
+    padding: 20px 0 ;
     align-items: center;
-    padding: 20px;
-    /* gap: 5rem; */
     justify-content: space-around;
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    /* padding: 4rem; */
+    max-height: 650px;
 }
 
 .price{
@@ -18,7 +15,6 @@
     align-items: center;
     justify-content: space-between;
     gap: 8rem;
-    /* background-color: #C86823; */
 }
 .delevryPart{
     display: flex;
@@ -28,6 +24,7 @@
     gap: 6rem;
 }
 .totalPrice{
+    padding-top: 1rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -39,10 +36,9 @@ p{
     color: #555555;
 }
 .titleCard{
+    width: 100%;
     font-weight: bold;
     font-size: larger;
-    justify-content: space-between;
-    /* background-color: #443a32; */
 }
 .buttonConainer{
     display: flex;
@@ -50,13 +46,20 @@ p{
     justify-content: center;
 }
 .cardWrapper{
-    /* background-color: cadetblue; */
+    width: 100%;
     gap: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+
+.form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    width: 100%;
+}
 @media screen and (max-width : 1200px) {
     .cardPage{
         width: 100%;
@@ -64,11 +67,16 @@ p{
 }
 
 
-@media screen  and (max-width : 500px){
-    
+@media screen  and (max-width : 800px){
+    .cardPage{
+        padding: 20px;
+    }
 }
 
 @media screen and (max-width : 300px) {
+    .cardPage{
+        padding: 5px;
+    }
     .price{
         display: flex;
         flex-direction: row;

@@ -46,7 +46,7 @@ const ProfileCard = ({
       >
         <Avatar
           alt="User"
-          src={`${process.env.REACT_APP_SQL_API}/${userData && userData.image}`}
+          src={`${process.env.REACT_APP_IMAGE_PATH}/${userData && userData.image}`}
           sx={{
             width: "10rem",
             height: "10rem",

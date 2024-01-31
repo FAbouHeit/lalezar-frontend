@@ -1,7 +1,11 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-cube";
+import "swiper/css/pagination";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import { EffectCube, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Styles from "./ChooseUs.module.css";
-
-const ChooseUs = () => {
+export default function ChooseUsSwiper() {
   const data = [
     {
       title: "24 x 7 User Support",
@@ -41,22 +45,38 @@ const ChooseUs = () => {
     },
   ];
   return (
-    <article className={Styles.container}>
-      {data.map((item , index) => {
-        return (
-          <section key={index} className={Styles.card}>
-            <div className={Styles.rotate}>
-            <div className={Styles.front}>
-              <span className={Styles.icon}>{item.icon}</span>
-              <h3 className={Styles.title}>{item.title}</h3>
-            </div>
-            <p className={`${Styles.text} ${Styles.back}`}>{item.text}</p>
-            </div>
-          </section>
-        );
-      })}
-    </article>
+    <div
+      style={{
+        width: "100%",
+      }}
+    >
+      <Swiper
+        effect={"cube"}
+        grabCursor={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[EffectCube, Pagination, Autoplay, Navigation]}
+        className="mySwiper"
+      >
+        {data.map((item, index) => {
+          return (
+            <SwiperSlide>
+              <section key={index} className={Styles.card}>
+                <span className={Styles.icon}>{item.icon}</span>
+                <span>
+                  <h3 className={Styles.title}>{item.title}</h3>
+                  <p className={`${Styles.text} ${Styles.back}`}>{item.text}</p>
+                </span>
+              </section>
+            </SwiperSlide>
+          );
+        })}
+      </Swiper>
+    </div>
   );
-};
-
-export default ChooseUs;
+}

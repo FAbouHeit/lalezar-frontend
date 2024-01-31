@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import HeroSection from "../../Components/Hero/HeroSection";
 import MainCategories from "../../Components/MainCategories/MainCategories";
 import Styles from "./Home.module.css";
 import ChooseUs from "../../Components/ChooseUs/ChooseUs";
-import img from "../../Assets/category2.jpg";
 import BlogCard from "../../Components/BlogCard2/BlogCard";
 import Clients from "../../Components/Clients/Clients";
 import { useQuery } from "@tanstack/react-query";
@@ -12,20 +11,11 @@ import { Reveal } from "../../RevealAnimation";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { Button } from "@mui/material";
+import { CartContext } from "../../Context/CartContext";
 
 const Home = () => {
-  const data = [
-    {
-      title: "24 x 7 User Support",
-      image: img,
-      description: "We use latest technology ",
-    },
-    {
-      title: "24 x 7 User Support",
-      image: img,
-      description: "We use latest technology ",
-    },
-  ];
+  const { increaseCartItem, setCartItems } = useContext(CartContext);
 
   const {
     isPending: isProductsPending,
@@ -104,7 +94,7 @@ const Home = () => {
   });
 
   const showToast = (message) => {
-    toast.info(message, {
+    toast.success(message, {
       position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
@@ -118,23 +108,36 @@ const Home = () => {
       },
     });
   };
+
   const addToCart = (product) => {
     const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
     const existingItem = currentItems.find((item) => item.id === product._id);
 
     if (!existingItem) {
-      currentItems.push({
+      const newItem = {
         id: product._id,
         name: product.name,
         price: product.price,
         quantity: 1,
-      });
+        slug: product.slug,
+        image: `${process.env.REACT_APP_IMAGE_PATH}${product.image}`,
+        totalPrice: product.price,
+      };
+
+      currentItems.push(newItem);
       localStorage.setItem("cart", JSON.stringify(currentItems));
-      showToast(`${product.name} added successfuly to your bag`);
+      showToast(`${product.name} added successfully to your bag`);
+      setCartItems((prevCartItems) => [...prevCartItems, newItem]);
+      increaseCartItem();
     } else {
       showToast(`${product.name} already added to your bag 🙂`);
       return;
     }
+  };
+
+  const isProductInCart = (productId) => {
+    const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
+    return currentItems.some((item) => item.id === productId);
   };
 
   return (
@@ -219,6 +222,7 @@ const Home = () => {
                     <img
                       src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
                       className={Styles.imgCart}
+                      alt={product.slug}
                     />
                     <div>
                       <section className={Styles.infoCart}>
@@ -230,19 +234,46 @@ const Home = () => {
                       </section>
                     </div>
                   </Link>
-                  <button
-                    className={Styles.addToCart}
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    disabled={isProductInCart(product._id)}
                     onClick={() => addToCart(product)}
+                    sx={{
+                      bgcolor: "#C86823",
+                      transition: "background-color 0.3s ease, color 0.3s ease",
+                      "&:hover": {
+                        bgcolor: "#A0471D",
+                        color: "white",
+                      },
+                      textTransform: "none",
+                      fontSize: "1.1rem",
+                    }}
                   >
-                    {<AddShoppingCartIcon />}Add to Cart
-                  </button>
+                    {isProductInCart(product._id) ? (
+                      "Already in Cart"
+                    ) : (
+                      <>
+                        <AddShoppingCartIcon />
+                        Add to cart
+                      </>
+                    )}{" "}
+                  </Button>
                 </div>
               </Reveal>
             ))
           )}
         </article>
-        <h2 className={Styles.h2}>Our Services</h2>
-        <ChooseUs />
+        <article className={Styles.chooseUsContainer}>
+          <div className={Styles.chooseUsWraper}>
+            <section className={Styles.chooseUsLeft}>
+              What you will get from one click with us
+            </section>
+            <section className={Styles.chooseUsRight}>
+              <ChooseUs />
+            </section>
+          </div>
+        </article>
 
         <h2 className={Styles.h2}>Latest Blogs</h2>
         <article className={Styles.Blogs}>

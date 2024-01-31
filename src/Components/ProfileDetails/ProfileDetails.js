@@ -27,15 +27,19 @@ const ProfileDetails = ({ userData }) => {
         lineHeight="2.7rem"
         borderBottom="1px solid rgba(0, 0, 0, 0.12)"
       >
-        <span style={{
-          paddingLeft: '1rem',
-          paddingRight: '1rem',
-          color: '#C86823',
-          borderBottom: '2px solid #C86823',
-          display:'flex',
-          height: '100%',
-          width: 'fit-content'
-        }}>User Details</span>
+        <span
+          style={{
+            paddingLeft: "1rem",
+            paddingRight: "1rem",
+            color: "#C86823",
+            borderBottom: "2px solid #C86823",
+            display: "flex",
+            height: "100%",
+            width: "fit-content",
+          }}
+        >
+          User Details
+        </span>
       </Typography>
       <Stack>
         <Typography
@@ -88,6 +92,23 @@ const ProfileDetails = ({ userData }) => {
             Email :{" "}
           </span>{" "}
           {userData && userData.email}
+        </Typography>
+        <Typography
+          variant="p"
+          component="p"
+          fontSize="1rem"
+          mb="1.2rem"
+          mt="1rem"
+          pl="1rem"
+        >
+          <span
+            style={{
+              fontWeight: "600",
+            }}
+          >
+            Phone :{" "}
+          </span>{" "}
+          {userData && userData.phoneNumber}
         </Typography>
         <Typography
           variant="p"

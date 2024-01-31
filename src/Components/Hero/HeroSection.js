@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 const HeroSection = () => {
   let mystrings;
   const nav = useNavigate()
+  mystrings = [""];
   useEffect(() => {
-    mystrings = [""];
     mystrings.push("Exceptional flavors, perfected seasoning");
 
     const typed = new Typed(el.current, {
@@ -33,6 +33,7 @@ const HeroSection = () => {
             <h1 className={Styles.Slogan} ><span ref={el}>Exceptional flavors, perfected seasoning</span></h1>
           </div>
           <Button
+            size="large"
             variant="contained"
             sx={{
               bgcolor: "#C86823",
@@ -40,6 +41,7 @@ const HeroSection = () => {
               ":hover": {
                 bgcolor: "#A0471D",
               },
+              textTransform: 'none'
             }}
             onClick={()=> {
               nav('/ProductsPage')

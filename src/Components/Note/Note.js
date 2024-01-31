@@ -4,10 +4,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NoteModal = ({ openNote, handleClose }) => {
-  const navigate = useNavigate();
   const style = {
     position: "absolute",
     top: "50%",
@@ -52,11 +51,10 @@ const NoteModal = ({ openNote, handleClose }) => {
               variant="h5"
               component="h5"
               sx={{
-                color: "#088395 !important",
+                color: "#C86823 !important",
                 fontSize: "1.5rem",
                 fontWeight: "bold",
               }}
-              fontFamily="Helvetica Neue"
             >
               Alert
             </Typography>
@@ -68,7 +66,7 @@ const NoteModal = ({ openNote, handleClose }) => {
             >
               <CloseIcon
                 sx={{
-                  color: "#088395",
+                  color: "#C86823",
                 }}
               />
             </IconButton>
@@ -81,7 +79,6 @@ const NoteModal = ({ openNote, handleClose }) => {
               mb: "2rem",
               mt: "1.5rem",
             }}
-            fontFamily="Helvetica Neue"
           >
             Oops, You are not logged in
           </Typography>
@@ -92,7 +89,6 @@ const NoteModal = ({ openNote, handleClose }) => {
             sx={{
               mb: "2rem",
             }}
-            fontFamily="Helvetica Neue"
           >
             Login to your account
           </Typography>
@@ -113,8 +109,13 @@ const NoteModal = ({ openNote, handleClose }) => {
                 variant="contained"
                 size="large"
                 sx={{
-                  bgcolor: "#088395 !important",
-                  fontFamily: "Helvetica Neue",
+                  bgcolor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  "&:hover": {
+                    bgcolor: "#A0471D",
+                    color: "white",
+                  },
+                  textTransform: 'none'
                 }}
               >
                 Login

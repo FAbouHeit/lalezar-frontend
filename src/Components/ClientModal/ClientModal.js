@@ -36,7 +36,7 @@ const ClientModal = ({
         setName(selectedRowData && selectedRowData.name)
         setLocation(selectedRowData && selectedRowData.location)
     }
-  },)
+  }, [selectedRowData , action])
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
@@ -87,7 +87,7 @@ const ClientModal = ({
         }
       );
       if (response.status === 200) {
-        toast.success(`Client Updated Successfuly 😍`);
+        toast.success(`Client ${selectedRowData.name} Updated Successfully 😍`);
         handleClose();
         await refetch();
       }

@@ -173,7 +173,7 @@ const Table = ({
             return <div>${" " + price}</div>;
           }
 
-          if (field === "userId") {
+          if (field === "userId" && params.row.userId.firstName && params.row.userId.lastName) {
             return (
               <p
                 style={{

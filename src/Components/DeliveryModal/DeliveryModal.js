@@ -17,10 +17,10 @@ const DeliveryModal = ({
   action,
 }) => {
   const [city, setCity] = useState(
-    action === "edit"  ? selectedRowData.city : ""
+    action === "edit" ? selectedRowData.city : ""
   );
   const [country, setCountry] = useState(
-    action === "edit"? selectedRowData.country : ""
+    action === "edit" ? selectedRowData.country : ""
   );
   const [price, setPrice] = useState(
     action === "edit" ? selectedRowData.price : ""
@@ -34,7 +34,7 @@ const DeliveryModal = ({
       setCountry(selectedRowData && selectedRowData.country);
       setPrice(selectedRowData && selectedRowData.price);
     }
-  },);
+  });
 
   const handleAdd = async (e) => {
     e.preventDefault();

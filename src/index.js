@@ -3,9 +3,10 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { AuthProvider } from "./Context/AuthContext";
+import { CartProvider } from "./Context/CartContext";
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import ReactGA from 'react-ga4'
+import ReactGA from "react-ga4";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -15,7 +16,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <CartProvider>
+          <App />
+        </CartProvider>
       </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>

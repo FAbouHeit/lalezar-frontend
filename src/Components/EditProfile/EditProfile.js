@@ -17,18 +17,19 @@ import Button from "@mui/material/Button";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { AuthContext } from "../../Context/AuthContext";
-import Styles from './EditProfile.module.css'
+import Styles from "./EditProfile.module.css";
+import { ToastContainer, toast } from "react-toastify";
 
-const EditProfile = ({ setSuccessEdit, userData }) => {
-  const { setUserUpdated } = useContext(AuthContext);
+const EditProfile = ({ userData, refetchUser }) => {
   const [firstName, setFirstName] = useState(userData && userData.firstName);
   const [lastName, setLastName] = useState(userData && userData.lastName);
-  const [image, setImage] = useState(userData && userData.image);
+  const [image, setImage] = useState();
   const [password, setPassword] = useState(null);
   const [role, setRole] = useState(userData && userData.role);
   const [email, setEmail] = useState(userData && userData.email);
-  const [phoneNumber, setPhoneNumber] = useState(userData && userData.phoneNumber);
+  const [phoneNumber, setPhoneNumber] = useState(
+    userData && userData.phoneNumber
+  );
   const [oldPassword, setOldPassword] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -51,10 +52,9 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
   useEffect(() => {
     setFirstName(userData && userData.firstName);
     setLastName(userData && userData.lastName);
-    setImage(userData && userData.image);
     setRole(userData && userData.role);
     setEmail(userData && userData.email);
-    setPhoneNumber(userData && userData.phoneNumber)
+    setPhoneNumber(userData && userData.phoneNumber);
   }, [userData]);
 
   const handleChange = (e) => {
@@ -73,8 +73,8 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
       setOldPassword(value);
     } else if (name === "password") {
       setPassword(value);
-    } else if (name === 'phoneNumber') {
-      setPhoneNumber(value)
+    } else if (name === "phoneNumber") {
+      setPhoneNumber(value);
     }
   };
 
@@ -96,9 +96,9 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
           image: image,
           password: conditionPassword,
           email: email,
-          id: userData && userData.id,
+          id: userData && userData._id,
           checkPassword: oldPassword,
-          phoneNumber  : phoneNumber,
+          phoneNumber: phoneNumber,
         },
         {
           headers: {
@@ -107,18 +107,14 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
         }
       );
       if (response.status === 200) {
-        setSuccessEdit(true);
-        setUserUpdated(true);
+        await refetchUser();
+        toast.success(`Your personal info are updated successfully 😍`);
       }
     } catch (error) {
       console.log(error);
       setError(true);
     } finally {
       setLoading(false);
-      setTimeout(() => {
-        setSuccessEdit(false);
-        setUserUpdated(true);
-      }, 30000);
     }
   };
 
@@ -148,7 +144,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
           width: screenWidth < 550 ? "15rem" : "20rem",
         },
         "& .MuiButton-containedPrimary:hover": {
-          bgcolor: "#035e6b !important",
+          bgcolor: "#A0471D !important",
         },
         "& .MuiStack-root": {
           padding: 0,
@@ -160,7 +156,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
           padding: "15px",
         },
         "& .MuiButtonBase-root:hover": {
-          bgcolor: "#17456E",
+          bgcolor: "#A0471D",
         },
         "& .MuiOutlinedInput-notchedOutline ": {
           border: "1.5px solid  gray !important",
@@ -196,7 +192,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
       }}
       autoComplete="on"
     >
-      
+      <ToastContainer />
       {loading ? (
         <div
           style={{
@@ -380,7 +376,7 @@ const EditProfile = ({ setSuccessEdit, userData }) => {
               </FormControl>
               <FormControl>
                 <input
-                className={Styles.input}
+                  className={Styles.input}
                   type="file"
                   name="image"
                   id="image"

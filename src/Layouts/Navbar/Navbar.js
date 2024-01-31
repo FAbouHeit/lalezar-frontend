@@ -10,16 +10,18 @@ import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AuthContext } from "../../Context/AuthContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { CartContext } from "../../Context/CartContext";
 
 function Navbar() {
   const [collapesed, setCollapsed] = useState(false);
   const { user, logOut } = useContext(AuthContext);
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { cartItemCount, setCartItemCount } = useContext(CartContext);
+  // const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [profOpen, setProfileOpen] = useState(false);
 
-  const handleLanguageChange = (e) => {
-    setSelectedLanguage(e.target.value);
-  };
+  // const handleLanguageChange = (e) => {
+  //   setSelectedLanguage(e.target.value);
+  // };
 
   // nav with active
   const navigate = useNavigate();
@@ -127,7 +129,7 @@ function Navbar() {
                   About Us
                 </NavLink>
               </li>
-              <div className={Styles.languageSwitcher}>
+              {/* <div className={Styles.languageSwitcher}>
                 <select
                   value={selectedLanguage}
                   onChange={handleLanguageChange}
@@ -135,7 +137,7 @@ function Navbar() {
                   <option value="en">English</option>
                   <option value="ar">العربية</option>
                 </select>
-              </div>
+              </div> */}
             </ul>
             {/* Navbar Ending */}
 
@@ -275,7 +277,7 @@ function Navbar() {
                   }}
                 >
                   <Badge
-                    badgeContent={4}
+                    badgeContent={cartItemCount}
                     color="secondary"
                     sx={{
                       color: "black",
@@ -289,23 +291,16 @@ function Navbar() {
                   </Badge>
                 </IconButton>
 
-                {/* Badge ending */}
               </li>
             </ul>
           </ul>
 
           {/* ///////////////
           /////////////////
-          /////////////////
-          /////////////////
-          ////////////////
 
           this for burger 
           
           /////////////////
-          ////////////////
-          ////////////////
-          ////////////////
           ////////////*/}
 
           <ul className={toggleClasses}>
@@ -366,7 +361,7 @@ function Navbar() {
                 About Us
               </NavLink>
             </li>
-
+            {/* 
             <li>
               <div className={Styles.languageSwitcher}>
                 <select
@@ -377,7 +372,7 @@ function Navbar() {
                   <option value="ar">العربية</option>
                 </select>
               </div>
-            </li>
+            </li> */}
 
             {!user && (
               <li>
@@ -396,7 +391,7 @@ function Navbar() {
                       color: "#C86823",
                       borderColor: "#C86823",
                       transition: "background-color 0.3s ease, color 0.3s ease",
-                      // width:"100px",
+                      textTransform: 'none',
                       "&:hover": {
                         borderColor: "#C86823",
                         backgroundColor: "#C86823",
@@ -404,7 +399,7 @@ function Navbar() {
                       },
                     }}
                   >
-                    LogIn
+                    Log In
                   </Button>
 
                   <Button
@@ -420,7 +415,7 @@ function Navbar() {
                       },
                     }}
                   >
-                    SignUp
+                    Sign Up
                   </Button>
                 </Stack>
               </li>
@@ -453,13 +448,14 @@ function Navbar() {
                             variant="outlined"
                             onClick={() => navigate("/dashboard")}
                             sx={{
-                              padding: "0.7rem 1.5rem",
+                              padding: "1.5rem 1.5rem",
                               borderColor: "transparent",
                               height: "2rem",
                               color: "#C86823",
                               ":hover": {
                                 borderColor: "transparent",
                               },
+                              textTransform: 'none'
                             }}
                           >
                             Dashboard
@@ -471,13 +467,14 @@ function Navbar() {
                           variant="outlined"
                           onClick={() => navigate("/profile")}
                           sx={{
-                            padding: "0.7rem 1.5rem",
+                            padding: "1.5rem 1.5rem",
                             height: "2rem",
                             borderColor: "transparent",
                             color: "#C86823",
                             ":hover": {
                               borderColor: "transparent",
                             },
+                            textTransform: 'none'
                           }}
                         >
                           Profile
@@ -488,13 +485,14 @@ function Navbar() {
                           variant="outlined"
                           onClick={() => logOut()}
                           sx={{
-                            padding: "0.7rem 1.5rem",
+                            padding: "1.5rem 1.5rem",
                             height: "2rem",
                             borderColor: "transparent",
                             color: "#C86823",
                             ":hover": {
                               borderColor: "transparent",
                             },
+                            textTransform: 'none'
                           }}
                         >
                           Logout

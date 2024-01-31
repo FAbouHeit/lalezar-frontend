@@ -53,6 +53,7 @@ const ProfilePage = () => {
     isPending: isUserPending,
     error: userError,
     data: userData,
+    refetch: refetchUser,
   } = useQuery({
     queryKey: ["UserData"],
     queryFn: async () => {
@@ -75,7 +76,6 @@ const ProfilePage = () => {
       }
     },
   });
-  
 
   if (isUserPending) {
     return (
@@ -112,6 +112,7 @@ const ProfilePage = () => {
   const rightSpanWidth = screenWidth < 600 ? "100%" : "40%";
   const marginLeft = user && user.role !== "Customer" ? "4rem" : "0";
   const marginRight = user && user.role !== "Customer" ? "0.3rem" : "0";
+  const marginTop = user && user.role !== "Customer" ? "3rem" : "7rem"
   return (
     <div
       style={{
@@ -141,7 +142,7 @@ const ProfilePage = () => {
       <>
         <span
           style={{
-            marginTop: "7rem",
+            marginTop: marginTop,
             display: "flex",
             justifyContent: "center",
             width: "90%",
@@ -164,28 +165,47 @@ const ProfilePage = () => {
               columnGap: "10%",
             }}
           >
-            <span
-              style={{
-                display: "flex",
-                boxShadow: "0 0 10px #BABABA",
-                width: leftSpanWidth,
-                borderRadius: "10px",
-                marginBottom: "2rem",
-              }}
-            >
-              <ProfileActivity userData={userData && userData} />
-            </span>
-            <span
-              style={{
-                display: "flex",
-                boxShadow: "0 0 10px #BABABA",
-                width: rightSpanWidth,
-                borderRadius: "10px",
-                height: "19rem",
-              }}
-            >
-              <ProfileDetails userData={userData && userData} />
-            </span>
+            {user && user.role === "Customer" ? (
+              <>
+                <span
+                  style={{
+                    display: "flex",
+                    boxShadow: "0 0 10px #BABABA",
+                    width: leftSpanWidth,
+                    borderRadius: "10px",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  <ProfileActivity userData={userData && userData} />
+                </span>
+                <span
+                  style={{
+                    display: "flex",
+                    boxShadow: "0 0 10px #BABABA",
+                    width: rightSpanWidth,
+                    borderRadius: "10px",
+                    height: "22rem",
+                  }}
+                >
+                  <ProfileDetails userData={userData && userData} />
+                </span>
+              </>
+            ) : (
+              <span
+                style={{
+                  display: "flex",
+                  boxShadow: "0 0 10px #BABABA",
+                  width: '100%',
+                  borderRadius: "10px",
+                  height: "22rem",
+                }}
+              >
+                <ProfileDetails
+                  userData={userData && userData}
+                  width={"100%"}
+                />
+              </span>
+            )}
           </div>
         )}
         {edit && (
@@ -197,6 +217,7 @@ const ProfilePage = () => {
             }}
           >
             <EditProfile
+              refetchUser={() => refetchUser()}
               userData={userData && userData}
               setSuccessEdit={setSuccessEdit}
             />

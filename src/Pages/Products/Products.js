@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import StyleProducts from "./Products.module.css";
 import Icon from "@mui/icons-material/CategoryOutlined";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -16,10 +16,13 @@ import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PaginationItem from "@mui/material/PaginationItem";
-import Loading from '../../Assets/loadinggg-ezgif.com-video-to-webp-converter.webp'
-import louaiLoading from '../../Assets/louaiiloading.webp'
+import Loading from "../../Assets/loadinggg-ezgif.com-video-to-webp-converter.webp";
+import louaiLoading from "../../Assets/louaiiloading.webp";
+import { Button } from "@mui/material";
+import { CartContext } from "../../Context/CartContext";
 
 const Products = () => {
+  const { increaseCartItem, setCartItems } = useContext(CartContext);
   const { categoryId } = useParams();
   const [searchInput, setSearchInput] = useState("");
   const [selectedCategories, setSelectedCategories] = useState(
@@ -105,9 +108,8 @@ const Products = () => {
           justifyContent: "center",
         }}
       >
-        <img src={Loading}/>
-        <img src={louaiLoading}/>
-
+        <img src={Loading} alt="loading" />
+        <img src={louaiLoading} alt="loading" />
       </div>
     );
   }
@@ -179,35 +181,41 @@ const Products = () => {
     const existingItem = currentItems.find((item) => item.id === product._id);
 
     if (!existingItem) {
-      currentItems.push({ id: product._id,
+      const newItem = {
+        id: product._id,
         name: product.name,
-         price:product.price ,
-         quantity: 1,
-         image: `${process.env.REACT_APP_IMAGE_PATH}${product.image}`,
-         totalPrice:product.price 
-       });
+        price: product.price,
+        quantity: 1,
+        slug: product.slug,
+        image: `${process.env.REACT_APP_IMAGE_PATH}${product.image}`,
+        totalPrice: product.price,
+      };
+
+      currentItems.push(newItem);
       localStorage.setItem("cart", JSON.stringify(currentItems));
-      showToast(`${product.name} added successfuly to your bag`);
+      showToast(`${product.name} added successfully to your bag`);
+      setCartItems((prevCartItems) => [...prevCartItems, newItem]);
+      increaseCartItem();
     } else {
       showToast(`${product.name} already added to your bag 🙂`);
       return;
     }
   };
 
+  const isProductInCart = (productId) => {
+    const currentItems = JSON.parse(localStorage.getItem("cart")) || [];
+    return currentItems.some((item) => item.id === productId);
+  };
+
   // Toastify Section
   const showToast = (message) => {
-    toast.info(message, {
-      position: "bottom-right",
+    toast.success(message, {
+      position: "top-right",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      style: {
-        backgroundColor: "#c86823",
-        color: "#fff",
-        fontSize: "16px",
-      },
     });
   };
 
@@ -305,14 +313,14 @@ const Products = () => {
         </div>
 
         {sidePanelWidth === 400 ? (
-          <a href="#" className={StyleProducts.openbtn} onClick={closeNav}>
+          <span className={StyleProducts.openbtn} onClick={closeNav}>
             <ArrowBackIosIcon
               style={{
                 color: "#c86823",
                 borderRight: "1px solid rgb(110, 110, 110)",
               }}
             ></ArrowBackIosIcon>
-          </a>
+          </span>
         ) : (
           <button className={StyleProducts.openbtn} onClick={openNav}>
             <ArrowForwardIosIcon
@@ -324,7 +332,7 @@ const Products = () => {
         <div className={StyleProducts.content}>
           <div className={StyleProducts.cartContainer}>
             {paginatedProducts.map((product) => (
-              <Reveal>
+              <Reveal key={product._id}>
                 <div className={StyleProducts.oneCart}>
                   <Link
                     style={{
@@ -348,10 +356,10 @@ const Products = () => {
                     <img
                       src={`${process.env.REACT_APP_IMAGE_PATH}${product.image}`}
                       className={StyleProducts.imgCart}
+                      alt={product.name}
                     />
                     <div>
                       <section className={StyleProducts.infoCart}>
-                        {/* <strong style={{ fontSize: "25px" , width:"50px" }}> */}
                         <strong
                           style={{
                             fontSize: "20px",
@@ -366,12 +374,31 @@ const Products = () => {
                       </section>
                     </div>
                   </Link>
-                  <button
-                    className={StyleProducts.addToCart}
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    disabled={isProductInCart(product._id)}
                     onClick={() => addToCart(product)}
+                    sx={{
+                      bgcolor: "#C86823",
+                      transition: "background-color 0.3s ease, color 0.3s ease",
+                      "&:hover": {
+                        bgcolor: "#A0471D",
+                        color: "white",
+                      },
+                      textTransform: "none",
+                      fontSize: "1.1rem",
+                    }}
                   >
-                    {<AddShoppingCartIcon />}Add to Cart
-                  </button>
+                    {isProductInCart(product._id) ? (
+                      "Already in Cart"
+                    ) : (
+                      <>
+                        <AddShoppingCartIcon />
+                        Add to cart
+                      </>
+                    )}{" "}
+                  </Button>
                 </div>
               </Reveal>
             ))}
@@ -380,7 +407,6 @@ const Products = () => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Stack spacing={2}>
               <Pagination
-                // count={Math.ceil(10)}
                 count={totalPages}
                 page={currentPage}
                 onChange={(event, page) => setCurrentPage(page)}
