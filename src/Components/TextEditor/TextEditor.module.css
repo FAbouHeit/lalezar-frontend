@@ -1,0 +1,6 @@
+.textField{
+    height: 360px;
+    max-height: 360px;
+    scroll-behavior: auto;
+    margin: 30px 0;
+}
