@@ -12,6 +12,8 @@ import Styles from "./UserModal.module.css";
 import Img from "../../Assets/ImgHolder.jpg";
 import axios from "axios";
 import axiosInstance from "../../Utils/AxiosInstance";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { InputAdornment } from "@mui/material";
 
 const UserModal = ({
     open,
@@ -33,10 +35,19 @@ const UserModal = ({
         action === "edit" ? selectedRowData.phoneNumber : ""
     );
 
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     const [image, setImage] = useState("");
-    const [password,setPassword] = useState("");
-    const [checkPassword,setCheckPassword] = useState("");
+    const [password, setPassword] = useState("");
+    const [newPassword, setNewPassword] = useState(null);
+    const [oldPassword, setOldPassword] = useState();
+    const [checkPassword, setCheckPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(false);
 
 
@@ -46,7 +57,7 @@ const UserModal = ({
             setLastName(selectedRowData && selectedRowData.lastName)
             setEmail(selectedRowData && selectedRowData.email)
             setPhoneNumber(selectedRowData && selectedRowData.phoneNumber)
-            setPassword(selectedRowData && selectedRowData.password)
+            // setPassword(selectedRowData && selectedRowData.password)
         }
     }, [selectedRowData, action])
     const handleAdd = async (e) => {
@@ -82,6 +93,7 @@ const UserModal = ({
             console.log(error);
         }
     };
+    const conditionPassword = newPassword !== null ? newPassword : null;
 
     const hanedleEdit = async (e) => {
         setLoading(true);
@@ -93,8 +105,8 @@ const UserModal = ({
                     id: selectedRowData._id,
                     firstName: firstName,
                     lastName: lastName,
-                    password: password,
-                    checkPassword:checkPassword,
+                    password: conditionPassword,
+                    checkPassword: oldPassword,
                     email: email,
                     phoneNumber: phoneNumber,
                     image: image,
@@ -213,8 +225,8 @@ const UserModal = ({
                             value={lastName}
                             autoComplete="on"
                         />
-                       
-                         <TextField
+
+                        <TextField
                             required
                             id="outlined-required1"
                             label="email"
@@ -224,27 +236,87 @@ const UserModal = ({
                             value={email}
                             autoComplete="on"
                         />
-                        <TextField
-                            required
-                            id="outlined-required1"
-                            label="password"
-                            placeholder="Password"
-                            name="password"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            autoComplete="on"
-                        />
-                          {selectedRowData ? (
-                             <TextField
-                            required
-                            id="outlined-required1"
-                            label="newPassword"
-                            placeholder="New Password"
-                            name="checkPassword"
-                            onChange={(e) => setCheckPassword(e.target.value)}
-                            value={checkPassword}
-                            autoComplete="on"
-                        />) : ""}
+                        {!selectedRowData ? (
+                            <TextField
+                                required
+                                id="outlined-required1"
+                                label="Password"
+                                placeholder="Password"
+                                name="password"
+                                type={showPassword ? "text" : "password"}
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                autoComplete="on"
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                                style={{ color: "#C86823" }}
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                        ) : (
+                            <>
+                                <TextField
+                                    required
+                                    id="outlined-required1"
+                                    label="Old Password"
+                                    placeholder="Old Password"
+                                    name="oldPassword"
+                                    type={showPassword ? "text" : "password"}
+                                    onChange={(e) => setOldPassword(e.target.value)}
+                                    autoComplete="on"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                    style={{ color: "#C86823" }}
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                />
+                                <TextField
+                                    required
+                                    id="outlined-required1"
+                                    label="New Password"
+                                    placeholder="New Password"
+                                    name="newPassword"
+                                    type={showPassword ? "text" : "password"}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    autoComplete="on"
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={handleClickShowPassword}
+                                                    onMouseDown={handleMouseDownPassword}
+                                                    edge="end"
+                                                    style={{ color: "#C86823" }}
+                                                >
+                                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        )
+                                    }}
+                                />
+                            </>
+                        )}
                         <TextField
                             required
                             id="outlined-required1"
@@ -272,7 +344,7 @@ const UserModal = ({
                                         image
                                             ? URL.createObjectURL(image)
                                             : selectedRowData.image ? `${process.env.REACT_APP_IMAGE_PATH}${selectedRowData.image}`
-                                            : Img 
+                                                : Img
                                     }
                                     width={"100%"}
                                     height={"300px"}
