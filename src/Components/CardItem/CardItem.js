@@ -81,8 +81,9 @@ export default function CardItem({
 
   const handleQuantityChange = (e) => {
     const newCount = Number(e.target.value);
-    if (newCount >= 1) {
+    if (newCount >= 1 || e.target.value === "") {
       setCount(newCount);
+      setEditQuantity(newCount)
       setTotalPrice1(newCount * price);
       updateQuantityInLocalStorage(newCount);
     }
