@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import Styles from "./Signup.module.css";
-import TextField from "@mui/material/TextField";
+import{TextField,IconButton} from "@mui/material";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
 import OAuth from "../../Components/OAuth/OAuth.js";
@@ -8,6 +8,8 @@ import useApi from "../../Hooks/UseApi";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { InputAdornment } from "@mui/material";
 
 function SignUp() {
   const [firstName, setFirstName] = useState();
@@ -18,10 +20,16 @@ function SignUp() {
   const [passwordError, setPasswordError] = useState(null);
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [success, setSuccess] = useState(false);
   const { fetchUserData } = useContext(AuthContext);
   const { apiCall } = useApi();
   const navigate = useNavigate();
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
   useEffect(() => {
     if (success) {
@@ -190,6 +198,7 @@ function SignUp() {
                   label="Password"
                   variant="outlined"
                   value={password}
+                  type={showPassword ? "text" : "password"}
                   onChange={(e) => {
                     setPassword(e.target.value);
                     setPasswordError(null); // Clear previous error when typing
@@ -204,6 +213,21 @@ function SignUp() {
                       );
                     }
                   }}
+                  InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                                style={{ color: "#C86823" }}
+                            >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    )
+                }}
                   sx={{
                     "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                       border: "2px solid #C86823 !important",
@@ -256,7 +280,7 @@ function SignUp() {
                   {loading ? "Signing up..." : "Sign Up"}
                 </Button>
                 <p className={Styles.orPhrase}>Or</p>
-                <OAuth />
+                <OAuth isLogin={false}/>
               </div>
             </form>
           </div>

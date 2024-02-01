@@ -45,7 +45,6 @@ const UserModal = ({
     const [password, setPassword] = useState("");
     const [newPassword, setNewPassword] = useState(null);
     const [oldPassword, setOldPassword] = useState();
-    const [checkPassword, setCheckPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState(false);

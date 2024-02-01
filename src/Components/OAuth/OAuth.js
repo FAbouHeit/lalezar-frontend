@@ -8,7 +8,7 @@ import googleG from "../../Assets/G.png";
 import useApi from "../../Hooks/UseApi";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-const  OAuth = ()  => {
+const  OAuth = ({isLogin})  => {
   const {apiCall , loading } = useApi()
   const {fetchUserData , setUser} = useContext(AuthContext)
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const  OAuth = ()  => {
         color: "black",
       }}
     >
-      Login with Google
+      {isLogin ? "Login with Google" : "Sign up with Google"}
     </Button>
     )}
     </>

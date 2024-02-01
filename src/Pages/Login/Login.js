@@ -1,6 +1,6 @@
 import React from "react";
 import Styles from "./Login.module.css";
-import TextField from "@mui/material/TextField";
+import{TextField,IconButton} from "@mui/material";
 import Button from "@mui/material/Button";
 import OAuth from "../../Components/OAuth/OAuth.js";
 import { NavLink } from "react-router-dom";
@@ -9,6 +9,8 @@ import useApi from "../../Hooks/UseApi";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { InputAdornment } from "@mui/material";
 
 function Login() {
   const [email, setEmail] = useState();
@@ -17,9 +19,15 @@ function Login() {
   const [success, setSuccess] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
+    const [showPassword, setShowPassword] = useState(false);
   const { fetchUserData } = useContext(AuthContext);
   const { apiCall } = useApi();
   const navigate = useNavigate();
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
   useEffect(() => {
     if (success) {
@@ -131,9 +139,25 @@ function Login() {
                   label="Password"
                   variant="outlined"
                   value={password}
+                  type={showPassword ? "text" : "password"}
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
+                  InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                                style={{ color: "#C86823" }}
+                                            >
+                                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    )
+                                }}
                   sx={{
                     "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
                       border: "2px solid #C86823 !important",
@@ -165,7 +189,7 @@ function Login() {
                   {loading === true ? "Logging in..." : "Login"}
                 </Button>
                 <p className={Styles.orPhrase}>Or</p>
-                <OAuth />
+                <OAuth isLogin={true}/>
               </div>
             </form>
           </div>
