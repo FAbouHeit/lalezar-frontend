@@ -16,8 +16,9 @@ import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PaginationItem from "@mui/material/PaginationItem";
-import Loading from "../../Assets/loadinggg-ezgif.com-video-to-webp-converter.webp";
-import louaiLoading from "../../Assets/louaiiloading.webp";
+// import Loading from '../../Assets/loadinggg-ezgif.com-video-to-webp-converter.webp'
+// import louaiLoading from '../../Assets/louaiiloading.webp'
+import Loading from "../Loading/Loading.js";
 import { Button } from "@mui/material";
 import { CartContext } from "../../Context/CartContext";
 
@@ -108,8 +109,10 @@ const Products = () => {
           justifyContent: "center",
         }}
       >
-        <img src={Loading} alt="loading" />
-        <img src={louaiLoading} alt="loading" />
+        {/* <img src={Loading}/>
+        <img src={louaiLoading}/> */}
+        <Loading/>
+
       </div>
     );
   }
@@ -124,7 +127,8 @@ const Products = () => {
           justifyContent: "center",
         }}
       >
-        <h1>An error occured while fetching Data</h1>
+        {/* <h1>An error occured while fetching Data</h1> */}
+        <Loading/>
       </div>
     );
   }
@@ -216,6 +220,11 @@ const Products = () => {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
+      style: {
+        backgroundColor: "#c86823",
+        color: "#fff",
+        fontSize: "16px",
+      },
     });
   };
 

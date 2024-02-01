@@ -7,6 +7,7 @@ import axios from "axios";
 import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "../Loading/Loading.js";
 import { Button } from "@mui/material";
 
 function ProductDetails() {
@@ -77,6 +78,11 @@ function ProductDetails() {
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
+      style: {
+        backgroundColor: "#c86823",
+        color: "#fff",
+        fontSize: "16px",
+      },
     });
   };
 
@@ -89,7 +95,7 @@ function ProductDetails() {
         justifyContent: "center",
       }}
     >
-      Loading ...
+      <Loading />
     </h1>
   ) : (
     <>
@@ -177,7 +183,7 @@ function ProductDetails() {
             ) : (
               ""
             )}
-            <span style={{marginTop: '2rem'}}>
+            <span style={{ marginTop: "2rem" }}>
               <Button
                 size="large"
                 variant="contained"
