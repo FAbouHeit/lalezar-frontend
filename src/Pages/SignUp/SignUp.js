@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { InputAdornment } from "@mui/material";
+import emailjs from "@emailjs/browser";
 
 function SignUp() {
   const [firstName, setFirstName] = useState();
@@ -48,6 +49,25 @@ function SignUp() {
       draggable: true,
     });
   };
+
+
+  const sendWelcomeEmail = (name, email) => {
+    emailjs.send(
+        'service_m3w6c13', // Replace with your EmailJS service ID
+        'template_m31wt1r', // Replace with your EmailJS template ID
+        {
+            name: name,
+            email: email
+        },
+        'kvWpezVmgudi10Apy' // Replace with your EmailJS user ID
+    )
+    .then((response) => {
+        console.log('Welcome email sent successfully:', response);
+    })
+    .catch((error) => {
+        console.error('Welcome email sending failed:', error);
+    });
+};
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -89,6 +109,7 @@ function SignUp() {
         console.log("sign up");
         setLoading(false);
         setSuccess(true);
+        sendWelcomeEmail(firstName, email);
         navigate("/home");
       }
     } catch (error) {
