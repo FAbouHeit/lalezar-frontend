@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import dateConverter from '../../Utils/DateConverter';
+import parse from 'html-react-parser'
 
 
 export default function BlogDetails() {
@@ -29,7 +30,7 @@ export default function BlogDetails() {
   });
   return (
     <>
-    { data ?
+    { data && data.title_en ?
     <main className={Styles.blogOneMain}>
       <section className={Styles.blogOneTitleContainer}>
         <span className={Styles.selectedBlogOneSpiceName}>Lalezar</span>
@@ -40,12 +41,14 @@ export default function BlogDetails() {
         <source srcSet={data && typeof(data.images) === Array ? data.images[0] : ""} media="(orientation: landscape)" />
         <img src={defaultLand} alt="stock spices image" />
       </picture>
-      <BlogMD text={data ? data.description_en : ""} />
-      { data && data.video ?
+      <article className={Styles.articleValue}>
+      {typeof data.description_en === 'string' ? parse(data.description_en) : ""}
+      </article>
+      {data && data.video ? (
         <YoutubeVideo videoUrl={data ? data.video : null}/>
-        : 
+      ):(
         ""
-      }
+      )}
       {console.log("SENDING this: ", data.comments)}
       
       {data && data.comments ?

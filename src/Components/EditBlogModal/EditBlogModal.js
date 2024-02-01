@@ -11,11 +11,11 @@ const changeTitleEn = (e) =>{
 const changeTitleAr = (e) =>{
     setTempBlog({...tempBlog, title_ar: e.target.value});
 }
-const changeTextEn = (e) =>{
-    setTempBlog({...tempBlog, description_en: e.target.value});
+const changeTextEn = (text) =>{
+    setTempBlog({...tempBlog, description_en: text});
 }
-const changeTextAr = (e) =>{
-    setTempBlog({...tempBlog, description_ar: e.target.value});
+const changeTextAr = (text) =>{
+    setTempBlog({...tempBlog, description_ar: text});
 }
 const changeYoutubeLink = (e) =>{
     setTempBlog({...tempBlog, video: e.target.value});
@@ -46,6 +46,8 @@ return (
         aria-describedby="modal-modal-description"
         >
         <Box sx={style}>
+        <button onClick={()=>console.log(tempBlog)}>print</button>
+
             <div style={{display: "flex", gap:"20px"}}>
             <TextField
             id="outlined-basic" 
@@ -70,8 +72,8 @@ return (
             onChange={(e)=>changeTitleAr(e)}
             />
             </div>
-            <TextEditor lang={"en"} text={tempBlog.description_en}/>
-            <TextEditor lang={"ar"} text={tempBlog.description_ar}/>
+            <TextEditor lang={"en"} description={selectedRowData.description_en} changeDescription={changeTextEn}/>
+            <TextEditor lang={"ar"} description={selectedRowData.description_ar} changeDescription={changeTextAr}/>
             <TextField 
             id="outlined-basic" 
             placeholder="Youtube Link" 
@@ -85,7 +87,7 @@ return (
             <div style={{display:"flex", gap:"20px"}}>
                 {/* <button onClick={()=>updateBlog()}>create</button>
                 <button onClick={()=>setOpenEdit(false)}>cancel</button> */}
-                <Button variant="contained" onClick={()=>updateBlog()}>Save</Button>
+                <Button variant="contained" onClick={()=>updateBlog(selectedRowData._id)}>Save</Button>
                 <Button variant="contained" onClick={()=>setOpenEdit(false)}>Cancel</Button>
             </div>
         </Box>

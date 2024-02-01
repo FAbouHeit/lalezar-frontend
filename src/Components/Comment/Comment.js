@@ -44,7 +44,7 @@ export default function Comment({element, parentName, focusOnTextArea, setReplyS
             <span className={Styles.commentDate}>{commentDate}</span>
             <p className={Styles.commentDescription}>{element.description || ""}</p>
             <div className={`${Styles.commentBottomPart} ${replies ? Styles.yesReplies : ""}`}>
-                <span className={Styles.commentViewReplies} style={replies.length>0 ? "" : {display:"none"} } onClick={handleViewReplyButton}>{replies.length > 0 ? openReplies ? "hide replies" : "view replies" : ""}</span>
+                <span className={Styles.commentViewReplies} style={replies && replies.length>0 ? {display:"inherit"} : {display:"none"} } onClick={handleViewReplyButton}>{replies && replies.length > 0 ? openReplies ? "hide replies" : "view replies" : ""}</span>
                 <span className={Styles.commentReply} onClick={handleReplyButton}>reply</span>
             </div>
         </div>        

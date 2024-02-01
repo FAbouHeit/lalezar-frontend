@@ -30,7 +30,7 @@ export default function DeleteBlogModal({setOpenDelete, openDelete, deleteBlog, 
             Text in a modal
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Are you sure you want to delete <span style={{fontWeight: "bold", textDecoration:"underline"}}>{selectedRowData.title_en}</span>?
           </Typography>
           {/* <button onClick={()=>deleteBlog(selectedRowData._id)}>yesss</button>
           <button onClick={()=>setOpenDelete(false)}>noooo</button> */}

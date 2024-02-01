@@ -10,8 +10,8 @@ export default function CommentSection({comments}) {
     const [commentParent, setCommentParent] = useState("");
     // const [allComments, setAllComments] = useState([{type:"comment"},2,3,{type:"comment"}]);
     // const [allComments, setAllComments] = useState([{type:"comment"},{type:"comment", replies:[{type:"reply", replies:[{type:"reply", replies:[{type:"reply"}]}]},{type:"reply"},{type:"reply"}]}]);
-    // const [allComments, setAllComments] = useState([{type: "comment",name:"Yahya Nashar", replies:[{type:"reply", name: "Fuad Abou Heit", replies:[{type: "reply", name:"Yahya Nashar"}]}]},{type: "comment", name:"nobody"},{type: "comment", name:"dark blue"}]);
-    const [allComments, setAllComments] = useState([]);
+    const [allComments, setAllComments] = useState([{type: "comment",name:"Yahya Nashar", replies:[{type:"reply", name: "Fuad Abou Heit", replies:[{type: "reply", name:"Yahya Nashar"}]}]},{type: "comment", name:"nobody"},{type: "comment", name:"dark blue"}]);
+    // const [allComments, setAllComments] = useState([]);
     console.log("RECEIVING this: ", comments)
     const [replyState, setReplyState] = useState("");
 
@@ -19,7 +19,7 @@ export default function CommentSection({comments}) {
 
 
     const { isPending, error, data } = useQuery({
-        queryKey: ["repoData"],
+        queryKey: ["commentData"],
         queryFn: async () => {
           try {
             const res = await axios.post(`${process.env.REACT_APP_BACKEND_ENDPOINT}comment/getMany`, { array: comments });
@@ -76,9 +76,9 @@ export default function CommentSection({comments}) {
 
   return (
     <>
+    <p className={Styles.commentsHeader}>Comments</p>
     { data ? 
         <>
-        <p className={Styles.commentsHeader}>Comments</p>
         <span className={Styles.replyCancel}>{replyState}</span>
         <article className={Styles.commentsMainContainer}>
             <form 
@@ -110,17 +110,22 @@ export default function CommentSection({comments}) {
                     >Post</button>
                 </div>
             </form>
-            { allComments.length > 0 ?
+            {/* { allComments.length > 0 ? */}
                 <div className={Styles.allComments}>
-                    {allComments.map((element, index)=>{
+                    { allComments ? (
+                    allComments.map((element, index)=>{
                         // console.log("element: ", element)
-                        return <Comment key={index} element={element} parentName={element.name} focusOnTextArea={focusOnTextArea} setReplyState={setReplyState}></Comment>
-                    })}
+                        return <Comment key={index} element={element} parentName={element.name} focusOnTextArea={focusOnTextArea} setReplyState={setReplyState}/>
+                    }) 
+                    ): (
+                      <p className={Styles.noComments}>No comments yet</p>
+                    )}      
                 </div>
-                :
-                <p className={Styles.noComments}>No comments yet</p>
-            }
-        </article>
+                
+             
+            {/* </form> */}
+            {/* </form> */}
+          </article>
         </>
         :
         isPending ? 
