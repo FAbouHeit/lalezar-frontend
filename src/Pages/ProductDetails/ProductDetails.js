@@ -7,6 +7,7 @@ import axios from "axios";
 import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "../Loading/Loading.js";
 
 function ProductDetails() {
   const [count, setCount] = useState(1);
@@ -86,7 +87,7 @@ function ProductDetails() {
         justifyContent: "center",
       }}
     >
-      Loading ...
+      <Loading/>
     </h1>
   ) : (
     <>

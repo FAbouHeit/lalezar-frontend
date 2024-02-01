@@ -16,8 +16,9 @@ import { Reveal } from "../../RevealAnimation";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PaginationItem from "@mui/material/PaginationItem";
-import Loading from '../../Assets/loadinggg-ezgif.com-video-to-webp-converter.webp'
-import louaiLoading from '../../Assets/louaiiloading.webp'
+// import Loading from '../../Assets/loadinggg-ezgif.com-video-to-webp-converter.webp'
+// import louaiLoading from '../../Assets/louaiiloading.webp'
+import Loading from "../Loading/Loading.js";
 
 const Products = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -102,8 +103,9 @@ const Products = () => {
           justifyContent: "center",
         }}
       >
-        <img src={Loading}/>
-        <img src={louaiLoading}/>
+        {/* <img src={Loading}/>
+        <img src={louaiLoading}/> */}
+        <Loading/>
 
       </div>
     );
@@ -119,7 +121,8 @@ const Products = () => {
           justifyContent: "center",
         }}
       >
-        <h1>An error occured while fetching Data</h1>
+        {/* <h1>An error occured while fetching Data</h1> */}
+        <Loading/>
       </div>
     );
   }
