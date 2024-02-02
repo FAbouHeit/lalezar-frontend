@@ -3,21 +3,31 @@ import Table from '../../Components/Table/Table'
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Modal, TextField, Typography } from '@mui/material';
+import EditBlogModal from '../../Components/EditBlogModal/EditBlogModal';
+import DeleteBlogModal from '../../Components/DeleteBlogModal/DeleteBlogModal';
+import CreateBlogModal from '../../Components/CreateBlogModal/CreateBlogModal';
+import Button from '@mui/material/Button';
 
 const DashBlogs = () => {
 
+  const [openCreate, setOpenCreate] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState({});
   const [allBlogs, setAllBlogs] = useState([]);
-  const [fetchState, setFetchState] = useState(false)
-  const [editedBlog, setEditedBlog] = useState({
+  const [tempBlog, setTempBlog] = useState({
     title_en: selectedRowData.title_en || '',
     title_ar: selectedRowData.title_ar || '',
     description_en: selectedRowData.description_en || '',
     description_ar: selectedRowData.description_ar || '',
     video: selectedRowData.video || '',
+  })
+  const [newBlog, setNewBlog] = useState({
+    title_en: '',
+    title_ar: '',
+    description_en: '',
+    description_ar: '',
+    video: '',
   })
   
   const getData = async () => {
@@ -38,8 +48,36 @@ const DashBlogs = () => {
     queryFn: getData
   });
 
+  const createBlog = async () => {
+    console.log("newBlog: ", newBlog);
+
+    try{
+    console.log("createBlog function triggered!")
+    if(newBlog){
+        console.log("newblog has passed the if statement and will be created")
+        await axios.post(`${process.env.REACT_APP_BACKEND_ENDPOINT}blog`, {
+          title_en: newBlog.title_en,
+          title_ar: newBlog.title_ar,
+          description_en: newBlog.description_en,
+          description_ar: newBlog.description_ar,
+          video: newBlog.video,
+        });
+    }
+    setOpenCreate(false);
+    blogsRefetch();
+    return;
+
+    } catch (error){
+      setOpenCreate(false);
+      console.log("error: ", error);
+      return;
+    }
+  }
+
 
   const deleteBlog = async (id) => {
+    console.log("selectedrowdata ID: ", id);
+
     try {
       await axios.delete(`${process.env.REACT_APP_BACKEND_ENDPOINT}blog/${id}`);
       setOpenDelete(false);
@@ -54,8 +92,10 @@ const DashBlogs = () => {
 
 
   const updateBlog = async (id) => {
+    console.log("tempBlog id: ", id);
+
     try {
-        await axios.patch(`${process.env.REACT_APP_BACKEND_ENDPOINT}blog/${id}`, {editedBlog});
+        await axios.patch(`${process.env.REACT_APP_BACKEND_ENDPOINT}blog/${id}`, {tempBlog});
         setOpenEdit(false);
         blogsRefetch();
         return;
@@ -66,47 +106,52 @@ const DashBlogs = () => {
     }
   };
 
-  const changeTitleEn = (e) =>{
-    setEditedBlog({...editedBlog, title_en: e.target.value});
-  }
-  const changeTitleAr = (e) =>{
-    setEditedBlog({...editedBlog, title_ar: e.target.value});
-  }
-  const changeTextEn = (e) =>{
-    setEditedBlog({...editedBlog, description_en: e.target.value});
-  }
-  const changeTextAr = (e) =>{
-    setEditedBlog({...editedBlog, description_ar: e.target.value});
-  }
-  const changeYoutubeLink = (e) =>{
-    setEditedBlog({...editedBlog, video: e.target.value});
-  }
-  
+
   useEffect(()=>{
-    console.log(selectedRowData);
-    setEditedBlog(selectedRowData);
+      // console.log("selectedrowdata: ", selectedRowData);
+      setTempBlog(selectedRowData);
   },[selectedRowData])
 
+  useEffect(()=>{
+    // if(openCreate){
+    //   console.log("selectedrowdata: ", selectedRowData);
+    // }
+    setNewBlog({});
+  },[openCreate])
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-    display:"flex",
-    flexDirection:"column",
-    gap:"20px"
-  };
+  useEffect(()=>{
+    if(openEdit){
+      console.log("selectedrowdata: ", selectedRowData);
+    }
+
+
+    if(!openEdit){
+       setTempBlog({
+          title_en:  '',
+          title_ar:  '',
+          description_en: '',
+          description_ar: '',
+          video: '',
+      })
+    } else {
+      setTempBlog({
+        title_en: selectedRowData.title_en,
+        title_ar: selectedRowData.title_ar,
+        description_en: selectedRowData.description_en,
+        description_ar: selectedRowData.description_ar,
+        video: selectedRowData.video,
+      })
+    }
+  },[openEdit])
+
+
+
 
   return (
     <>
     { allBlogs ? 
     <main className={Styles.container}>
+        <Button variant="contained" onClick={()=>setOpenCreate(true)}>Create A Blog</Button>
       <section>
         <Table 
         data={allBlogs && allBlogs} //all blogs
@@ -117,98 +162,34 @@ const DashBlogs = () => {
         handleOpenDelete={() => setOpenDelete(true)} 
         />
       </section>
-      <Modal
-        open={openDelete}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-          <button onClick={()=>deleteBlog(selectedRowData._id)}>yesss</button>
-          <button onClick={()=>setOpenDelete(false)}>noooo</button>
-        </Box>
-      </Modal>
-
-
-      <Modal
-        open={openEdit}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Edit {selectedRowData.title_en}
-          </Typography>
-
-          <TextField 
-          id="outlined-basic" 
-          placeholder="Title English" 
-          label={selectedRowData.title_en || "Blog title English"} 
-          variant="outlined" 
-          fullWidth 
-          required={true} 
-          value={ editedBlog.title_en} 
-          focused={selectedRowData.title_en ? true : false} 
-          onChange={(e)=>changeTitleEn(e)}
-          />
-          <TextField 
-          id="outlined-basic" 
-          placeholder="Title Arabic" 
-          label={selectedRowData.title_ar || "Blog title Arabic"} 
-          variant="outlined" 
-          fullWidth 
-          required={true} 
-          value={editedBlog.title_ar} 
-          focused={selectedRowData.title_ar ? true : false} 
-          onChange={(e)=>changeTitleAr(e)}
-
-          />
-          <TextField 
-          id="outlined-basic" 
-          placeholder="Text English" 
-          label={selectedRowData.desription_en || "Blog text English"} 
-          variant="outlined" 
-          fullWidth 
-          required={true} 
-          value={editedBlog.description_en} 
-          focused={selectedRowData.description_en ? true : false} 
-          onChange={(e)=>changeTextEn(e)}
-          />
-          <TextField 
-          id="outlined-basic" 
-          placeholder="Text English" 
-          label={selectedRowData.description_ar || "Blog text Arabic"} 
-          variant="outlined" 
-          fullWidth 
-          required={true} 
-          value={editedBlog.description_ar} 
-          focused={selectedRowData.description_ar ? true : false} 
-          onChange={(e)=>changeTextAr(e)}
-          />
-          <TextField 
-          id="outlined-basic" 
-          placeholder="Youtube Link" 
-          label={selectedRowData.video || "Youtube Link"} 
-          variant="outlined" 
-          fullWidth 
-          required={false} 
-          value={editedBlog.video} 
-          focused={selectedRowData.video ? true : false} 
-          onChange={(e)=>changeYoutubeLink(e)}
-          />
-          <button onClick={()=>updateBlog(selectedRowData._id)}>save</button>
-          <button onClick={()=>setOpenEdit(false)}>cancel</button>
-        </Box>
-      </Modal>
-
       
-    </main>
-    
+      <DeleteBlogModal 
+      setOpenDelete={setOpenDelete}
+      openDelete= {openDelete}
+      deleteBlog={deleteBlog}
+      selectedRowData={selectedRowData}
+      />
+
+
+      <EditBlogModal
+      setOpenEdit={setOpenEdit}
+      openEdit={openEdit}
+      tempBlog={tempBlog}
+      setTempBlog={setTempBlog}
+      updateBlog={updateBlog}
+      selectedRowData={selectedRowData}
+      />
+
+
+      <CreateBlogModal
+      setOpenCreate={setOpenCreate} 
+      openCreate = {openCreate}
+      newBlog = {newBlog}
+      setNewBlog = {setNewBlog}
+      createBlog = {createBlog}
+      />
+      
+    </main> 
     :
     isBlogPending ?
     <p>loading...loadingloadingloadingloading</p>

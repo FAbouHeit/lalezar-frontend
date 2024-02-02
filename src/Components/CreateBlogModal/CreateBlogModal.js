@@ -4,21 +4,22 @@ import TextEditor from '../TextEditor/TextEditor';
 
 export default function CreateBlogModal({setOpenCreate, openCreate, newBlog, setNewBlog, createBlog}) {
 
-  useEffect(()=>{
-    setNewBlog({})
-  },[])
+    const [textAr, setTextAr] = useState("");
+    const [textEn, setTextEn] = useState("");
+
+    useEffect(()=>{
+      setNewBlog({...newBlog, description_en: textEn});
+    },[textEn])
+    
+    useEffect(()=>{
+      setNewBlog({...newBlog, description_ar: textAr});
+    },[textAr])
 
     const changeTitleEn = (e) =>{
         setNewBlog({...newBlog, title_en: e.target.value});
     }
     const changeTitleAr = (e) =>{
         setNewBlog({...newBlog, title_ar: e.target.value});
-    }
-    const changeTextEn = (e) =>{
-        setNewBlog({...newBlog, description_en: e.target.value});
-    }
-    const changeTextAr = (e) =>{
-        setNewBlog({...newBlog, description_ar: e.target.value});
     }
     const changeYoutubeLink = (e) =>{
         setNewBlog({...newBlog, video: e.target.value});
@@ -49,6 +50,7 @@ export default function CreateBlogModal({setOpenCreate, openCreate, newBlog, set
     aria-describedby="modal-modal-description"
     >
     <Box sx={style}>
+      <button onClick={()=>console.log(newBlog)}>print</button>
         <div style={{display: "flex", gap:"20px"}}>
         <TextField
           id="outlined-basic" 
@@ -73,8 +75,8 @@ export default function CreateBlogModal({setOpenCreate, openCreate, newBlog, set
           onChange={(e)=>changeTitleAr(e)}
           />
           </div>
-          <TextEditor lang={"en"}/>
-          <TextEditor lang={"ar"}/>
+          <TextEditor lang={"en"} setText={setTextEn}/>
+          <TextEditor lang={"ar"} setText={setTextAr}/>
           <TextField 
           id="outlined-basic" 
           placeholder="Youtube Link" 
@@ -97,3 +99,4 @@ export default function CreateBlogModal({setOpenCreate, openCreate, newBlog, set
   </>
   )
 }
+

@@ -1,14 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useContext } from 'react'
 import Styles from './Comment.module.css'
 import image1 from '../../Pages/BlogDetails/1.avif'
 import { motion } from 'framer-motion'
 import dateConverter from '../../Utils/DateConverter.js'
+import { AuthContext } from '../../Context/AuthContext'
 
-export default function Comment({element, parentName, focusOnTextArea, setReplyState}) {
+export default function Comment({element, parentName, focusOnTextArea, setReplyState, setCommentParentId}) {
     // const [replies, setReplies] = useState([{type:"reply"},{type:"reply"},{type:"reply"}]);
+    // console.log("comment element: ", element)
     const [replies, setReplies] = useState([]);
     const [openReplies, setOpenReplies] = useState(false);
     const [commentDate, setCommentDate] = useState("");
+    const { user } = useContext(AuthContext);
     const type = element.type;
     // const commentRef = useRef();
     // const isInView = useInView(commentRef);
@@ -18,9 +21,10 @@ export default function Comment({element, parentName, focusOnTextArea, setReplyS
     }
 
     const handleReplyButton = () =>{
-        // console.log("reply to: ", parentName);
         focusOnTextArea();
-        setReplyState(`replying to ${element.name}`);
+        setReplyState(`replying to ${element.name} ✕`);
+        setCommentParentId(element._id);
+        console.log("reply pressed!!!!!! ");
     }
 
     useEffect(()=>{
@@ -40,12 +44,16 @@ export default function Comment({element, parentName, focusOnTextArea, setReplyS
     className={`${Styles.commentComponentContainer} ${type === "comment" ? Styles.typeComment : Styles.typeReply }`}>
         <img src={image1} height={50} width={50} style={{borderRadius: "50%"}}/>
         <div className={Styles.commentComponentInfo}>
-            <p className={Styles.commentUser}>{element.name || "not loaded"} {type === "reply" ? <><span style={{color:"#777"}}>-- Replied to {parentName}</span> <span style={{color:"blue"}}>&#8617;</span></> : ""}</p>
+            <p className={Styles.commentUser}>{element.name || "not loaded"} {type === "reply" ? <><span style={{color:"#c86823"}}>-- Replied to</span> <span style={{color:"#777"}}> {parentName}</span><span style={{color:"#c86823"}}> &#8617;</span></> : ""}</p>
             <span className={Styles.commentDate}>{commentDate}</span>
             <p className={Styles.commentDescription}>{element.description || ""}</p>
             <div className={`${Styles.commentBottomPart} ${replies ? Styles.yesReplies : ""}`}>
-                <span className={Styles.commentViewReplies} style={replies.length>0 ? "" : {display:"none"} } onClick={handleViewReplyButton}>{replies.length > 0 ? openReplies ? "hide replies" : "view replies" : ""}</span>
-                <span className={Styles.commentReply} onClick={handleReplyButton}>reply</span>
+                <span className={Styles.commentViewReplies} style={replies && replies.length>0 ? {display:"inherit"} : {display:"none"} } onClick={handleViewReplyButton}>{replies && replies.length > 0 ? openReplies ? "hide replies" : "view replies" : ""}</span>
+                { type === "comment" ?
+                 <span className={Styles.commentReply} onClick={handleReplyButton}>reply</span>
+                 :
+                 ""
+                }
             </div>
         </div>        
     </motion.section>

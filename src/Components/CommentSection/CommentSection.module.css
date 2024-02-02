@@ -4,6 +4,7 @@
     /* background-color: red; */
     border: 2px solid black;
     border-radius: 15px;
+    /* background-color: orange; */
 }
 
 .addComment{
@@ -94,6 +95,8 @@
     font-size: 1.5em;
     text-align: center;
     margin: 50px 0;
+    background-color: red;
+    border: 5px solid black;
 }
 
 .replyCancel{
@@ -104,6 +107,7 @@
     margin: 15px;
     color: white;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 
