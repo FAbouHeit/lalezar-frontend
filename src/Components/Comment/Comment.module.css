@@ -41,6 +41,7 @@
 
 .commentBottomPart{
     color: var(--color1);
+    display: flex;
 }
 
 .commentBottomPart .yesReplies{
