@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import useApi from "../../Hooks/UseApi";
 import { useEffect, useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import Styles from "./UserModal.module.css";
 import Img from "../../Assets/ImgHolder.jpg";
 import axios from "axios";
@@ -43,6 +43,8 @@ const UserModal = ({
 
     const [image, setImage] = useState("");
     const [password, setPassword] = useState("");
+    const [emailError, setEmailError] = useState(null);
+    const [passwordError, setPasswordError] = useState(null);
     const [newPassword, setNewPassword] = useState(null);
     const [oldPassword, setOldPassword] = useState();
     const [loading, setLoading] = useState(false);
@@ -59,10 +61,24 @@ const UserModal = ({
             // setPassword(selectedRowData && selectedRowData.password)
         }
     }, [selectedRowData, action])
+
+
+  const showToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  };
+
     const handleAdd = async (e) => {
         e.preventDefault();
         try {
             setLoading(true);
+
             const response = await axiosInstance.post(
                 `${process.env.REACT_APP_BACKEND_ENDPOINT}user`,
                 {
@@ -133,6 +149,24 @@ const UserModal = ({
     const handleSubmit = (e) => {
         e.preventDefault();
         if (action === "add") {
+            const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            const isValidPassword =
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$/.test(password);
+        
+            if (!isValidEmail) {
+              setEmailError(" Please enter a valid email address");
+              setLoading(false);
+              showToast("Invalid email address");
+            }
+        
+            if (!isValidPassword) {
+              setPasswordError(
+                "Password must be at least 8 characters long and contain at least one letter and one number"
+              );
+              setLoading(false);
+              showToast("Invalid password");
+              return;
+            }
             handleAdd(e);
         } else if (action === "edit") {
             hanedleEdit(e);
@@ -151,8 +185,9 @@ const UserModal = ({
         p: 4,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "left",
+        maxHeight: "600px",
+        overflowY: "scroll",
     };
 
     const divStyle = {
@@ -171,6 +206,7 @@ const UserModal = ({
 
     return (
         <>
+          <ToastContainer />
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -213,6 +249,11 @@ const UserModal = ({
                             onChange={(e) => setFirstName(e.target.value)}
                             value={firstName}
                             autoComplete="on"
+                            sx={{
+                                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#C86823",
+                                },
+                            }}
                         />
                         <TextField
                             required
@@ -223,6 +264,11 @@ const UserModal = ({
                             onChange={(e) => setLastName(e.target.value)}
                             value={lastName}
                             autoComplete="on"
+                            sx={{
+                                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#C86823",
+                                },
+                            }}
                         />
 
                         <TextField
@@ -231,9 +277,24 @@ const UserModal = ({
                             label="email"
                             placeholder="Email"
                             name="email"
+                            helperText={!emailError ? "": emailError}
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
                             autoComplete="on"
+                            sx={{
+                                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#C86823",
+                                },
+                            }}
+                            onBlur={() => {
+                                // Validate email on blur
+                                const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+                                  email
+                                );
+                                if (!isValidEmail) {
+                                  setEmailError("Please enter a valid email address");
+                                }
+                              }}
                         />
                         {!selectedRowData ? (
                             <TextField
@@ -242,10 +303,26 @@ const UserModal = ({
                                 label="Password"
                                 placeholder="Password"
                                 name="password"
+                                helperText={!passwordError ? "": passwordError}
                                 type={showPassword ? "text" : "password"}
                                 onChange={(e) => setPassword(e.target.value)}
                                 value={password}
                                 autoComplete="on"
+                                sx={{
+                                    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                        borderColor: "#C86823", 
+                                    },
+                                }}
+                                onBlur={() => {
+                                    // Validate password on blur
+                                    const isValidPassword =
+                                      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
+                                    if (!isValidPassword) {
+                                      setPasswordError(
+                                        "Password must be at least 8 characters long and contain at least one letter and one number"
+                                      );
+                                    }
+                                  }}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -273,6 +350,21 @@ const UserModal = ({
                                     type={showPassword ? "text" : "password"}
                                     onChange={(e) => setOldPassword(e.target.value)}
                                     autoComplete="on"
+                                    sx={{
+                                        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                            borderColor: "#C86823", // Change border color on focus
+                                        },
+                                    }}
+                                    onBlur={() => {
+                                        // Validate password on blur
+                                        const isValidPassword =
+                                          /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
+                                        if (!isValidPassword) {
+                                          setPasswordError(
+                                            "Password must be at least 8 characters long and contain at least one letter and one number"
+                                          );
+                                        }
+                                      }}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -296,8 +388,14 @@ const UserModal = ({
                                     placeholder="New Password"
                                     name="newPassword"
                                     type={showPassword ? "text" : "password"}
+                                    helperText={!passwordError ? "": passwordError}
                                     onChange={(e) => setNewPassword(e.target.value)}
                                     autoComplete="on"
+                                    sx={{
+                                        "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                            borderColor: "#C86823", 
+                                        },
+                                    }}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
@@ -325,6 +423,11 @@ const UserModal = ({
                             onChange={(e) => setPhoneNumber(e.target.value)}
                             value={phoneNumber}
                             autoComplete="on"
+                            sx={{
+                                "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                                    borderColor: "#C86823",
+                                },
+                            }}
                         />
                         <FormControl>
                             <input

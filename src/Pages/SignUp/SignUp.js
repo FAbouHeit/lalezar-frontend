@@ -83,7 +83,7 @@ function SignUp() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,16}$/.test(password);
 
     if (!isValidEmail) {
-      setEmailError("Invalid email address");
+      setEmailError(" Please enter a valid email address");
       setLoading(false);
       showToast("Invalid email address");
     }
@@ -185,6 +185,7 @@ function SignUp() {
                   id="outlined-basic"
                   label="Email"
                   variant="outlined"
+                    helperText={!emailError ? "": emailError}
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
@@ -196,7 +197,7 @@ function SignUp() {
                       email
                     );
                     if (!isValidEmail) {
-                      setEmailError("Invalid email address");
+                     setEmailError("Please enter a valid email address");
                     }
                   }}
                   sx={{
@@ -217,6 +218,7 @@ function SignUp() {
                   fullWidth
                   id="outlined-basic"
                   label="Password"
+                  helperText={!passwordError ? "": passwordError}
                   variant="outlined"
                   value={password}
                   type={showPassword ? "text" : "password"}
