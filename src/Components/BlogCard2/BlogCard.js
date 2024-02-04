@@ -6,8 +6,22 @@ const BlogCard = ({ title, image, description, slug }) => {
   const navigate = useNavigate();
 
   const createMarkup = () => {
-    return { __html: description };
+    // Split the description into words
+    const words = description.split(" ");
+
+    // Take the first 4 words
+    const truncatedWords = words.slice(0, 6);
+
+    // Join the words back together
+    const truncatedDescription = truncatedWords.join(" ");
+
+    // Add 3 dots if there are more words
+    const finalDescription =
+      words.length > 4 ? `${truncatedDescription}...` : truncatedDescription;
+
+    return { __html: finalDescription };
   };
+
   return (
     <section className={Styles.container}>
       <img

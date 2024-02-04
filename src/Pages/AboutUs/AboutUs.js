@@ -2,13 +2,73 @@ import React from "react";
 import Styles from "./AboutUs.module.css";
 import Hero from "./Hero";
 import Location from "./Location";
+import { useQuery } from "@tanstack/react-query";
+import axiosInstance from "../../Utils/AxiosInstance";
 
 const AboutUs = () => {
+  const {
+    isPending: isCategoriesPending,
+    isError: isCategoriesError,
+    data: categoriesData,
+  } = useQuery({
+    queryKey: ["CategoriesData"],
+    queryFn: async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}categories/sum`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching Categoriess:", error);
+        throw error;
+      }
+    },
+  });
+
+  const {
+    isPending: isCountriesPending,
+    isError: isCountriesError,
+    data: countriesData,
+  } = useQuery({
+    queryKey: ["CountriesData"],
+    queryFn: async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}delivery/country`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching Countriess:", error);
+        throw error;
+      }
+    },
+  });
+
+  const {
+    isPending: isUserPending,
+    isError: isUserError,
+    data: userData,
+  } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      try {
+        const response = await axiosInstance.get(
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}user`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching Users:", error);
+        throw error;
+      }
+    },
+  });
+
   const data = [
-    { id: 1, number: 4, text: "Shopping category" },
-    { id: 2, number: 6, text: "Different Country" },
-    { id: 3, number: 534, text: "Happy Clients" },
+    { id: 1, number: categoriesData && categoriesData, text: "Shopping category" },
+    { id: 2, number: countriesData && countriesData, text: "Different Country" },
+    { id: 3, number: userData && userData.length, text: "Happy Clients" },
   ];
+
   return (
     <>
       <Hero />

@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/effect-cube";
 import "swiper/css/pagination";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
-import { EffectCube, Pagination, Autoplay, Navigation } from "swiper/modules";
+import { EffectFade, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Styles from "./ChooseUs.module.css";
 export default function ChooseUsSwiper() {
   const data = [
@@ -45,11 +45,7 @@ export default function ChooseUsSwiper() {
     },
   ];
   return (
-    <div
-      style={{
-        width: "100%",
-      }}
-    >
+    <div className={Styles.container}>
       <Swiper
         effect={"cube"}
         grabCursor={true}
@@ -60,7 +56,7 @@ export default function ChooseUsSwiper() {
         pagination={{
           clickable: true,
         }}
-        modules={[EffectCube, Pagination, Autoplay, Navigation]}
+        modules={[EffectFade, Pagination, Autoplay, Navigation]}
         className="mySwiper"
       >
         {data.map((item, index) => {
@@ -68,9 +64,9 @@ export default function ChooseUsSwiper() {
             <SwiperSlide>
               <section key={index} className={Styles.card}>
                 <span className={Styles.icon}>{item.icon}</span>
-                <span>
+                <span className={Styles.rigth}>
                   <h3 className={Styles.title}>{item.title}</h3>
-                  <p className={`${Styles.text} ${Styles.back}`}>{item.text}</p>
+                  <p className={Styles.p}>{item.text}</p>
                 </span>
               </section>
             </SwiperSlide>

@@ -77,7 +77,7 @@
   .btn2 {
     display: flex;
     width: 80%;
-    margin: auto;
+    margin: 0.5rem auto 0;
   }
 }
 

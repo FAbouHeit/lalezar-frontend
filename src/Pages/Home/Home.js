@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Button } from "@mui/material";
 import { CartContext } from "../../Context/CartContext";
+import Loading from "../Loading/Loading";
 
 const Home = () => {
   const { increaseCartItem, setCartItems } = useContext(CartContext);
@@ -45,7 +46,7 @@ const Home = () => {
     queryFn: async () => {
       try {
         const response = await axiosInstance.get(
-          `${process.env.REACT_APP_BACKEND_ENDPOINT}blog`
+          `${process.env.REACT_APP_BACKEND_ENDPOINT}blog/lastTwo`
         );
         return response.data;
       } catch (error) {
@@ -174,7 +175,7 @@ const Home = () => {
                   fontWeight: "700",
                 }}
               >
-                Loading ...
+                <Loading />
               </p>
             </div>
           ) : isProductsError ? (
@@ -293,7 +294,7 @@ const Home = () => {
                   fontWeight: "700",
                 }}
               >
-                Loading
+                <Loading />
               </p>
             </div>
           ) : isBlogError ? (

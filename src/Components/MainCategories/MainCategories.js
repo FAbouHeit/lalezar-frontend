@@ -7,6 +7,7 @@ import Spices from "../../Assets/Spices.png";
 import Organic from "../../Assets/Organic.png";
 import { useNavigate } from "react-router-dom";
 import { Reveal } from "../../RevealAnimation";
+import Loading from "../../Pages/Loading/Loading";
 
 const MainCategories = ({ categoryData, isPending, isError }) => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const MainCategories = ({ categoryData, isPending, isError }) => {
               fontWeight: "700",
             }}
           >
-            Loading ...
+           <Loading/>
           </p>
         </div>
       ) : isError ? (

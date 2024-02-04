@@ -10,8 +10,10 @@ import { Box, FormControl, InputLabel, TextField } from "@mui/material";
 import useApi from "../../Hooks/UseApi";
 import NoteModal from "../Note/Note";
 import { ToastContainer, toast } from "react-toastify";
+import { CartContext } from "../../Context/CartContext";
 
-export default function CardCheckout({ setCartItems, totalPrice, cartItems }) {
+export default function CardCheckout({ totalPrice, cartItems }) {
+  const { setCartItemCount, setCartItems } = useContext(CartContext);
   const { user } = useContext(AuthContext);
   const { apiCall, error } = useApi();
   const {
@@ -90,6 +92,7 @@ export default function CardCheckout({ setCartItems, totalPrice, cartItems }) {
           toast.success("Order sent Successfuly ");
           toast.success("Items removed from your cart ");
           setCartItems([]);
+          setCartItemCount(null)
         }
       } catch (error) {
         console.log(error);
