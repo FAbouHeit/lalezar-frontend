@@ -17,7 +17,6 @@ const UserChart = ({ userData }) => {
     },
     fill: {
       opacity: 1,
-      type: "gradient",
       colors: ["#C86823", "#740004", "#fff", "#49220E", "#A0471D"],
     },
     legend: {

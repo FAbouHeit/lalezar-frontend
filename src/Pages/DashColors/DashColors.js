@@ -3,7 +3,7 @@ import Table from "../../Components/Table/Table";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import StyleDashColors from "./DashColors.module.css";
-import { FormControl, TextField, Button } from "@mui/material";
+import { FormControl, TextField, Button, IconButton } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { toast, ToastContainer } from "react-toastify";
 import AddIcon from "@mui/icons-material/Add";
 import "react-toastify/dist/ReactToastify.css";
+import CloseIcon from "@mui/icons-material/Close";
 
 function DashColors() {
   const [isAddPopUp, setIsAddPopUp] = useState(false);
@@ -29,6 +30,9 @@ function DashColors() {
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+    rowGap: '1rem',
+    display: 'flex',
+    flexDirection: 'column'
   };
 
   const [formData, setFormData] = useState({
@@ -87,7 +91,7 @@ function DashColors() {
   }
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, type, checked } = e.target;
 
     setFormData((prevData) => ({
       ...prevData,
@@ -102,7 +106,7 @@ function DashColors() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_BACKEND_ENDPOINT}colors/create`,
         formData
       );
@@ -130,7 +134,7 @@ function DashColors() {
 
   const handleDelete = async (selectedRowData) => {
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `${process.env.REACT_APP_BACKEND_ENDPOINT}colors/delete/${selectedRowData._id}`
       );
 
@@ -169,7 +173,7 @@ function DashColors() {
         }
       });
 
-      const response = await axios.patch(
+      await axios.patch(
         `${process.env.REACT_APP_BACKEND_ENDPOINT}colors/update/${selectedRowData._id}`,
         formData
       );
@@ -187,14 +191,49 @@ function DashColors() {
     <>
       {isAddPopUp && (
         <>
-          <div className={StyleDashColors.addPopUp}>
-            <h1 style={{ marginBottom: "15px" }}>Add A Color</h1>
+          <Box
+            className={StyleDashColors.addPopUp}
+            sx={{
+              "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
+                border: "2px solid #C86823 !important",
+                borderRadius: "4px",
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "1px solid #C86823 ",
+              },
+              "& .MuiInputLabel-root.Mui-focused ": {
+                color: "#C86823 ",
+              },
+            }}
+          >
+            <span
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "1rem",
+              }}
+            >
+              <h1>Add A Color</h1>
+              <IconButton
+                onClick={() => {
+                  setIsAddPopUp(false);
+                }}
+              >
+                <CloseIcon
+                  sx={{
+                    color: "#C86823",
+                  }}
+                />
+              </IconButton>
+            </span>
             <form
               onSubmit={handleSubmit}
               style={{
                 display: "flex",
                 flexDirection: "column",
-                rowGap: "5px",
+                rowGap: "1.5rem",
               }}
             >
               <FormControl fullWidth>
@@ -216,11 +255,23 @@ function DashColors() {
                   required
                 />
               </FormControl>
-              <Button type="submit" variant="contained" color="primary">
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  bgcolor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "#A0471D",
+                    color: "white",
+                  },
+                }}
+              >
                 Submit
               </Button>
             </form>
-          </div>
+          </Box>
           <div
             style={{
               position: "absolute",
@@ -238,12 +289,33 @@ function DashColors() {
       {isEditPopUp && (
         <>
           <div className={StyleDashColors.addPopUp}>
-            <h1 style={{ marginBottom: "20px" }}>Edit a color</h1>
+            <span
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <h1>Edit A Color</h1>
+              <IconButton
+                onClick={() => {
+                  setIsEditPopUp(false);
+                }}
+              >
+                <CloseIcon
+                  sx={{
+                    color: "#C86823",
+                  }}
+                />
+              </IconButton>
+            </span>
             <form
               style={{
                 display: "flex",
                 flexDirection: "column",
-                rowGap: "5px",
+                rowGap: "1rem",
               }}
             >
               <FormControl fullWidth>
@@ -270,11 +342,35 @@ function DashColors() {
               <Button
                 onClick={() => handleUpdate(selectedRowData)}
                 variant="contained"
-                color="primary"
+                sx={{
+                  bgcolor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "#A0471D",
+                    color: "white",
+                  },
+                }}
               >
                 Update
               </Button>
-              <Button onClick={handleEditClose}>Cancel</Button>
+              <Button
+                onClick={handleEditClose}
+                variant="outlined"
+                sx={{
+                  color: "#C86823",
+                  borderColor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    borderColor: "#C86823",
+                    backgroundColor: "#C86823",
+                    color: "white",
+                  },
+                }}
+              >
+                Cancel
+              </Button>
             </form>
           </div>
           <div
@@ -299,11 +395,6 @@ function DashColors() {
           onClose={handleClose}
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
-          // slotProps={{
-          //   backdrop: {
-          //     timeout: 500,
-          //   },
-          // }}
         >
           <Fade in={isDeletePopUp}>
             <Box sx={style}>
@@ -313,10 +404,8 @@ function DashColors() {
                 component="h2"
               >
                 Are you sure to Delete this Color?
-                <span style={{ color: "red" }}>
-                  May this affects the design
-                </span>
               </Typography>
+              <span style={{ color: "red" }}>This may affect the design</span>
               <div
                 style={{
                   display: "flex",
@@ -324,18 +413,38 @@ function DashColors() {
                   marginTop: "10px",
                 }}
               >
-                <button
+                <Button
                   onClick={() => handleDelete(selectedRowData)}
-                  className={StyleDashColors.cancel}
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#C86823",
+                    transition: "background-color 0.3s ease, color 0.3s ease",
+                    textTransform: "none",
+                    "&:hover": {
+                      bgcolor: "#A0471D",
+                      color: "white",
+                    },
+                  }}
                 >
                   Confirm
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={handleClose}
-                  className={StyleDashColors.confirm}
+                  variant="outlined"
+                  sx={{
+                    color: "#C86823",
+                    borderColor: "#C86823",
+                    transition: "background-color 0.3s ease, color 0.3s ease",
+                    textTransform: "none",
+                    "&:hover": {
+                      borderColor: "#C86823",
+                      backgroundColor: "#C86823",
+                      color: "white",
+                    },
+                  }}
                 >
                   Cancel
-                </button>
+                </Button>
               </div>
             </Box>
           </Fade>

@@ -24,11 +24,14 @@ function DashCategories() {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: '300px',
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+    display: 'flex',
+    flexDirection: 'column',
+    rowGap: '1rem'
   };
 
   const [formData, setFormData] = useState({
@@ -112,7 +115,7 @@ function DashCategories() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.REACT_APP_BACKEND_ENDPOINT}categories/create`,
         formData
       );
@@ -140,7 +143,7 @@ function DashCategories() {
 
   const handleDelete = async (selectedRowData) => {
     try {
-      const response = await axios.delete(
+       await axios.delete(
         `${process.env.REACT_APP_BACKEND_ENDPOINT}categories/delete/${selectedRowData._id}`
       );
 
@@ -180,7 +183,7 @@ function DashCategories() {
         }
       });
 
-      const response = await axios.patch(
+      await axios.patch(
         `${process.env.REACT_APP_BACKEND_ENDPOINT}categories/update/${selectedRowData._id}`,
         formData
       );
@@ -198,14 +201,28 @@ function DashCategories() {
     <>
       {isAddPopUp && (
         <>
-          <div className={StyleDashCategories.addPopUp}>
+          <Box
+            className={StyleDashCategories.addPopUp}
+            sx={{
+              "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
+                border: "2px solid #C86823 !important",
+                borderRadius: "4px",
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "1px solid #C86823 ",
+              },
+              "& .MuiInputLabel-root.Mui-focused ": {
+                color: "#C86823 ",
+              },
+            }}
+          >
             <h1 style={{ marginBottom: "15px" }}>Add A Category</h1>
             <form
               onSubmit={handleSubmit}
               style={{
                 display: "flex",
                 flexDirection: "column",
-                rowGap: "5px",
+                rowGap: "1rem",
               }}
             >
               <FormControl fullWidth>
@@ -227,11 +244,40 @@ function DashCategories() {
                   required
                 />
               </FormControl>
-              <Button type="submit" variant="contained" color="primary">
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  bgcolor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "#A0471D",
+                    color: "white",
+                  },
+                }}
+              >
                 Submit
               </Button>
+              <Button
+                onClick={() => setIsAddPopUp(false)}
+                variant="outlined"
+                sx={{
+                  color: "#C86823",
+                  borderColor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    borderColor: "#C86823",
+                    backgroundColor: "#C86823",
+                    color: "white",
+                  },
+                }}
+              >
+                Cancel
+              </Button>
             </form>
-          </div>
+          </Box>
           <div
             style={{
               position: "absolute",
@@ -248,13 +294,27 @@ function DashCategories() {
       )}
       {isEditPopUp && (
         <>
-          <div className={StyleDashCategories.addPopUp}>
+          <Box
+            className={StyleDashCategories.addPopUp}
+            sx={{
+              "& .Mui-focused > .MuiOutlinedInput-notchedOutline ": {
+                border: "2px solid #C86823 !important",
+                borderRadius: "4px",
+              },
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: "1px solid #C86823 ",
+              },
+              "& .MuiInputLabel-root.Mui-focused ": {
+                color: "#C86823 ",
+              },
+            }}
+          >
             <h1 style={{ marginBottom: "20px" }}>Edit a category</h1>
             <form
               style={{
                 display: "flex",
                 flexDirection: "column",
-                rowGap: "5px",
+                rowGap: "1rem",
               }}
             >
               <FormControl fullWidth>
@@ -281,13 +341,37 @@ function DashCategories() {
               <Button
                 onClick={() => handleUpdate(selectedRowData)}
                 variant="contained"
-                color="primary"
+                sx={{
+                  bgcolor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "#A0471D",
+                    color: "white",
+                  },
+                }}
               >
                 Update
               </Button>
-              <Button onClick={handleEditClose}>Cancel</Button>
+              <Button
+                onClick={handleEditClose}
+                variant="outlined"
+                sx={{
+                  color: "#C86823",
+                  borderColor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    borderColor: "#C86823",
+                    backgroundColor: "#C86823",
+                    color: "white",
+                  },
+                }}
+              >
+                Cancel
+              </Button>
             </form>
-          </div>
+          </Box>
           <div
             style={{
               position: "absolute",
@@ -324,31 +408,43 @@ function DashCategories() {
                 component="h2"
               >
                 Are you sure to Delete this Category?
-                <span style={{ color: "red" }}>
-                  because of this action , You will have products without
-                  Category.
-                </span>
               </Typography>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "20px",
-                  marginTop: "10px",
+              <span style={{ color: "red" }}>
+                Because of this action, you will have products without
+                Category.
+              </span>
+              <Button
+                onClick={() => handleDelete(selectedRowData)}
+                sx={{
+                  bgcolor: "#C86823",
+                  color: "white",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    bgcolor: "#A0471D",
+                    color: "white",
+                  },
                 }}
               >
-                <button
-                  onClick={() => handleDelete(selectedRowData)}
-                  className={StyleDashCategories.cancel}
-                >
-                  Confirm
-                </button>
-                <button
-                  onClick={handleClose}
-                  className={StyleDashCategories.confirm}
-                >
-                  Cancel
-                </button>
-              </div>
+                Confirm
+              </Button>
+              <Button
+                onClick={handleClose}
+                variant="outlined"
+                sx={{
+                  color: "#C86823",
+                  borderColor: "#C86823",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                  textTransform: "none",
+                  "&:hover": {
+                    borderColor: "#C86823",
+                    backgroundColor: "#C86823",
+                    color: "white",
+                  },
+                }}
+              >
+                Cancel
+              </Button>
             </Box>
           </Fade>
         </Modal>
@@ -370,21 +466,21 @@ function DashCategories() {
           Manage Categories
         </Typography>
         <Button
-            onClick={handleOpenPopUp}
-            endIcon={<AddIcon />}
-            variant="contained"
-            sx={{
-              bgcolor: "#C86823",
-              transition: "background-color 0.3s ease, color 0.3s ease",
-              textTransform: "none",
-              "&:hover": {
-                bgcolor: "#A0471D",
-                color: "white",
-              },
-            }}
-          >
-            Add Category
-          </Button>
+          onClick={handleOpenPopUp}
+          endIcon={<AddIcon />}
+          variant="contained"
+          sx={{
+            bgcolor: "#C86823",
+            transition: "background-color 0.3s ease, color 0.3s ease",
+            textTransform: "none",
+            "&:hover": {
+              bgcolor: "#A0471D",
+              color: "white",
+            },
+          }}
+        >
+          Add Category
+        </Button>
         <Table
           data={categoriesData}
           ForWhat={"categories"}

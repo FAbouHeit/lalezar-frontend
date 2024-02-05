@@ -50,6 +50,7 @@ const  OAuth = ({isLogin})  => {
       startIcon={<img src={googleG} alt="googleImage"/>}
       sx={{
         color: "black",
+        textTransform: 'none'
       }}
     >
       {isLogin ? "Login with Google" : "Sign up with Google"}

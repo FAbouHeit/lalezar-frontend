@@ -215,6 +215,7 @@ function Navbar() {
                             sx={{
                               padding: "0.7rem 1.5rem",
                               borderColor: "transparent",
+                              textTransform: "none",
                               color: "#C86823",
                               ":hover": {
                                 borderColor: "transparent",
@@ -233,6 +234,7 @@ function Navbar() {
                             padding: "0.7rem 1.5rem",
                             borderColor: "transparent",
                             color: "#C86823",
+                            textTransform: "none",
                             ":hover": {
                               borderColor: "transparent",
                             },
@@ -249,6 +251,7 @@ function Navbar() {
                             padding: "0.7rem 1.5rem",
                             borderColor: "transparent",
                             color: "#C86823",
+                            textTransform: "none",
                             ":hover": {
                               borderColor: "transparent",
                             },
@@ -290,7 +293,6 @@ function Navbar() {
                     <ShoppingCartIcon />
                   </Badge>
                 </IconButton>
-
               </li>
             </ul>
           </ul>
@@ -391,7 +393,7 @@ function Navbar() {
                       color: "#C86823",
                       borderColor: "#C86823",
                       transition: "background-color 0.3s ease, color 0.3s ease",
-                      textTransform: 'none',
+                      textTransform: "none",
                       "&:hover": {
                         borderColor: "#C86823",
                         backgroundColor: "#C86823",
@@ -408,7 +410,7 @@ function Navbar() {
                     sx={{
                       bgcolor: "#C86823",
                       transition: "background-color 0.3s ease, color 0.3s ease",
-                      // width:"100px",
+                      textTransform: "none",
                       "&:hover": {
                         bgcolor: "#A0471D",
                         color: "white",
@@ -455,7 +457,7 @@ function Navbar() {
                               ":hover": {
                                 borderColor: "transparent",
                               },
-                              textTransform: 'none'
+                              textTransform: "none",
                             }}
                           >
                             Dashboard
@@ -474,7 +476,7 @@ function Navbar() {
                             ":hover": {
                               borderColor: "transparent",
                             },
-                            textTransform: 'none'
+                            textTransform: "none",
                           }}
                         >
                           Profile
@@ -492,7 +494,7 @@ function Navbar() {
                             ":hover": {
                               borderColor: "transparent",
                             },
-                            textTransform: 'none'
+                            textTransform: "none",
                           }}
                         >
                           Logout

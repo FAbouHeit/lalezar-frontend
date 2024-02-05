@@ -10,14 +10,13 @@ const CategoryChart = ({ categoryData }) => {
       animations: {
         enabled: true,
       },
-      stroke: 0,
+      stroke: '0px',
     },
     dataLabels: {
       enabled: true,
     },
     fill: {
       opacity: 1,
-      type: "gradient",
       colors: ["#C86823", "#740004", "#fff", "#49220E", "#A0471D"],
     },
     legend: {

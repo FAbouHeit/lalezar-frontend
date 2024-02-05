@@ -165,7 +165,7 @@ const DashOverview = () => {
                 width: "100%",
                 display: "flex",
                 justifyContent: "center",
-                height: "530px",
+                height: "515px",
                 alignItems: "center",
                 backgroundColor: "rgb(231, 231, 231)",
                 borderRadius: "10px",
