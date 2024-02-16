@@ -72,17 +72,12 @@ function ProductDetails() {
 
   const showToast = (message) => {
     toast.success(message, {
-      position: "top-right",
+      position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      style: {
-        backgroundColor: "#c86823",
-        color: "#fff",
-        fontSize: "16px",
-      },
     });
   };
 

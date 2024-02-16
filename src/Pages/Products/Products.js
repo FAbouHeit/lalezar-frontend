@@ -111,8 +111,7 @@ const Products = () => {
       >
         {/* <img src={Loading}/>
         <img src={louaiLoading}/> */}
-        <Loading/>
-
+        <Loading />
       </div>
     );
   }
@@ -128,7 +127,7 @@ const Products = () => {
         }}
       >
         {/* <h1>An error occured while fetching Data</h1> */}
-        <Loading/>
+        <Loading />
       </div>
     );
   }
@@ -214,17 +213,12 @@ const Products = () => {
   // Toastify Section
   const showToast = (message) => {
     toast.success(message, {
-      position: "top-right",
+      position: "top-center",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      style: {
-        backgroundColor: "#c86823",
-        color: "#fff",
-        fontSize: "16px",
-      },
     });
   };
 

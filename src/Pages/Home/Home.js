@@ -96,7 +96,7 @@ const Home = () => {
 
   const showToast = (message) => {
     toast.success(message, {
-      position: "top-right",
+      position: "top-left",
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,

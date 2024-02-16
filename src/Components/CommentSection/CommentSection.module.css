@@ -1,121 +1,119 @@
-.commentsMainContainer{
-    width: 100%;
-    height: 200px;
-    /* background-color: red; */
-    border: 2px solid black;
-    border-radius: 15px;
-    /* background-color: orange; */
+.commentsMainContainer {
+  width: 100%;
+  height: 200px;
+  /* background-color: red; */
+  border: 2px solid black;
+  border-radius: 15px;
+  /* background-color: orange; */
 }
 
-.addComment{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
+.addComment {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
 }
 
-.commentInput{
-    width: 100%;
-    min-height: 50px;
-    /* height: auto; */
-    resize: none;
-    border-radius: 15px;
-    height: 100%;
-    font-size: 1.5em;
-    border-top-right-radius: 15px;
-    border-top-left-radius: 15px;
-    border: none;
-    outline: none;
-    padding: 10px;
+.commentInput {
+  width: 100%;
+  min-height: 50px;
+  /* height: auto; */
+  resize: none;
+  border-radius: 15px;
+  height: 100%;
+  font-size: 1.5em;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  border: none;
+  outline: none;
+  padding: 10px;
 }
 
-.addComment:focus-within{
-    border: 1px solid var(--color1);
-    border-radius: 15px;
-    z-index: 4;
+.addComment:focus-within {
+  border: 1px solid var(--color1);
+  border-radius: 15px;
+  z-index: 4;
 }
 
-.addComment > button{
-    width: 100px;
-    height: 40px;
-    margin-right: 2vw;
-    float: right;
+.addComment > button {
+  width: 100px;
+  height: 40px;
+  margin-right: 2vw;
+  float: right;
 }
 
-.commentButtonContainer{
-    margin: 10px;
-    align-self: flex-end;
-    position: absolute;
-    bottom: 0;
+.commentButtonContainer {
+  margin: 10px;
+  align-self: flex-end;
+  position: absolute;
+  bottom: 0;
 }
 
-.commentButtonContainer > button{
-    width: 100px;
-    height: 40px;
-    margin: 10px;
-    border-radius: 5px;
-    box-shadow: none;
-    border: none;
-    font-size: 1em;
-    cursor: pointer;
+.commentButtonContainer > button {
+  width: 100px;
+  height: 40px;
+  margin: 10px;
+  border-radius: 5px;
+  box-shadow: none;
+  border: none;
+  font-size: 1em;
+  cursor: pointer;
 }
 
-.commentButtonContainer > button:active{
-    opacity: 0.7;
+.commentButtonContainer > button:active {
+  opacity: 0.7;
 }
 
-.buttonReset{
-    background-color: white;
-    color: var(--color1);
-    border: 1px solid var(--color1) !important;
+.buttonReset {
+  background-color: white;
+  color: var(--color1);
+  border: 1px solid var(--color1) !important;
 }
-.buttonSubmit{
-    background-color: var(--color1);
-    color: white;
-}
-
-.allComments{
-    /* background-color: red; */
-    display: flex;
-    flex-direction: column;
-    margin: 50px 0;
+.buttonSubmit {
+  background-color: var(--color1);
+  color: white;
 }
 
-.commentsHeader{
-    font-size: 1.5em;
-    margin: 50px 0;
-    padding: 20px 10px;
-    border-bottom: 1px solid gray;
-    border-top: 1px solid gray;
+.allComments {
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  margin: 50px 0;
 }
 
-.noComments{
-    font-size: 1.5em;
-    text-align: center;
-    margin: 50px 0;
-    background-color: red;
-    border: 5px solid black;
+.commentsHeader {
+  font-size: 1.5em;
+  margin: 50px 0;
+  padding: 20px 10px;
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
 }
 
-.replyCancel{
-    padding: 10px;
-    background-color: var(--color1);
-    /* opacity: 0.8; */
-    width: fit-content;
-    margin: 15px;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
+.noComments {
+  font-size: 1.5em;
+  text-align: center;
+  background-color: rgba(255, 0, 0, 0.301);
+  border: 1px solid black;
 }
 
+.replyCancel {
+  padding: 10px;
+  background-color: var(--color1);
+  /* opacity: 0.8; */
+  width: fit-content;
+  margin: 15px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
 @media screen and (max-width: 600px) {
-    .commentButtonContainer{
-        align-self: center;
-    }
-    .commentButtonContainer > button{
-        margin: 5px;
-    }
+  .commentButtonContainer {
+    align-self: center;
+  }
+  .commentButtonContainer > button {
+    margin: 5px;
+  }
 }

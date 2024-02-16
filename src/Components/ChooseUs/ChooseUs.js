@@ -5,13 +5,15 @@ import "swiper/css/pagination";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import { EffectFade, Pagination, Autoplay, Navigation } from "swiper/modules";
 import Styles from "./ChooseUs.module.css";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import SpaIcon from "@mui/icons-material/Spa";
 export default function ChooseUsSwiper() {
   const data = [
     {
-      title: "24 x 7 User Support",
-      text: "We use latest technology for the latest world because we know the demand of peoples We use latest technology for the latest world because we know the demand of peoples.",
+      title: "Gluten-Free Guarantee",
+      text: " Enjoy our spice collection worry-free with our gluten-free assurance",
       icon: (
-        <AccessTimeFilledIcon
+        <SpaIcon
           sx={{
             width: "50px",
             height: "50px",
@@ -21,9 +23,9 @@ export default function ChooseUsSwiper() {
     },
     {
       title: "24 x 7 User Support",
-      text: "We use latest technology for the latest world because we know the demand of peoples We use latest technology for the latest world because we know the demand of peoples.",
+      text: "We use latest technology for the latest world because we know the demand of peoples",
       icon: (
-        <AccessTimeFilledIcon
+        <SupportAgentIcon
           sx={{
             width: "50px",
             height: "50px",
@@ -32,8 +34,8 @@ export default function ChooseUsSwiper() {
       ),
     },
     {
-      title: "24 x 7 User Support",
-      text: "We use latest technology for the latest world because we know the demand of peoples We use latest technology for the latest world because we know the demand of peoples.",
+      title: "Instant Access",
+      text: "Explore our spice collection and informative blogs with just one click, anytime, anywhere.",
       icon: (
         <AccessTimeFilledIcon
           sx={{

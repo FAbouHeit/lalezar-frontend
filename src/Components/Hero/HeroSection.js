@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   let mystrings;
-  const nav = useNavigate()
+  const nav = useNavigate();
   mystrings = [""];
   useEffect(() => {
     mystrings.push("Exceptional flavors, perfected seasoning");
@@ -26,34 +26,42 @@ const HeroSection = () => {
   const el = useRef();
 
   return (
-      <header className={Styles.HeroSection}>
-        <div className={Styles.left}>
-          <p className={Styles.P}>Our Best Of World Class Spices</p>
-          <div className={Styles.SloganContainer}>
-            <h1 className={Styles.Slogan} ><span ref={el}>Exceptional flavors, perfected seasoning</span></h1>
-          </div>
-          <Button
-            size="large"
-            variant="contained"
-            sx={{
-              bgcolor: "#C86823",
-              color: "white",
-              ":hover": {
-                bgcolor: "#A0471D",
-              },
-              textTransform: 'none'
-            }}
-            onClick={()=> {
-              nav('/ProductsPage')
-            }}
-          >
-            Discover products
-          </Button>
+    <header className={Styles.HeroSection}>
+      <div className={Styles.left}>
+        <p className={Styles.P}>Our Best Of World Class Spices</p>
+        <div className={Styles.SloganContainer}>
+          <h1 className={Styles.Slogan}>
+            <span ref={el}>Exceptional flavors, perfected seasoning</span>
+          </h1>
         </div>
-        <div className={Styles.right}>
-          <img className={Styles.img} src={img} alt="Lalezar Logo" loading="lazy"/>
-        </div>
-      </header>
+        <Button
+          size="large"
+          variant="contained"
+          sx={{
+            bgcolor: "#C86823",
+            color: "white",
+            fontSize: "1.3rem",
+            ":hover": {
+              bgcolor: "#A0471D",
+            },
+            textTransform: "none",
+          }}
+          onClick={() => {
+            nav("/ProductsPage");
+          }}
+        >
+          Discover products
+        </Button>
+      </div>
+      <div className={Styles.right}>
+        <img
+          className={Styles.img}
+          src={img}
+          alt="Lalezar Logo"
+          loading="lazy"
+        />
+      </div>
+    </header>
   );
 };
 

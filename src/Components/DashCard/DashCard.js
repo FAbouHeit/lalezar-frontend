@@ -9,7 +9,7 @@ const DashCard = ({ index, title, number }) => {
     <div className={Styles.card}>
       <div className={Styles.left}>
         <p className={Styles.title}>{title}</p>
-        <p className={Styles.number}>{number}</p>
+        <p className={Styles.number}>{parseInt(number)}</p>
       </div>
       <span className={Styles.icon}>
         {index === 0 ? (
